@@ -6,12 +6,13 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2018/09/24 19:22:32 by llopez           ###   ########.fr        #
+#    Updated: 2018/09/29 21:50:16 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = lem-in.h\
-	   main.c
+SRCS =	main.c
+
+BIN = Lem-in
 
 all:
-	gcc $(SRCS) -I libft/ libft/libft.a
+	gcc -o $(BIN) $(SRCS) -I lem-in.h -I libft/ libft/libft.a

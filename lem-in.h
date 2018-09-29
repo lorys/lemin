@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:12:06 by llopez            #+#    #+#             */
-/*   Updated: 2018/09/25 18:45:36 by llopez           ###   ########.fr       */
+/*   Updated: 2018/09/29 19:43:22 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,3 +24,6 @@ typedef	struct	s_tube {
 	struct s_tube	*next;
 	struct s_tube	*prev;
 }				t_tube;
+
+
+t_tube		**realloc_links(t_tube *tube, t_tube *add);
