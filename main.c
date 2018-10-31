@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2018/10/25 17:15:57 by llopez           ###   ########.fr       */
+/*   Updated: 2018/10/31 17:43:36 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_tube	*find_room(char *name, t_tube **list)
 	tube = *list;
 	while (tube && tube->prev != NULL)
 		tube = tube->prev;
-	while (tube && tube->next != NULL && tube->next->name)
+	while (tube && tube->next != NULL && tube->name)
 	{
 		if (name && tube->name && !ft_strcmp(tube->name, name))
 			return (tube);
@@ -73,6 +73,8 @@ t_tube	*find_room(char *name, t_tube **list)
 
 void	save_room(t_tube **tube, char **split_tmp)
 {
+	if (find_room(split_tmp[0], tube))
+		return;
 	(*tube)->name = split_tmp[0];
 	(*tube)->x = ft_atoi(split_tmp[1]);
 	(*tube)->y = ft_atoi(split_tmp[2]);
@@ -85,19 +87,39 @@ void	save_room(t_tube **tube, char **split_tmp)
 	(*tube) = (*tube)->next;
 }
 
-int		count_room(t_tube *tube, t_tube *start, t_tube *end)
+int		find_path(t_tube *room, t_infos *infos, t_tube *from)
 {
-	while (tube->next && tube->next->name)
+	int i;
+
+	i = 0;
+	while (room->links && room->links[i])
 	{
-		
+		if (room->links[i] == from && ++i)
+			continue;
+		if (room->links[i] == infos->start)
+		{
+			printf("----FINI !\n\n");
+			return (1);
+		}
+		if (find_path(room->links[i], infos, room))
+		{
+			printf("oooooooooroom = %s\n", room->links[i]->name);
+			return (1);
+		}
+		i++;
 	}
+	return (0);
+}
+
+int		read_stdin(char *line, t_tube *tube)
+{
+	return (1);
 }
 
 int		main(int argc, char **argv)
 {
 	char	*line;
-	char	**starting_room;
-	char	**ending_room;
+	t_infos *infos;
 	t_tube	*tube;
 	char	**split_tmp;
 	int		i;
@@ -110,6 +132,7 @@ int		main(int argc, char **argv)
 	tube->x = 0;
 	tube->y = 0;
 	tube->links = NULL;
+	infos = (t_infos *)malloc(sizeof(t_infos));
 	while (get_next_line(0, &line))
 	{
 		ft_printf("%s\n", line);
@@ -120,23 +143,20 @@ int		main(int argc, char **argv)
 			free(line);
 			get_next_line(0, &line);
 			ft_printf("%s\n", line);
-			starting_room = ft_strsplit(line, ' ');
-			if (!find_room(starting_room[0], &tube))
-				save_room(&tube, starting_room);
+			save_room(&tube, ft_strsplit(line, ' '));
+			infos->start = tube->prev;
 		}
 		else if (!ft_strcmp("##end", line))
 		{
 			free(line);
 			get_next_line(0, &line);
 			ft_printf("%s\n", line);
-			ending_room = ft_strsplit(line, ' ');
-			if (!find_room(ending_room[0], &tube))
-				save_room(&tube, ending_room);
+			save_room(&tube, ft_strsplit(line, ' '));
+			infos->end = tube->prev;
 		}
 		else if (!ft_strchr(line, '-') && ft_strchr(line, ' '))
 		{
-			split_tmp = ft_strsplit(line, ' ');
-			save_room(&tube, split_tmp);
+			save_room(&tube, ft_strsplit(line, ' '));
 		}
 		else if (ft_strchr(line, '-') && !ft_strchr(line, ' '))
 		{
@@ -149,8 +169,10 @@ int		main(int argc, char **argv)
 		}
 		free(line);
 	}
+	printf("start = %s\nend = %s\n", infos->start->name, infos->end->name);
 	while (tube->prev != NULL)
 		tube = tube->prev;
+	find_path(infos->end, infos, infos->end);
 	show_struct(&tube);
 	return (0);
 }
