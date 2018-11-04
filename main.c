@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2018/10/31 17:43:36 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/04 14:23:45 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,24 +87,34 @@ void	save_room(t_tube **tube, char **split_tmp)
 	(*tube) = (*tube)->next;
 }
 
-int		find_path(t_tube *room, t_infos *infos, t_tube *from)
-{
+int		ft_tubelen(t_tube *len) {
 	int i;
 
 	i = 0;
+	while (len->links && len->links[i])
+		i++;
+	return (i-1);
+}
+
+int		find_path(t_tube *room, t_infos *infos, t_tube *from)
+{
+	int i;
+	int steps;
+	int y;
+
+	y = 0;
+	i = 0;
+	steps = 1;
+	if (room == infos->start)
+		return (1);
 	while (room->links && room->links[i])
 	{
 		if (room->links[i] == from && ++i)
 			continue;
-		if (room->links[i] == infos->start)
+		if ((steps += find_path(room->links[i], infos, room)))
 		{
-			printf("----FINI !\n\n");
-			return (1);
-		}
-		if (find_path(room->links[i], infos, room))
-		{
-			printf("oooooooooroom = %s\n", room->links[i]->name);
-			return (1);
+			printf("%s >> ", room->links[i]->name);
+			return (steps);
 		}
 		i++;
 	}
@@ -123,6 +133,7 @@ int		main(int argc, char **argv)
 	t_tube	*tube;
 	char	**split_tmp;
 	int		i;
+	int		fourmi;
 
 	i = 0;
 	tube = malloc(sizeof(t_tube));
@@ -136,7 +147,10 @@ int		main(int argc, char **argv)
 	while (get_next_line(0, &line))
 	{
 		ft_printf("%s\n", line);
-		if (line[0] == '#' && line[1] != '#')
+		if (ft_isdigit(line[0]) && !ft_strchr(line, ' ') &&\
+				!ft_strchr(line, '-'))
+			fourmi = ft_atoi(line);
+		else if (line[0] == '#' && line[1] != '#')
 			continue;
 		else if (!ft_strcmp("##start", line))
 		{
@@ -172,7 +186,7 @@ int		main(int argc, char **argv)
 	printf("start = %s\nend = %s\n", infos->start->name, infos->end->name);
 	while (tube->prev != NULL)
 		tube = tube->prev;
-	find_path(infos->end, infos, infos->end);
+	printf("nbr of steps = %d\n", find_path(infos->end, infos, infos->end));
 	show_struct(&tube);
 	return (0);
 }
