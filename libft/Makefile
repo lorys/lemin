@@ -6,7 +6,7 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/12 18:15:23 by llopez            #+#    #+#              #
-#    Updated: 2018/07/16 17:17:07 by llopez           ###   ########.fr        #
+#    Updated: 2018/11/07 16:44:23 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -128,7 +128,7 @@ $(NAME): $(OBJ)
 
 $(OBJDIR)%.o: %.c libft.h
 	@mkdir -p $(OBJDIR) 
-	@printf "\033[33m $@ \033[0m\n"
+	@printf "\e[1A\r\033[33m $@                      \033[0m\n"
 	@gcc -o $@ $(FLAG) -c $< -I ../includes
 
 clean:

@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   save_start.c                                       :+:      :+:    :+:   */
+/*   toend.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/06 22:24:01 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/07 18:40:43 by llopez           ###   ########.fr       */
+/*   Created: 2018/11/07 11:04:09 by llopez            #+#    #+#             */
+/*   Updated: 2018/11/07 11:11:33 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
 
-void	save_start(t_tube **tube, t_infos *infos)
+t_tube	*toend(t_tube *tube)
 {
-	char *line;
-	
-	get_next_line(0, &line);
-	ft_printf("%s\n", line);
-	save_room(tube, ft_strsplit(line, ' '));
-	infos->start = (*tube)->prev;
+	while (tube->next && tube->next->name)
+		tube = tube->next;
+	return (tube);
 }
