@@ -6,49 +6,52 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/07 19:35:26 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/08 17:09:30 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
 
-int		ft_tubelen(t_tube *len) {
-	int i;
-
-	i = 0;
-	while (len->links && len->links[i])
-		i++;
-	return (i-1);
-}
-
-int		main(void)
+static void		set_tube(t_tube *tube)
 {
-	t_infos *infos;
-	t_tube	*tube;
-	int		i;
-
-	i = 0;
-	tube = malloc(sizeof(t_tube));
 	tube->prev = NULL;
 	tube->next = NULL;
 	tube->name = NULL;
 	tube->x = 0;
 	tube->y = 0;
 	tube->vu = 0;
-	tube->links = NULL;
+	tube->links = NULL;	
+}
+
+int				main(void)
+{
+	t_infos *infos;
+	t_tube	*tube;
+	t_tube	*paths;
+	int		ret;
+	int		i;
+
+	i = 0;
+	ret = 0;
+	paths = (t_tube *)malloc(sizeof(t_tube));
+	tube = (t_tube *)malloc(sizeof(t_tube));
+	set_tube(tube);
+	set_tube(paths);
 	infos = (t_infos *)malloc(sizeof(t_infos));
 	read_stdin(tube, infos);
-
-
-
 	printf("start = %s\nend = %s\n", infos->start->name, infos->end->name);
-	while (infos->start->links[i])
+	ret = find_path(infos->start, infos, infos->start, paths);
+
+	printf("\n\n\n----------------------------------------------------\n\n\n");
+	while (paths->links[i])
 	{
-		printf("\\/\\/\\/\\/\\/\\/\\/\\/\n");
-		find_path(infos->start->links[i], infos, infos->start, 0);
-		printf("/\\/\\/\\/\\/\\/\\/\\/\\\n\n\n\n");
+		printf("> %s\n", paths->links[i]->name);
 		i++;
 	}
+	printf("\n\n\n----------------------------------------------------\n\n\n");
+	if (!ret)
+		printf("Il n'y a aucun chemin menant a la fin.");
+	printf("\n\n\n----------------------------------------------------\n\n\n");
 	show_struct(&tube);
 	return (0);
 }

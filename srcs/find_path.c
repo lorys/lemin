@@ -6,37 +6,36 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 22:12:07 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/07 18:47:45 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/08 18:41:40 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
 
-int		find_path(t_tube *room, t_infos *infos, t_tube *from, int steps)
+int		find_path(t_tube *room, t_infos *infos, t_tube *from, t_tube *paths)
 {
 	int	i;
-	int ret;
-	int	y;
+	int	ret;
 
-	y = 0;
-	ret = 0;
 	i = 0;
-	room->vu = 1;
+	ret = 0;
 	if (room == infos->end)
 		return (1);
-	while (room->links && room->links[i])
+	room->vu = 1;
+	while (room->links[i])
 	{
-		if (room->links[i] == infos->end)
-			return (1);
 		if ((room->links[i] == from || room->links[i]->vu == 1) && ++i)
 			continue;
-		printf("on test %s[%d] = %s\n", room->name, i, room->links[i]->name);
-		if ((ret = find_path(room->links[i], infos, room, ++steps)))
+		printf("checking ->%s\n", room->links[i]->name);
+		ret = find_path(room->links[i], infos, room, paths);
+		if (ret == 1)
 		{
-			printf(">>>%s (%d steps)\n", room->links[i]->name, steps);
-			return (1);
+			paths->links = realloc_links(paths, room->links[i]);
+			ret++;
 		}
 		i++;
 	}
+	if (ret)
+		return (2);
 	return (0);
 }

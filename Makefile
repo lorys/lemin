@@ -6,7 +6,7 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2018/11/07 16:41:20 by llopez           ###   ########.fr        #
+#    Updated: 2018/11/08 16:18:15 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ CC = gcc
 
 LINK_LIBFT = -Llibft/ -lft
 
-NAME = Lem-in
+NAME = lem-in
 
 CFLAG = -Wall -Wextra -Werror
 

@@ -1,34 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   realloc_links.c                                    :+:      :+:    :+:   */
+/*   ft_tubelen.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/06 22:10:30 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/08 17:06:54 by llopez           ###   ########.fr       */
+/*   Created: 2018/11/08 11:28:05 by llopez            #+#    #+#             */
+/*   Updated: 2018/11/08 11:28:20 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
 
-t_tube	**realloc_links(t_tube *tube, t_tube *add)
-{
-	int length;
-	t_tube **links_tmp;
+int		ft_tubelen(t_tube *len) {
+	int i;
 
-	length = 0;
-	while (tube->links && tube->links[length])
-		length++;
-	links_tmp = malloc(sizeof(t_tube) * (length + 2));
-	links_tmp[length + 1] = NULL;
-	links_tmp[length] = add;
-	length = 0;
-	while (tube->links && tube->links[length])
-	{
-		links_tmp[length] = tube->links[length];
-		length++;
-	}
-	free(tube->links);
-	return (links_tmp);
+	i = 0;
+	while (len->links && len->links[i])
+		i++;
+	return (i-1);
 }
