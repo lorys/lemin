@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 10:48:59 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/07 18:40:40 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/09 09:56:44 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ int		read_stdin(t_tube *tube, t_infos *infos)
 		else if (!ft_strcmp("##end", line))
 			save_end(&tube, infos);
 		else if (!ft_strchr(line, '-') && ft_strchr(line, ' '))
-			save_room(&tube, ft_strsplit(line, ' '));
+		{
+			tmp = ft_strsplit(line, ' ');
+			save_room(&tube, tmp[0], ft_atoi(tmp[1]), ft_atoi(tmp[2]));
+		}
 		else if (ft_strchr(line, '-') && !ft_strchr(line, ' '))
 			make_tube(line, tube);
 	}

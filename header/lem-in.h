@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:12:06 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/08 17:08:26 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/09 09:54:54 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int			find_path(t_tube *room, t_infos *infos, t_tube *from, t_tube *paths);
 t_tube		*find_room(char *name, t_tube **list);
 void		make_tube(char *line, t_tube *tube);
 void		save_end(t_tube **tube, t_infos *infos);
-void		save_room(t_tube **tube, char **split_tmp);
+void		save_room(t_tube **tube, char *name, int x, int y);
 void		save_start(t_tube **tube, t_infos *infos);
 void		show_struct(t_tube **tube);
 int			read_stdin(t_tube *tube, t_infos *infos);

@@ -6,7 +6,7 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2018/11/08 16:18:15 by llopez           ###   ########.fr        #
+#    Updated: 2018/11/09 12:49:17 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ $(OBJDIR)%.o: srcs/%.c libft/libft.h header/lem-in.h
 
 all: $(NAME)
 
-$(LIBFT): 
+$(LIBFT):
 	@make -C libft/
 
 OBJ = $(SRCS:%.c=$(OBJDIR)%.o)

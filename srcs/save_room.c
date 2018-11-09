@@ -6,19 +6,19 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 22:11:45 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/08 17:09:51 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/09 09:55:14 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
 
-void	save_room(t_tube **tube, char **split_tmp)
+void	save_room(t_tube **tube, char *name, int x, int y)
 {
-	if (find_room(split_tmp[0], tube))
+	if (find_room(name, tube))
 		return;
-	(*tube)->name = split_tmp[0];
-	(*tube)->x = ft_atoi(split_tmp[1]);
-	(*tube)->y = ft_atoi(split_tmp[2]);
+	(*tube)->name = name;
+	(*tube)->x = x;
+	(*tube)->y = y;
 	(*tube)->vu = 0;
 	(*tube)->links = NULL;
 	if (!((*tube)->next = malloc(sizeof(t_tube))))

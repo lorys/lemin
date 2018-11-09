@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/08 17:09:30 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/09 17:02:21 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,21 @@ int				main(void)
 	printf("start = %s\nend = %s\n", infos->start->name, infos->end->name);
 	ret = find_path(infos->start, infos, infos->start, paths);
 
-	printf("\n\n\n----------------------------------------------------\n\n\n");
-	while (paths->links[i])
+	while (paths->prev)
+		paths = paths->prev;
+	while (paths)
 	{
-		printf("> %s\n", paths->links[i]->name);
-		i++;
+		printf("\n\n\n-------------------------------------------------\n\n\n");
+		while (paths->links && paths->links[i])
+		{
+			printf("> %s\n", paths->links[i]->name);
+			i++;
+		}
+		paths = paths->next;
+		printf("\n\n\n-------------------------------------------------\n\n\n");
 	}
-	printf("\n\n\n----------------------------------------------------\n\n\n");
 	if (!ret)
 		printf("Il n'y a aucun chemin menant a la fin.");
-	printf("\n\n\n----------------------------------------------------\n\n\n");
-	show_struct(&tube);
+	//show_struct(&tube);
 	return (0);
 }
