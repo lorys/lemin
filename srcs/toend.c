@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 11:04:09 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/07 11:11:33 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/10 13:52:31 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_tube	*toend(t_tube *tube)
 {
-	while (tube->next && tube->next->name)
+	while (tube && tube->next)
 		tube = tube->next;
 	return (tube);
 }

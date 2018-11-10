@@ -6,21 +6,23 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 22:12:07 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/09 20:23:53 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/10 22:52:29 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
 
-int		find_path(t_tube *room, t_infos *infos, t_tube *from, t_tube *paths)
+int		find_path(t_tube *room, t_infos *infos, t_tube *from, t_paths *paths)
 {
 	int	i;
 	int	ret;
 	int	found;
+	int	b;
 
 	found = 0;
 	i = 0;
 	ret = 0;
+	b = 0;
 	if (room == infos->end)
 		return (1);
 	room->vu = 1;
@@ -28,40 +30,43 @@ int		find_path(t_tube *room, t_infos *infos, t_tube *from, t_tube *paths)
 	{
 		if (room->links[i] == infos->end)
 		{
-			if (paths != NULL)
-				paths->links = realloc_links(paths, room->links[i]);
+			//printf("\t\t%s ->%s\n",room->name, room->links[i]->name);
+			room->to_end = 1;
+			if (paths)
+				paths->steps = realloc_paths(paths, room->links[i]);
+			//paths->steps = realloc_paths(paths, room);
+			room->vu = 0;
 			return (1);
 		}
-		if ((room->links[i] == from || room->links[i]->vu == 1) && ++i)
+		i++;
+	}
+	i = 0;
+	while (room->links && room->links[i])
+	{
+		if ((room->links[i]->vu || room->links[i] == from) && ++i)
 			continue;
-		printf("checking ->%s\n", room->links[i]->name);
-		if (found > 0 && paths)
+		if ((ret = find_path(room->links[i], infos, room, paths)))
 		{
-			ret = find_path(room->links[i], infos, room, NULL);
-			if (ret)
+			found++;
+			if (paths)
 			{
-				printf("\t\tUN AUTRE CHEMIN\n");
-				save_room(&paths, NULL, 0, 0);
-				find_path(room->links[i], infos, room, paths);
-				paths->links = realloc_links(paths, room->links[i]);
-				found++;
-			}
-		}
-		else
-		{
-			printf("\tno other way found yet.\n");
-			ret = find_path(room->links[i], infos, room, paths);
-			if (ret)
-			{
-				found++;
-				if (paths != NULL)
-					paths->links = realloc_links(paths, room->links[i]);
+				paths->steps = realloc_paths(paths, room->links[i]);
+				b = 0;
+				while (room->links[b])
+				{
+					if (b != i && find_path(room->links[b], infos, room, NULL))
+					{
+						paths->steps = realloc_paths(paths, room);
+						break;
+					}
+					b++;
+				}
 			}
 		}
 		i++;
 	}
-	printf("paths found in %s : %d\n", room->name, found);
-	if (found > 1)
+	//printf("\t\t%s a %d liens vers %s\n", room->name, found, infos->end->name);
+	if (found > 0)
 		room->vu = 0;
 	return (found);
 }

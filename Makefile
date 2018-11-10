@@ -6,7 +6,7 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2018/11/09 12:49:17 by llopez           ###   ########.fr        #
+#    Updated: 2018/11/10 18:13:50 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SRCS =	main.c\
 		save_start.c\
 		show_struct.c\
 		read_stdin.c\
-		toend.c
+		toend.c\
+		ft_tubelen.c
 
 CC = gcc
 
