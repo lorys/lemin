@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 10:48:59 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/12 07:42:22 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/12 08:26:30 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,34 +48,6 @@ int		int_free(void *data)
 	return (1);
 }
 
-int			check_entry(char *line, t_infos *infos, t_tube *tube)
-{
-	char	**tmp;
-
-	tmp = NULL;
-	if (!ft_strcmp("##start", line))
-	{
-		if (!save_start(&tube, infos) && int_free(line))
-			return (0);
-	}
-	else if (!ft_strcmp("##end", line))
-	{
-		if (!save_end(&tube, infos) && int_free(line))
-			return (0);
-	}
-	else if (!ft_strchr(line, '-') && ft_strchr(line, ' ') && \
-			check_room(line))
-	{
-		tmp = ft_strsplit(line, ' ');
-		if (!save_room(&tube, tmp[0], ft_atoi(tmp[1]), ft_atoi(tmp[2])))
-			return (0);
-		free_char_tab(tmp);
-	}
-	else if (ft_strchr(line, '-') && !ft_strchr(line, ' '))
-		make_tube(line, tube);
-	return (1);
-}
-
 int		read_stdin(t_tube *tube, t_infos *infos)
 {
 	char	*line;
@@ -90,11 +62,29 @@ int		read_stdin(t_tube *tube, t_infos *infos)
 			infos->fourmis = ft_atoi(line);
 		else if (line[0] == '#' && line[1] != '#' && int_free(line))
 			continue;
-		else if (!check_entry(line, infos, tube))
-			return (0);
+		else if (!ft_strcmp("##start", line))
+		{
+			if (!save_start(&tube, infos) && int_free(line))
+				return (0);
+		}
+		else if (!ft_strcmp("##end", line))
+		{
+			if (!save_end(&tube, infos) && int_free(line))
+				return (0);
+		}
+		else if (!ft_strchr(line, '-') && ft_strchr(line, ' ') && \
+				check_room(line))
+		{
+			tmp = ft_strsplit(line, ' ');
+			if (!save_room(&tube, tmp[0], ft_atoi(tmp[1]), ft_atoi(tmp[2])))
+				return (0);
+			free_char_tab(tmp);
+		}
+		else if (ft_strchr(line, '-') && !ft_strchr(line, ' '))
+			make_tube(line, tube);
 		else if (line[0] == '#' && line[1] == '#' && int_free(line))
 			continue;
-		else if (line[0] == '\0')
+		else if (line[0] == '\0' && int_free(line))
 			break;
 		else
 		{
@@ -103,7 +93,7 @@ int		read_stdin(t_tube *tube, t_infos *infos)
 		}
 		free(line);
 	}
-	if (infos->fourmis == 0)
+	if (infos->fourmis <= 0)
 		return (0);
 	free(line);
 	return (1);
