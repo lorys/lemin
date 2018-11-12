@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   save_end.c                                         :+:      :+:    :+:   */
+/*   free_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/06 22:28:56 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/12 06:16:53 by llopez           ###   ########.fr       */
+/*   Created: 2018/11/12 07:06:44 by llopez            #+#    #+#             */
+/*   Updated: 2018/11/12 07:06:54 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		save_end(t_tube **tube, t_infos *infos)
+void	free_list(t_tube *list)
 {
-	char	*line;
-	char	**tmp;
+	t_tube *tmp;
 
-	get_next_line(0, &line);
-	if (!check_room(line))
-	{
-		free(line);
-		return (0);
-	}
-	ft_printf("%s\n", line);
-	tmp = ft_strsplit(line, ' ');
-	save_room(tube, tmp[0], ft_atoi(tmp[1]), ft_atoi(tmp[2]));
-	infos->end = (*tube)->prev;
-	free(line);
-	free_char_tab(tmp);
-	return (1);
+	if (!list)
+		return ;
+	tmp = list->prev;
+	free(list->name);
+	free(list->links);
+	free(list);
+	if (tmp)
+		free_list(tmp);
 }

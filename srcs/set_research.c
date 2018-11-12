@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   save_end.c                                         :+:      :+:    :+:   */
+/*   set_research.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/06 22:28:56 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/12 06:16:53 by llopez           ###   ########.fr       */
+/*   Created: 2018/11/12 06:51:28 by llopez            #+#    #+#             */
+/*   Updated: 2018/11/12 07:20:06 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		save_end(t_tube **tube, t_infos *infos)
+void	set_research(t_infos *infos, t_paths *paths, t_tube **ants,\
+		t_tube *tube)
 {
-	char	*line;
-	char	**tmp;
-
-	get_next_line(0, &line);
-	if (!check_room(line))
+	if (!find_path(infos->start, infos, infos->start, paths))
+		display_error(tube, paths, infos, ants);
+	else
 	{
-		free(line);
-		return (0);
+		set_ants(infos, &ants);
+		move_ants(paths, infos, ants);
+		free(ants);
 	}
-	ft_printf("%s\n", line);
-	tmp = ft_strsplit(line, ' ');
-	save_room(tube, tmp[0], ft_atoi(tmp[1]), ft_atoi(tmp[2]));
-	infos->end = (*tube)->prev;
-	free(line);
-	free_char_tab(tmp);
-	return (1);
 }

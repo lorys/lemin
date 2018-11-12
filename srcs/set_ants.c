@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   save_end.c                                         :+:      :+:    :+:   */
+/*   set_ants.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/06 22:28:56 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/12 06:16:53 by llopez           ###   ########.fr       */
+/*   Created: 2018/11/12 01:04:03 by llopez            #+#    #+#             */
+/*   Updated: 2018/11/12 07:22:36 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		save_end(t_tube **tube, t_infos *infos)
+int				set_ants(t_infos *infos, t_tube ***ants)
 {
-	char	*line;
-	char	**tmp;
+	int	i;
 
-	get_next_line(0, &line);
-	if (!check_room(line))
-	{
-		free(line);
+	i = 0;
+	if (!((*ants) = (t_tube **)malloc(sizeof(t_tube *) * (infos->fourmis + 1))))
 		return (0);
-	}
-	ft_printf("%s\n", line);
-	tmp = ft_strsplit(line, ' ');
-	save_room(tube, tmp[0], ft_atoi(tmp[1]), ft_atoi(tmp[2]));
-	infos->end = (*tube)->prev;
-	free(line);
-	free_char_tab(tmp);
+	(*ants)[infos->fourmis] = NULL;
+	while (infos->fourmis >= i + 1)
+		(*ants)[i++] = infos->start;
 	return (1);
 }

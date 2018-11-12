@@ -6,28 +6,28 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 22:11:08 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/08 17:10:13 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/12 06:18:19 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 void	show_struct(t_tube **tube)
 {
 	int	i;
 
 	i = 0;
-	printf("addr = %p\n", (*tube));
-	printf("nom = %s\n", (*tube)->name);
-	printf("x = %d\n", (*tube)->x);
-	printf("y = %d\n", (*tube)->y);
+	ft_printf("addr = %p\n", (*tube));
+	ft_printf("nom = %s\n", (*tube)->name);
+	ft_printf("x = %d\n", (*tube)->x);
+	ft_printf("y = %d\n", (*tube)->y);
 	while ((*tube)->links && (*tube)->links[i]) {
-		printf("\tliens === %s\n", (*tube)->links[i]->name);
+		ft_printf("\tliens === %s\n", (*tube)->links[i]->name);
 		i++;
 	}
-	printf("prev = %p\n", (*tube)->prev);
-	printf("next = %p\n", (*tube)->next);
-	printf("------------------------------\n");
+	ft_printf("prev = %p\n", (*tube)->prev);
+	ft_printf("next = %p\n", (*tube)->next);
+	ft_printf("------------------------------\n");
 	if ((*tube)->next && (*tube)->next->name)
 		show_struct(&(*tube)->next);
 }

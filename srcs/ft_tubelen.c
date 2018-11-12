@@ -6,17 +6,18 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 11:28:05 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/08 11:28:20 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/12 06:18:57 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
-int		ft_tubelen(t_tube *len) {
+int		ft_tubelen(t_tube *len)
+{
 	int i;
 
 	i = 0;
 	while (len->links && len->links[i])
 		i++;
-	return (i-1);
+	return (i - 1);
 }

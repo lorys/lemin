@@ -6,7 +6,7 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2018/11/10 18:13:50 by llopez           ###   ########.fr        #
+#    Updated: 2018/11/12 07:14:24 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,15 @@ SRCS =	main.c\
 		show_struct.c\
 		read_stdin.c\
 		toend.c\
-		ft_tubelen.c
+		ft_tubelen.c\
+		move_ants.c\
+		set_ants.c\
+		free_char_tab.c\
+		set_research.c\
+		display_error.c\
+		free_everything.c\
+		free_list.c\
+		set_tube.c
 
 CC = gcc
 
@@ -39,7 +47,7 @@ INCLUDES = -I libft/ -I header/
 
 OBJDIR = obj/
 
-$(OBJDIR)%.o: srcs/%.c libft/libft.h header/lem-in.h
+$(OBJDIR)%.o: srcs/%.c libft/libft.h header/lem_in.h
 	@mkdir -p $(OBJDIR)
 	@$(CC) -o $@ $(CFLAG) -c $< $(INCLUDES)
 	@printf "\e[1A\r\033[34m $@                  \033[0m\n"

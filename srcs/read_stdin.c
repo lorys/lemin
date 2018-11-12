@@ -6,11 +6,11 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 10:48:59 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/10 11:54:28 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/12 07:42:22 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 int		ft_strisdigit(char *str)
 {
@@ -32,15 +32,47 @@ int		check_room(char *line)
 	tmp = ft_strsplit(line, ' ');
 	while (tmp[i])
 		i++;
-	if (i != 3 || tmp[0][0] == 'L' || tmp[0][0] == '#' || !ft_strisdigit(tmp[1])\
-			|| !ft_strisdigit(tmp[2]))
+	if (i != 3 || tmp[0][0] == 'L' || tmp[0][0] == '#'\
+			|| !ft_strisdigit(tmp[1]) || !ft_strisdigit(tmp[2]))
+	{
+		free_char_tab(tmp);
 		return (0);
+	}
+	free_char_tab(tmp);
 	return (1);
 }
 
 int		int_free(void *data)
 {
 	free(data);
+	return (1);
+}
+
+int			check_entry(char *line, t_infos *infos, t_tube *tube)
+{
+	char	**tmp;
+
+	tmp = NULL;
+	if (!ft_strcmp("##start", line))
+	{
+		if (!save_start(&tube, infos) && int_free(line))
+			return (0);
+	}
+	else if (!ft_strcmp("##end", line))
+	{
+		if (!save_end(&tube, infos) && int_free(line))
+			return (0);
+	}
+	else if (!ft_strchr(line, '-') && ft_strchr(line, ' ') && \
+			check_room(line))
+	{
+		tmp = ft_strsplit(line, ' ');
+		if (!save_room(&tube, tmp[0], ft_atoi(tmp[1]), ft_atoi(tmp[2])))
+			return (0);
+		free_char_tab(tmp);
+	}
+	else if (ft_strchr(line, '-') && !ft_strchr(line, ' '))
+		make_tube(line, tube);
 	return (1);
 }
 
@@ -56,24 +88,14 @@ int		read_stdin(t_tube *tube, t_infos *infos)
 		if (ft_isdigit(line[0]) && !ft_strchr(line, ' ') &&\
 				!ft_strchr(line, '-'))
 			infos->fourmis = ft_atoi(line);
-		else if (line[0] == '#' && line[1] != '#')
+		else if (line[0] == '#' && line[1] != '#' && int_free(line))
 			continue;
-		else if (!ft_strcmp("##start", line))
-		{
-			if (!save_start(&tube, infos) && int_free(line))
-				return (0);
-		}
-		else if (!ft_strcmp("##end", line))
-			save_end(&tube, infos);
-		else if (!ft_strchr(line, '-') && ft_strchr(line, ' ') && check_room(line))
-		{
-			tmp = ft_strsplit(line, ' ');
-			save_room(&tube, tmp[0], ft_atoi(tmp[1]), ft_atoi(tmp[2]));
-		}
-		else if (ft_strchr(line, '-') && !ft_strchr(line, ' '))
-			make_tube(line, tube);
-		else if (line[0] == '#' && line[1] == '#')
+		else if (!check_entry(line, infos, tube))
+			return (0);
+		else if (line[0] == '#' && line[1] == '#' && int_free(line))
 			continue;
+		else if (line[0] == '\0')
+			break;
 		else
 		{
 			free(line);
@@ -81,5 +103,8 @@ int		read_stdin(t_tube *tube, t_infos *infos)
 		}
 		free(line);
 	}
+	if (infos->fourmis == 0)
+		return (0);
+	free(line);
 	return (1);
 }
