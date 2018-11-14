@@ -15,15 +15,30 @@
 static t_tube	*get_shortest_path(t_paths *paths, t_tube *from)
 {
 	int		i;
+	int		min;
+	int		min_tmp;
+	t_tube		*end;
 
+	min_tmp = 0;
 	i = 0;
+	min = INT_MAX;
+	end = paths->steps[0];
 	while (paths->steps[i])
 	{
-		if (paths->steps[i] == from && !paths->steps[i - 1]->ants)
-			return (paths->steps[i - 1]);
+		if (paths->steps[i] == end)
+		{
+			min_tmp = i;
+			while (paths->steps[i] != from && paths->steps[i])
+				i++;
+			if ((i - min_tmp) < min && paths->steps[i] == from && !paths->steps[i]->ants)
+			{
+				printf("%s est plus proche\n", paths->steps[i - min_tmp]->name);
+				min = (i - min_tmp);
+			}
+		}
 		i++;
 	}
-	return (NULL);
+	return (paths->steps[min]);
 }
 
 static int		need_to_move(t_tube **ants, t_infos *infos)
