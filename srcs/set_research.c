@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 06:51:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/12 07:20:06 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/15 19:17:37 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 void	set_research(t_infos *infos, t_paths *paths, t_tube **ants,\
 		t_tube *tube)
 {
+	int i;
+
+	i = 0;
 	if (!find_path(infos->start, infos, infos->start, paths))
 		display_error(tube, paths, infos, ants);
 	else

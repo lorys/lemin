@@ -6,39 +6,71 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:03:15 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/12 07:22:55 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/15 19:55:23 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static t_tube	*get_shortest_path(t_paths *paths, t_tube *from)
+/*
+static int		is_linked(t_tube *a, t_tube *b)
+{
+	int	i;
+
+	i = 0;
+	while (a->links[i])
+		if (a->links[i++] == b)
+			return (1);
+	return (0);
+}
+static int		how_many_paths(t_paths *paths, t_tube *from)
+{
+	int		i;
+	int		count;
+
+	count = 0;
+	i = 0;
+	while (paths->steps[i])
+	{
+		if (paths->steps[i] == from)
+			count++;
+		i++;
+	}
+	return (count);
+}
+*/
+static t_tube	*get_shortest_path(t_paths *paths, t_tube *from, t_infos *infos)
 {
 	int		i;
 	int		min;
 	int		min_tmp;
-	t_tube		*end;
+	t_tube	*nearest;
 
+	nearest = NULL;
 	min_tmp = 0;
 	i = 0;
-	min = INT_MAX;
-	end = paths->steps[0];
+	min = -2;
 	while (paths->steps[i])
 	{
-		if (paths->steps[i] == end)
+		if (paths->steps[i] == infos->end)
 		{
 			min_tmp = i;
-			while (paths->steps[i] != from && paths->steps[i])
-				i++;
-			if ((i - min_tmp) < min && paths->steps[i] == from && !paths->steps[i]->ants)
+			while (paths->steps[i] && paths->steps[i+1] != from)
 			{
-				printf("%s est plus proche\n", paths->steps[i - min_tmp]->name);
+				i++;
+				if (paths->steps[i] == infos->end)
+					continue;
+			}
+			if (((i - min_tmp) < min || min == -2) &&\
+					!paths->steps[i]->ants)
+			{
 				min = (i - min_tmp);
+				nearest = paths->steps[i];
 			}
 		}
 		i++;
 	}
-	return (paths->steps[min]);
+	return (nearest);
 }
 
 static int		need_to_move(t_tube **ants, t_infos *infos)
@@ -66,7 +98,7 @@ void			move_ants(t_paths *paths, t_infos *infos, t_tube **ants)
 	{
 		if (ants[i] == infos->end && ++i)
 			continue;
-		new_room = get_shortest_path(paths, ants[i]);
+		new_room = get_shortest_path(paths, ants[i], infos);
 		if (new_room)
 		{
 			ants[i]->ants = 0;
