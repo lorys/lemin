@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/15 16:15:26 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/16 04:00:41 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ int		main(void)
 	if (!read_stdin(tube, infos))
 		display_error(tube, paths, infos, ants);
 	else
-	{
-		show_struct(&tube);
 		set_research(infos, paths, ants, tube);
-	}
 	free_everything(tube, infos, paths, ants);
 	return (1);
 }

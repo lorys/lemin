@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:03:15 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/15 19:55:23 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/16 10:34:18 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,11 @@ static t_tube	*get_shortest_path(t_paths *paths, t_tube *from, t_infos *infos)
 	int		i;
 	int		min;
 	int		min_tmp;
-	t_tube	*nearest;
+	t_tube	*way;
 
-	nearest = NULL;
-	min_tmp = 0;
 	i = 0;
 	min = -2;
+	way = NULL;
 	while (paths->steps[i])
 	{
 		if (paths->steps[i] == infos->end)
@@ -61,16 +60,23 @@ static t_tube	*get_shortest_path(t_paths *paths, t_tube *from, t_infos *infos)
 				if (paths->steps[i] == infos->end)
 					continue;
 			}
-			if (((i - min_tmp) < min || min == -2) &&\
-					!paths->steps[i]->ants)
+			if ((i - min_tmp) < infos->fourmis && !paths->steps[i]->ants)
+				return (paths->steps[i]);
+			else if (infos->fourmis > 1\
+				&& ((i - min_tmp) + infos->fourmis < min || min == -2))
 			{
 				min = (i - min_tmp);
-				nearest = paths->steps[i];
+				way = paths->steps[i];
+			}
+			else if ((i - min_tmp) < min && !paths->steps[i]->ants)
+			{
+				min = (i - min_tmp);
+				way = paths->steps[i];
 			}
 		}
 		i++;
 	}
-	return (nearest);
+	return (way);
 }
 
 static int		need_to_move(t_tube **ants, t_infos *infos)
