@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:03:15 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/16 10:34:18 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/20 23:28:39 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,43 +38,51 @@ static int		how_many_paths(t_paths *paths, t_tube *from)
 	}
 	return (count);
 }
-*/
-static t_tube	*get_shortest_path(t_paths *paths, t_tube *from, t_infos *infos)
+
+static int		ants_by_room(t_tube *room, t_tube **ants)
 {
-	int		i;
-	int		min;
-	int		min_tmp;
-	t_tube	*way;
+	int i;
+	int	count;
 
 	i = 0;
-	min = -2;
-	way = NULL;
-	while (paths->steps[i])
+	count = 0;
+	while (ants[i])
 	{
-		if (paths->steps[i] == infos->end)
-		{
-			min_tmp = i;
-			while (paths->steps[i] && paths->steps[i+1] != from)
-			{
-				i++;
-				if (paths->steps[i] == infos->end)
-					continue;
-			}
-			if ((i - min_tmp) < infos->fourmis && !paths->steps[i]->ants)
-				return (paths->steps[i]);
-			else if (infos->fourmis > 1\
-				&& ((i - min_tmp) + infos->fourmis < min || min == -2))
-			{
-				min = (i - min_tmp);
-				way = paths->steps[i];
-			}
-			else if ((i - min_tmp) < min && !paths->steps[i]->ants)
-			{
-				min = (i - min_tmp);
-				way = paths->steps[i];
-			}
-		}
+		if (ants[i] == room)
+			count++;
 		i++;
+	}
+	return (count);
+}
+
+*/
+static t_tube	*get_shortest_path(t_tube **ants, t_paths *paths, t_tube *from, t_infos *infos)
+{
+	int		i;
+	int		steps;
+	int		min;
+	t_tube	*min_way;
+	t_tube	*way;
+
+	way = NULL;
+	steps = 0;
+	i = 0;
+	min = -1;
+	min_way = NULL;
+	(void)from;
+	(void)ants;
+	while (paths->steps[i + 1])
+		i++;
+	while (i >= 0)
+	{
+		if (paths->steps[i] != infos->start || paths->steps[i] != infos->end)
+			steps++;
+		if (paths->steps[i] == infos->end && (min > steps || min == -1))
+		{
+			min_way = paths->steps[i];
+			min = steps;
+		}
+		i--;
 	}
 	return (way);
 }
@@ -104,7 +112,7 @@ void			move_ants(t_paths *paths, t_infos *infos, t_tube **ants)
 	{
 		if (ants[i] == infos->end && ++i)
 			continue;
-		new_room = get_shortest_path(paths, ants[i], infos);
+		new_room = get_shortest_path(ants, paths, ants[i], infos);
 		if (new_room)
 		{
 			ants[i]->ants = 0;

@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 10:48:59 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/12 08:26:30 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/20 20:30:30 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,6 @@ int		read_stdin(t_tube *tube, t_infos *infos)
 	if (infos->fourmis <= 0)
 		return (0);
 	free(line);
+	ft_printf("\n");
 	return (1);
 }
