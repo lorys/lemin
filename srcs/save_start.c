@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 22:24:01 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/21 07:18:37 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/21 08:01:51 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int		save_start(t_tube **tube, t_infos *infos)
 	char	*line;
 	char	**tmp;
 
-	
 	while (get_next_line(0, &line) && ((!ft_strncmp(line, "##", 2)\
 			&& ft_strcmp(line, "##start") && ft_strcmp(line, "##end"))\
 			|| (line[0] == '#' && line[1] != '#')))

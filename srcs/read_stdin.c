@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 10:48:59 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/21 07:14:28 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/21 07:47:55 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,18 @@ int		read_stdin(t_tube *tube, t_infos *infos)
 		{
 			tmp = ft_strsplit(line, ' ');
 			if (!save_room(&tube, tmp[0], ft_atoi(tmp[1]), ft_atoi(tmp[2])))
+			{
+				free_char_tab(tmp);
+				free(line);
 				return (0);
+			}
 			free_char_tab(tmp);
 		}
 		else if (ft_strchr(line, '-') && !ft_strchr(line, ' '))
 			make_tube(line, tube);
 		else if (line[0] == '#' && line[1] == '#' && int_free(line))
 			continue;
-		else if (line[0] == '\0' && int_free(line))
+		else if (line[0] == '\0')
 			break;
 		else
 		{
