@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:03:15 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/20 23:28:39 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/21 06:56:38 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,20 @@ static t_tube	*get_shortest_path(t_tube **ants, t_paths *paths, t_tube *from, t_
 	int		i;
 	int		steps;
 	int		min;
+	int		min_possible;
 	t_tube	*min_way;
 	t_tube	*way;
+	t_tube	*next;
+	int		tmp;
 
+	min_possible = -1;
 	way = NULL;
 	steps = 0;
 	i = 0;
 	min = -1;
 	min_way = NULL;
-	(void)from;
+	next = NULL;
+	tmp = 0;
 	(void)ants;
 	while (paths->steps[i + 1])
 		i++;
@@ -77,14 +82,27 @@ static t_tube	*get_shortest_path(t_tube **ants, t_paths *paths, t_tube *from, t_
 	{
 		if (paths->steps[i] != infos->start || paths->steps[i] != infos->end)
 			steps++;
-		if (paths->steps[i] == infos->end && (min > steps || min == -1))
+		if (paths->steps[i] == from)
+			next = paths->steps[i-1];
+		if (paths->steps[i] == infos->end && (min > steps || min == -1) && next)
 		{
-			min_way = paths->steps[i];
+			min_way = next;
 			min = steps;
+			steps = 0;
+		}
+		if (paths->steps[i] == infos->end && next\
+				&& !next->ants && (min_possible > steps || min_possible == -1))
+		{
+			min_possible = steps;
+			way = next;
 		}
 		i--;
 	}
-	return (way);
+	if (min_way && !min_way->ants)
+		return (min_way);
+	else if (way && !way->ants)
+		return (way);
+	return (NULL);
 }
 
 static int		need_to_move(t_tube **ants, t_infos *infos)

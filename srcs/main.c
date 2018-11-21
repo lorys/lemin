@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/16 04:00:41 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/21 07:25:59 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ int		main(void)
 			|| !(infos = (t_infos *)malloc(sizeof(t_infos))))
 		exit(1);
 	set_tube(tube);
+	infos->fourmis = 0;
 	paths->steps = NULL;
-	if (!read_stdin(tube, infos))
+	if (!read_stdin(tube, infos) || !tube->name || !infos->start || !infos->end)
 		display_error(tube, paths, infos, ants);
 	else
 		set_research(infos, paths, ants, tube);
