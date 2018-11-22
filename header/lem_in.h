@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 05:43:04 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/12 07:31:58 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/22 05:44:49 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,18 @@ typedef	struct	s_infos {
 	struct s_tube	*end;
 	struct s_tube	*start;
 	int				fourmis;
+	int				bonus;
+	int				select;
 }				t_infos;
 
 typedef	struct	s_paths {
 	struct s_tube	**steps;
 }				t_paths;
+
+typedef	struct	s_next {
+	struct s_tube	*room;
+	int				steps;
+}				t_next;
 
 t_tube			**realloc_links(t_tube *tube, t_tube *add);
 t_tube			**realloc_paths(t_paths *tube, t_tube *add);
@@ -67,5 +74,7 @@ void			set_research(t_infos *infos, t_paths *paths, t_tube **ants,\
 void			set_tube(t_tube *tube);
 void			display_error(t_tube *tube, t_paths *paths, t_infos *infos,\
 			t_tube **ants);
+t_tube			*get_shortest_path(t_paths *paths, t_tube *from,\
+			t_infos *infos);
 
 #endif

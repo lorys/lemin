@@ -6,7 +6,7 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2018/11/21 07:40:52 by llopez           ###   ########.fr        #
+#    Updated: 2018/11/22 05:21:33 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ SRCS =	main.c\
 		display_error.c\
 		free_everything.c\
 		free_list.c\
-		set_tube.c
+		set_tube.c\
+		get_shortest_path.c
 
 CC = gcc
 
