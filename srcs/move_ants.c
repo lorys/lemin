@@ -6,57 +6,11 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:03:15 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/21 09:26:18 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/22 05:19:41 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-static t_tube	*get_shortest_path(t_paths *paths, t_tube *from, t_infos *infos)
-{
-	int		i;
-	int		steps;
-	int		min;
-	int		min_possible;
-	t_tube	*min_way;
-	t_tube	*way;
-	t_tube	*next;
-	int		tmp;
-
-	min_possible = -1;
-	way = NULL;
-	steps = 0;
-	i = 0;
-	min = -1;
-	min_way = NULL;
-	next = NULL;
-	tmp = 0;
-	while (paths->steps[i + 1])
-		i++;
-	while (i >= 0)
-	{
-		if (paths->steps[i] != infos->start || paths->steps[i] != infos->end)
-			steps++;
-		if (paths->steps[i] == from)
-			next = paths->steps[i - 1];
-		if (paths->steps[i] == infos->end && (min > steps || min == -1) && next)
-		{
-			min_way = next;
-			min = steps;
-			steps = 0;
-		}
-		if (paths->steps[i] == infos->end && next\
-				&& !next->ants && (min_possible > steps || min_possible == -1))
-		{
-			min_possible = steps;
-			way = next;
-		}
-		i--;
-	}
-	if ((min_way && !min_way->ants) || (way && !way->ants))
-		return ((min_way && !min_way->ants) ? min_way : way);
-	return (NULL);
-}
 
 static int		need_to_move(t_tube **ants, t_infos *infos)
 {
@@ -70,6 +24,16 @@ static int		need_to_move(t_tube **ants, t_infos *infos)
 		i++;
 	}
 	return (0);
+}
+
+static void		show_ant(int i, t_tube **ants, t_infos *infos)
+{
+	if (infos->select == (i + 1))
+		ft_printf("\033[41mL%d-%s\033[0m ", i + 1, ants[i]->name);
+	else if (infos->bonus)
+		ft_printf("\033[%dmL%d-%s\033[0m ", i, i + 1, ants[i]->name);
+	else
+		ft_printf("L%d-%s ", i + 1, ants[i]->name);
 }
 
 void			move_ants(t_paths *paths, t_infos *infos, t_tube **ants)
@@ -90,7 +54,7 @@ void			move_ants(t_paths *paths, t_infos *infos, t_tube **ants)
 			ants[i] = new_room;
 			if (ants[i] != infos->end)
 				ants[i]->ants = 1;
-			ft_printf("L%d-%s ", i + 1, ants[i]->name);
+			show_ant(i, ants, infos);
 		}
 		i++;
 	}

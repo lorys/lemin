@@ -6,13 +6,30 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/21 07:25:59 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/22 08:56:35 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		main(void)
+static	void	bonus_manager(int argc, char **argv, t_infos *infos)
+{
+	int i;
+
+	i = 0;
+	infos->select = -1;
+	infos->bonus = 0;
+	while (argc > i)
+	{
+		if (!ft_strcmp(argv[i], "-colors"))
+			infos->bonus = 1;
+		if (!ft_strcmp(argv[i], "-select") && argv[i + 1])
+			infos->select = ft_atoi(argv[i + 1]);
+		i++;
+	}
+}
+
+int				main(int argc, char **argv)
 {
 	t_infos *infos;
 	t_tube	*tube;
@@ -28,11 +45,14 @@ int		main(void)
 		exit(1);
 	set_tube(tube);
 	infos->fourmis = 0;
+	infos->start = NULL;
+	infos->end = NULL;
 	paths->steps = NULL;
+	bonus_manager(argc, argv, infos);
 	if (!read_stdin(tube, infos) || !tube->name || !infos->start || !infos->end)
 		display_error(tube, paths, infos, ants);
 	else
 		set_research(infos, paths, ants, tube);
 	free_everything(tube, infos, paths, ants);
-	return (1);
+	return (0);
 }

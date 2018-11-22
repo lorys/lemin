@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 10:48:59 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/21 07:47:55 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/22 08:59:27 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,59 +48,113 @@ int		int_free(void *data)
 	return (1);
 }
 
+int		check_ants(char *line, t_infos *infos)
+{
+	if (ft_isdigit(line[0]) && !ft_strchr(line, ' ') &&\
+				!ft_strchr(line, '-'))
+	{
+		infos->fourmis = ft_atoi(line);
+		return (1);
+	}
+	return (0);
+}
+
+int		check_end(char *line, t_infos *infos, t_tube **tube)
+{
+	if (!ft_strcmp("##end", line))
+	{
+		if (!save_end(tube, infos))
+		{
+			free(line);
+			return (-1);
+		}
+		return (1);
+	}
+	return (0);
+}
+
+int		check_start(char *line, t_infos *infos, t_tube **tube)
+{
+	if (!ft_strcmp("##start", line))
+	{
+		if (!save_start(tube, infos))
+		{
+			free(line);
+			return (-1);
+		}
+		return (1);
+	}
+	return (0);
+}
+
+int		new_room(char *line, t_tube **tube)
+{
+	char **tmp;
+
+	tmp = NULL;
+	if (!ft_strchr(line, '-') && ft_strchr(line, ' ') && \
+			check_room(line))
+	{
+		tmp = ft_strsplit(line, ' ');
+		if (!save_room(tube, tmp[0], ft_atoi(tmp[1]), ft_atoi(tmp[2])))
+		{
+			free(line);
+			free_char_tab(tmp);
+			return (-1);
+		}
+		free_char_tab(tmp);
+		return (1);
+	}
+	return (0);
+}
+
+int		check_tube(char *line, t_tube *tube)
+{
+	if (ft_strchr(line, '-') && !ft_strchr(line, ' '))
+	{
+		make_tube(line, tube);
+		return (1);
+	}
+	return (0);
+}
+
 int		read_stdin(t_tube *tube, t_infos *infos)
 {
 	char	*line;
-	char	**tmp;
+	int		ret;
 
-	tmp = NULL;
-	while (get_next_line(0, &line))
+	ret = 0;
+	line = NULL;
+	while (get_next_line(0, &line) > 0)
 	{
+		ret = 0;
 		ft_printf("%s\n", line);
-		if (ft_isdigit(line[0]) && !ft_strchr(line, ' ') &&\
-				!ft_strchr(line, '-'))
-			infos->fourmis = ft_atoi(line);
-		else if (line[0] == '#' && line[1] != '#' && int_free(line))
+		if (line[0] == '#' && line[1] != '#' && int_free(line))
 			continue;
-		else if (!ft_strcmp("##start", line))
+		ret += (ret == 0) ? check_ants(line, infos) : 0;
+		ret += (ret == 0) ? check_start(line, infos, &tube) : 0;
+		ret += (ret == 0) ? check_end(line, infos, &tube) : 0;
+		ret += (ret == 0) ? new_room(line, &tube) : 0;
+		ret += (ret == 0) ? check_tube(line, tube) : 0;
+		if (ret == -1)
 		{
-			if (!save_start(&tube, infos) && int_free(line))
-				return (0);
+			free(line);
+			return (0);
 		}
-		else if (!ft_strcmp("##end", line))
-		{
-			if (!save_end(&tube, infos) && int_free(line))
-				return (0);
-		}
-		else if (!ft_strchr(line, '-') && ft_strchr(line, ' ') && \
-				check_room(line))
-		{
-			tmp = ft_strsplit(line, ' ');
-			if (!save_room(&tube, tmp[0], ft_atoi(tmp[1]), ft_atoi(tmp[2])))
-			{
-				free_char_tab(tmp);
-				free(line);
-				return (0);
-			}
-			free_char_tab(tmp);
-		}
-		else if (ft_strchr(line, '-') && !ft_strchr(line, ' '))
-			make_tube(line, tube);
 		else if (line[0] == '#' && line[1] == '#' && int_free(line))
 			continue;
-		else if (line[0] == '\0')
-			break;
-		else
+		else if (line[0] == '\0' && int_free(line))
+			break ;
+		else if (ret == 0)
 		{
 			free(line);
 			return (0);
 		}
 		free(line);
 	}
+	free(line);
+	write(1, "\n", 1);
 	if (infos->fourmis <= 0)
 		return (0);
-	if (line)
-		free(line);
-	ft_printf("\n");
 	return (1);
 }

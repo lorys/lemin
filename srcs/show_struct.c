@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 22:11:08 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/12 06:18:19 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/22 05:45:29 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	show_struct(t_tube **tube)
 	ft_printf("nom = %s\n", (*tube)->name);
 	ft_printf("x = %d\n", (*tube)->x);
 	ft_printf("y = %d\n", (*tube)->y);
-	while ((*tube)->links && (*tube)->links[i]) {
+	while ((*tube)->links && (*tube)->links[i])
+	{
 		ft_printf("\tliens === %s\n", (*tube)->links[i]->name);
 		i++;
 	}
