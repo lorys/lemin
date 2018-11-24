@@ -6,72 +6,11 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 10:48:59 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/22 08:59:27 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/24 17:54:01 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-int		ft_strisdigit(char *str)
-{
-	while (*str)
-	{
-		if (!ft_isdigit(*str))
-			return (0);
-		str++;
-	}
-	return (1);
-}
-
-int		check_room(char *line)
-{
-	char	**tmp;
-	int		i;
-
-	i = 0;
-	tmp = ft_strsplit(line, ' ');
-	while (tmp[i])
-		i++;
-	if (i != 3 || tmp[0][0] == 'L' || tmp[0][0] == '#'\
-			|| !ft_strisdigit(tmp[1]) || !ft_strisdigit(tmp[2]))
-	{
-		free_char_tab(tmp);
-		return (0);
-	}
-	free_char_tab(tmp);
-	return (1);
-}
-
-int		int_free(void *data)
-{
-	free(data);
-	return (1);
-}
-
-int		check_ants(char *line, t_infos *infos)
-{
-	if (ft_isdigit(line[0]) && !ft_strchr(line, ' ') &&\
-				!ft_strchr(line, '-'))
-	{
-		infos->fourmis = ft_atoi(line);
-		return (1);
-	}
-	return (0);
-}
-
-int		check_end(char *line, t_infos *infos, t_tube **tube)
-{
-	if (!ft_strcmp("##end", line))
-	{
-		if (!save_end(tube, infos))
-		{
-			free(line);
-			return (-1);
-		}
-		return (1);
-	}
-	return (0);
-}
 
 int		check_start(char *line, t_infos *infos, t_tube **tube)
 {
@@ -118,7 +57,7 @@ int		check_tube(char *line, t_tube *tube)
 	return (0);
 }
 
-int		read_stdin(t_tube *tube, t_infos *infos)
+int		check_line(t_tube *tube, t_infos *infos)
 {
 	char	*line;
 	int		ret;
@@ -136,23 +75,23 @@ int		read_stdin(t_tube *tube, t_infos *infos)
 		ret += (ret == 0) ? check_end(line, infos, &tube) : 0;
 		ret += (ret == 0) ? new_room(line, &tube) : 0;
 		ret += (ret == 0) ? check_tube(line, tube) : 0;
-		if (ret == -1)
-		{
-			free(line);
-			return (0);
-		}
-		else if (line[0] == '#' && line[1] == '#' && int_free(line))
+		if (line[0] == '#' && line[1] == '#' && int_free(line))
 			continue;
 		else if (line[0] == '\0' && int_free(line))
 			break ;
-		else if (ret == 0)
-		{
-			free(line);
+		else if ((ret == -1 || ret == 0) && int_free(line))
 			return (0);
-		}
 		free(line);
 	}
-	free(line);
+	if (line)
+		free(line);
+	return (1);
+}
+
+int		read_stdin(t_tube *tube, t_infos *infos)
+{
+	if (!check_line(tube, infos))
+		return (0);
 	write(1, "\n", 1);
 	if (infos->fourmis <= 0)
 		return (0);

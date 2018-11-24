@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 05:43:04 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/22 05:44:49 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/24 15:19:27 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,10 @@ void			display_error(t_tube *tube, t_paths *paths, t_infos *infos,\
 			t_tube **ants);
 t_tube			*get_shortest_path(t_paths *paths, t_tube *from,\
 			t_infos *infos);
+int				ft_strisdigit(char *str);
+int				check_room(char *line);
+int				int_free(void *data);
+int				check_ants(char *line, t_infos *infos);
+int				check_end(char *line, t_infos *infos, t_tube **tube);
 
 #endif

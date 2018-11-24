@@ -6,11 +6,12 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/22 08:56:35 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/24 17:59:47 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+#include <pthread.h>
 
 static	void	bonus_manager(int argc, char **argv, t_infos *infos)
 {
