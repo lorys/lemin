@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 22:10:30 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/12 07:21:14 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/26 16:36:19 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,27 +35,14 @@ t_tube		**realloc_links(t_tube *tube, t_tube *add)
 	return (links_tmp);
 }
 
-t_tube		**realloc_paths(t_paths *tube, t_tube *add)
+void		realloc_paths(t_paths **tube, t_tube *add)
 {
-	int		length;
-	t_tube	**links_tmp;
-
-	length = 0;
-	if (!add || !tube)
-		return (NULL);
-	while (tube->steps && tube->steps[length])
-		length++;
-	if (length > 0 && tube->steps[length - 1] == add)
-		return (tube->steps);
-	links_tmp = malloc(sizeof(t_tube) * (length + 2));
-	links_tmp[length + 1] = NULL;
-	links_tmp[length] = add;
-	length = 0;
-	while (tube->steps && tube->steps[length])
-	{
-		links_tmp[length] = tube->steps[length];
-		length++;
-	}
-	free(tube->steps);
-	return (links_tmp);
+	if (add == (*tube)->room)
+		return;
+	(*tube)->room = add;
+	(*tube)->prev = (t_paths *)malloc(sizeof(t_paths));
+	(*tube)->prev->prev = NULL;
+	(*tube)->prev->next = (*tube);
+	*tube = (*tube)->prev;
+	(*tube)->room = NULL;
 }
