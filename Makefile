@@ -37,7 +37,7 @@ CC = gcc
 
 LINK_LIBFT = -Llibft/ -lft -lpthread
 
-NAME = lem-in
+NAME = lem_in
 
 CFLAG = -Wall -Wextra -Werror
 
