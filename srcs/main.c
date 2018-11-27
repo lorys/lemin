@@ -15,7 +15,7 @@
 
 static	void	bonus_manager(int argc, char **argv, t_infos *infos)
 {
-	int i;
+	int 		i;
 
 	i = 0;
 	infos->select = -1;
@@ -32,18 +32,18 @@ static	void	bonus_manager(int argc, char **argv, t_infos *infos)
 
 int				main(int argc, char **argv)
 {
-	t_infos *infos;
-	t_tube	*tube;
-	t_paths	*paths;
-	t_tube	**ants;
-	int		i;
+	t_infos		*infos;
+	t_tube		*tube;
+	t_paths		*paths;
+	t_tube		**ants;
+	int			i;
 
 	i = 0;
 	ants = NULL;
 	if (!(tube = (t_tube *)malloc(sizeof(t_tube)))\
 			|| !(paths = (t_paths *)malloc(sizeof(t_paths)))\
 			|| !(infos = (t_infos *)malloc(sizeof(t_infos))))
-		exit(1);
+		exit(EXIT_FAILURE);
 	set_tube(tube);
 	infos->fourmis = 0;
 	infos->start = NULL;
@@ -55,5 +55,5 @@ int				main(int argc, char **argv)
 	else
 		set_research(infos, paths, ants, tube);
 	free_everything(tube, infos, paths, ants);
-	return (0);
+	return (EXIT_SUCCESS);
 }

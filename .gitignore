@@ -1,4 +1,6 @@
 *.o
 *.a
-*.sYSM
+*.dYSM
 lem_in
+lem-in
+.DS_Store

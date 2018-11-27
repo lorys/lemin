@@ -19,6 +19,8 @@
 # include "ft_printf.h"
 # include "get_next_line.h"
 
+# define DEBUG 1
+
 typedef	struct	s_tube {
 	char			*name;
 	int				x;
@@ -81,5 +83,7 @@ int				check_room(char *line);
 int				int_free(void *data);
 int				check_ants(char *line, t_infos *infos);
 int				check_end(char *line, t_infos *infos, t_tube **tube);
+void			warn_parsing(char *str, int nline);
+void			error_parsing(char *str, int nline);
 
 #endif
