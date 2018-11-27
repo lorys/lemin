@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 22:10:30 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/26 16:36:19 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/27 06:04:09 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,19 @@ t_tube		**realloc_links(t_tube *tube, t_tube *add)
 	return (links_tmp);
 }
 
-void		realloc_paths(t_paths **tube, t_tube *add)
+void		realloc_paths(t_paths *tube, t_tube *add)
 {
-	if (add == (*tube)->room)
+	int	first;
+
+	first = 0;
+	if (add == NULL || tube == NULL)
 		return;
-	(*tube)->room = add;
-	(*tube)->prev = (t_paths *)malloc(sizeof(t_paths));
-	(*tube)->prev->prev = NULL;
-	(*tube)->prev->next = (*tube);
-	*tube = (*tube)->prev;
-	(*tube)->room = NULL;
+	first = (tube->next == NULL && tube->prev == NULL);
+	tube->prev = (t_paths *)malloc(sizeof(t_paths));
+	if (first)
+		tube->room = add;
+	else
+		tube->prev->room = add;
+	tube->prev->prev = NULL;
+	tube->prev->next = tube;
 }

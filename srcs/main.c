@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/26 14:11:02 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/27 04:53:32 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int				main(int argc, char **argv)
 	infos->end = NULL;
 	paths->room = NULL;
 	paths->next = NULL;
+	paths->prev = NULL;
 	bonus_manager(argc, argv, infos);
 	if (!read_stdin(tube, infos) || !tube->name || !infos->start || !infos->end)
 		display_error(tube, paths, infos, ants);

@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 22:12:07 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/26 15:33:25 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/27 06:04:58 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ static int	check_every_path(t_tube *room, t_paths *paths, t_infos *infos,\
 		if (find_path(room->links[i], infos, room, paths))
 		{
 			found++;
-			realloc_paths(&paths, room);
+			realloc_paths(paths, room);
 			if (room->links[i + 1])
-				realloc_paths(&paths, from);
+				realloc_paths(paths, from);
 		}
 		i++;
 	}
@@ -45,8 +45,8 @@ static int	check_links_end(t_tube *room, t_infos *infos, t_paths *paths)
 	{
 		if (room->links[i] == infos->end)
 		{
-			realloc_paths(&paths, room->links[i]);
-			realloc_paths(&paths, room);
+			realloc_paths(paths, room->links[i]);
+			realloc_paths(paths, room);
 			room->vu = 0;
 			return (1);
 		}
@@ -63,7 +63,7 @@ int			find_path(t_tube *room, t_infos *infos, t_tube *from, \
 	found = 0;
 	if (room == infos->end)
 	{
-		realloc_paths(&paths, room);
+		realloc_paths(paths, room);
 		return (1);
 	}
 	room->vu = 1;
