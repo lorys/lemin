@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 05:19:09 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/27 05:48:40 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/27 18:09:29 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,25 @@ static void		set_next(t_next *choice, int *steps, t_tube *room)
 
 static t_tube	*choose_path(t_next *shortest, t_next *possible)
 {
+	t_tube *tmp;
+
+	tmp = NULL;
 	if (!shortest || !possible)
 		return (NULL);
 	if (shortest->room && !shortest->room->ants)
-		return (shortest->room);
-	if (possible->room && !possible->room->ants \
-			&& (shortest->steps*2) >= possible->steps)
-		return (possible->room);
+	{
+		tmp = shortest->room;
+		free(possible);
+		free(shortest);
+		return (tmp);
+	}
+	if (possible->room && !possible->room->ants)
+	{
+		tmp = possible->room;
+		free(possible);
+		free(shortest);
+		return (tmp);
+	}
 	return (NULL);
 }
 
@@ -59,7 +71,8 @@ t_tube			*get_shortest_path(t_paths *paths, t_tube *from, t_infos *infos)
 	{
 		if (paths->room != infos->start || paths->room != infos->end)
 				steps++;
-		(paths->room == from && paths->next->room) && (next = paths->next->room);
+		if (paths->room == from)
+			next = paths->next->room;
 		if (paths->room == infos->end\
 				&& (shortest->steps > steps || shortest->steps == -1) && next)
 			set_next(shortest, &steps, next);
