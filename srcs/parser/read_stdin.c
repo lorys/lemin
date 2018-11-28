@@ -61,9 +61,11 @@ int		check_line(t_tube *tube, t_infos *infos)
 {
 	char	*line;
 	int		ret;
+	int		nline;
 
 	line = NULL;
-	while (get_next_line(0, &line) > 0)
+	nline = 0;
+	while (get_next_line(0, &line) > 0 && ++nline)
 	{
 		ret = 0;
 		ft_printf("%s\n", line);
