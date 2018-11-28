@@ -6,15 +6,15 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2018/11/27 17:46:37 by llopez           ###   ########.fr        #
+#    Updated: 2018/11/28 20:47:28 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= lem-in
 
 CC			= gcc
-C_FLAGS		= -Wall -Wextra -Werror -g -fsanitize=address
-LD_FLAGS	= -g -fsanitize=address
+C_FLAGS		= -Wall -Wextra -Werror
+LD_FLAGS	= 
 
 OBJDIR		= obj/
 SRCDIR		= srcs/
