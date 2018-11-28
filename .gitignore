@@ -1,0 +1,6 @@
+*.o
+*.a
+*.dYSM
+lem_in
+lem-in
+.DS_Store

@@ -16,6 +16,6 @@ void	display_error(t_tube *tube, t_paths *paths, t_infos *infos,\
 		t_tube **ants)
 {
 	free_everything(tube, infos, paths, ants);
-	write(2, "ERROR", 5);
-	exit(1);
+	write(2, "ERROR\n", 6);
+	exit(EXIT_FAILURE);
 }

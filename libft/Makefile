@@ -116,7 +116,7 @@ SOURCES = ft_atoi.c \
 
 OBJ = $(SOURCES:%.c=$(OBJDIR)%.o)
 
-FLAG = -Wall -Werror -Wextra
+C_FLAG ?= -Wall -Werror -Wextra
 
 OBJDIR = obj/
 
@@ -129,7 +129,7 @@ $(NAME): $(OBJ)
 $(OBJDIR)%.o: %.c libft.h
 	@mkdir -p $(OBJDIR) 
 	@printf "\e[1A\r\033[33m $@                      \033[0m\n"
-	@gcc -o $@ $(FLAG) -c $< -I ../includes
+	@gcc -o $@ $(C_FLAG) -c $< -I ../includes
 
 clean:
 	rm -rf $(OBJDIR)

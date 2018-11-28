@@ -10,73 +10,87 @@
 #                                                                              #
 # **************************************************************************** #
 
-SRCS =	main.c\
-		find_path.c\
-		find_room.c\
-		make_tube.c\
-		realloc_links.c\
-		save_end.c\
-		save_room.c\
-		save_start.c\
-		show_struct.c\
-		read_stdin.c\
-		toend.c\
-		ft_tubelen.c\
-		move_ants.c\
-		set_ants.c\
-		free_char_tab.c\
-		set_research.c\
-		display_error.c\
-		free_everything.c\
-		free_list.c\
-		set_tube.c\
-		get_shortest_path.c\
-		utils.c
+NAME		= lem-in
 
-CC = gcc
+CC			= gcc
+C_FLAGS		= -Wall -Wextra -Werror -g -fsanitize=address
+LD_FLAGS	= -g -fsanitize=address
 
-LINK_LIBFT = -Llibft/ -lft -lpthread
+OBJDIR		= obj/
+SRCDIR		= srcs/
+INCLDIR		= header/
+LIBDIR		= libft/
 
-NAME = lem-in
+H_FILES		= lem_in.h \
+			libft.h \
+			ft_printf.h \
+			get_next_line.h \
 
-CFLAG = -Wall -Wextra -Werror
+C_FILES		= main.c \
+			find_path.c \
+			find_room.c \
+			make_tube.c \
+			realloc_links.c \
+			parser/save_end.c \
+			save_room.c \
+			parser/save_start.c \
+			show_struct.c \
+			parser/read_stdin.c \
+			paser/errors.c \
+			toend.c \
+			ft_tubelen.c \
+			move_ants.c \
+			set_ants.c \
+			free_char_tab.c \
+			set_research.c \
+			display_error.c \
+			free_everything.c \
+			free_list.c \
+			set_tube.c \
+			get_shortest_path.c \
+			utils.c
 
-LIBFT = libft/libft.a
+LIBFT		= $(LIBDIR)libft.a
 
-LIBFT_PATH = libft/
+SRC			= $(addprefix $(SRCDIR), $(C_FILES))
+OBJ			= $(patsubst %.c, %.o, $(addprefix $(OBJDIR), $(notdir $(SRC))))
+HDRS		= $(addprefix $(INCLDIR), $(H_FILES))
 
-INCLUDES = -I libft/ -I header/
+VPATH		= $(shell find $(SRCDIR) -type d)
 
-OBJDIR = obj/
+export CC C_FLAGS LD_FLAGS
 
-$(OBJDIR)%.o: srcs/%.c libft/libft.h header/lem_in.h
-	@mkdir -p $(OBJDIR)
-	@$(CC) -o $@ $(CFLAG) -c $< $(INCLUDES)
-	@printf "\e[1A\r\033[34m $@                  \033[0m\n"
+.PHONY: all clean fclean re norm
 
 all: $(NAME)
 
+$(NAME): $(OBJ) $(LIBFT)
+	@$(CC) -o $@ -L$(LIBDIR) -lft $(OBJ) $(LD_FLAGS)
+	@printf "\033[32m BINARY FILE $@ CREATED \033[0m\n"
+
 $(LIBFT):
-	@make -C libft/
+	@$(MAKE) -C $(LIBDIR)
 
-OBJ = $(SRCS:%.c=$(OBJDIR)%.o)
-
-$(NAME): $(LIBFT) $(OBJ)
-	@$(CC) -o $(NAME) $(CFLAG) $(OBJ) $(INCLUDES) $(LINK_LIBFT)
-	@printf "\033[32m BINARY FILE $(NAME) CREATED \033[0m\n"
-
-fclean:
-	@make -C libft/ fclean
-	@printf "\033[35m fclean LIBFT \033[0m\n"
-	@rm -rf $(OBJDIR)
-	@printf "\033[35m DELETE OBJ/ \033[0m\n"
-	@rm -rf $(NAME)
-	@printf "\033[35m DELETE $(NAME) \033[0m\n"
+$(OBJDIR)%.o: %.c $(HDRS)
+	@mkdir -p $(OBJDIR)
+	@$(CC) -o $@ -c $< -I $(INCLDIR) $(C_FLAGS)
+	@printf "\e[1A\r\033[34m $@                  \033[0m\n"
 
 clean:
-	@make -C $(LIBFT_PATH) clean
-	@printf "\033[35m clean LIBFT \033[0m\n"
+	@$(MAKE) -C $(LIBDIR) $@
+	@printf "\033[35m $@ LIBFT \033[0m\n"
 	@rm -rf $(OBJDIR)
-	@printf "\033[35m DELETE OBJ/ \033[0m\n"
+	@printf "\033[35m DELETE $(OBJDIR) \033[0m\n"
+
+fclean:
+	@$(MAKE) -C $(LIBDIR) $@
+	@printf "\033[35m $@ LIBFT \033[0m\n"
+	@rm -rf $(OBJDIR)
+	@printf "\033[35m DELETE $(OBJDIR) \033[0m\n"
+	@rm -f $(NAME)
+	@printf "\033[35m DELETE $(NAME) \033[0m\n"
 
 re: fclean all
+
+norm:
+	@norminette $(SRCDIR) $(INCLDIR)
