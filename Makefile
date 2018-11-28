@@ -26,7 +26,7 @@ H_FILES		= lem_in.h \
 			ft_printf.h \
 			get_next_line.h \
 
-C_FILES 	= main.c \
+C_FILES		= main.c \
 			find_path.c \
 			find_room.c \
 			make_tube.c \
@@ -50,7 +50,7 @@ C_FILES 	= main.c \
 			get_shortest_path.c \
 			utils.c
 
-LIBFT 		= $(LIBDIR)libft.a
+LIBFT		= $(LIBDIR)libft.a
 
 SRC			= $(addprefix $(SRCDIR), $(C_FILES))
 OBJ			= $(patsubst %.c, %.o, $(addprefix $(OBJDIR), $(notdir $(SRC))))
