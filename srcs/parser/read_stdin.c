@@ -61,11 +61,9 @@ int		check_line(t_tube *tube, t_infos *infos)
 {
 	char	*line;
 	int		ret;
-	int		nline;
 
 	line = NULL;
-	nline = 0;
-	while (get_next_line(0, &line) > 0 && nline++)
+	while (get_next_line(0, &line) > 0)
 	{
 		ret = 0;
 		ft_printf("%s\n", line);
@@ -77,10 +75,7 @@ int		check_line(t_tube *tube, t_infos *infos)
 		ret += (ret == 0) ? new_room(line, &tube) : 0;
 		ret += (ret == 0) ? check_tube(line, tube) : 0;
 		if (line[0] == '#' && line[1] == '#' && int_free(line))
-		{
-			warn_parsing("unrecognized command, ignoring it.", nline);
 			continue;
-		}
 		else if (line[0] == '\0' && int_free(line))
 			break ;
 		else if ((ret == -1 || ret == 0) && int_free(line))
