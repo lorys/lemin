@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 05:19:09 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/24 15:41:23 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/27 18:09:29 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,55 +21,65 @@ static void		set_next(t_next *choice, int *steps, t_tube *room)
 
 static t_tube	*choose_path(t_next *shortest, t_next *possible)
 {
+	t_tube *tmp;
+
+	tmp = NULL;
+	if (!shortest || !possible)
+		return (NULL);
 	if (shortest->room && !shortest->room->ants)
-		return (shortest->room);
+	{
+		tmp = shortest->room;
+		free(possible);
+		free(shortest);
+		return (tmp);
+	}
 	if (possible->room && !possible->room->ants)
-		return (possible->room);
+	{
+		tmp = possible->room;
+		free(possible);
+		free(shortest);
+		return (tmp);
+	}
 	return (NULL);
 }
 
 static void		init_next(t_next *possible, t_next *shortest)
 {
+	possible = (t_next *)malloc(sizeof(t_next));
+	shortest = (t_next *)malloc(sizeof(t_next));
 	possible->steps = -1;
 	possible->room = NULL;
 	shortest->steps = -1;
 	shortest->room = NULL;
 }
 
-static int		stepslen(t_paths *paths)
-{
-	int i;
-
-	i = 0;
-	while (paths->steps[i + 1])
-		i++;
-	return (i);
-}
-
 t_tube			*get_shortest_path(t_paths *paths, t_tube *from, t_infos *infos)
 {
-	int		i;
 	int		steps;
-	t_next	possible;
-	t_next	shortest;
+	t_next	*possible;
+	t_next	*shortest;
 	t_tube	*next;
 
 	steps = 0;
-	i = stepslen(paths);
 	next = NULL;
-	init_next(&possible, &shortest);
-	while (i >= 0)
+	possible = NULL;
+	shortest = NULL;
+	init_next(possible, shortest);
+	while (paths->prev)
+		paths = paths->prev;
+	while (paths->next)
 	{
-		(paths->steps[i] != infos->start || paths->steps[i] != infos->end) &&\
-							steps++;
-		(paths->steps[i] == from) && (next = paths->steps[i - 1]);
-		if (paths->steps[i] == infos->end\
-				&& (shortest.steps > steps || shortest.steps == -1) && next)
-			set_next(&shortest, &steps, next);
-		if (paths->steps[i] == infos->end && next && !next->ants\
-				&& (possible.steps > steps || possible.steps == -1))
-			set_next(&possible, &steps, next);
-		i--;
+		if (paths->room != infos->start || paths->room != infos->end)
+				steps++;
+		if (paths->room == from)
+			next = paths->next->room;
+		if (paths->room == infos->end\
+				&& (shortest->steps > steps || shortest->steps == -1) && next)
+			set_next(shortest, &steps, next);
+		if (paths->room == infos->end && next && !next->ants 
+				&& (possible->steps > steps || possible->steps == -1))
+			set_next(possible, &steps, next);
+		paths = paths->next;
 	}
-	return (choose_path(&shortest, &possible));
+	return (choose_path(shortest, possible));
 }
