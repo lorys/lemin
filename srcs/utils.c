@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 15:17:38 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/24 15:18:20 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/28 17:23:27 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int		check_room(char *line)
 	while (tmp[i])
 		i++;
 	if (i != 3 || tmp[0][0] == 'L' || tmp[0][0] == '#'\
-			|| !ft_strisdigit(tmp[1]) || !ft_strisdigit(tmp[2]))
+			|| !ft_strisdigit(tmp[1]) || ft_atoi(tmp[1]) < 0\
+			|| ft_atoi(tmp[2]) < 0 || !ft_strisdigit(tmp[2]))
 	{
 		free_char_tab(tmp);
 		return (0);

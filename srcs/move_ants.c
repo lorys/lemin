@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:03:15 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/27 05:59:38 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/29 00:16:43 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void			move_ants(t_paths *paths, t_infos *infos, t_tube **ants)
 		}
 		i++;
 	}
-	//ft_printf("\n");
+	ft_printf("\n");
 	if (need_to_move(ants, infos))
 		move_ants(paths, infos, ants);
 }

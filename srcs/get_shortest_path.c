@@ -6,16 +6,16 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 05:19:09 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/27 18:09:29 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/29 00:52:10 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void		set_next(t_next *choice, int *steps, t_tube *room)
+static void		set_next(t_next **choice, int *steps, t_tube *room)
 {
-	choice->steps = *steps;
-	choice->room = room;
+	(*choice)->steps = *steps;
+	(*choice)->room = room;
 	*steps = 0;
 }
 
@@ -25,7 +25,10 @@ static t_tube	*choose_path(t_next *shortest, t_next *possible)
 
 	tmp = NULL;
 	if (!shortest || !possible)
+	{
+		printf("short ou possible a NULL\n");
 		return (NULL);
+	}
 	if (shortest->room && !shortest->room->ants)
 	{
 		tmp = shortest->room;
@@ -43,14 +46,14 @@ static t_tube	*choose_path(t_next *shortest, t_next *possible)
 	return (NULL);
 }
 
-static void		init_next(t_next *possible, t_next *shortest)
+static void		init_next(t_next **possible, t_next **shortest)
 {
-	possible = (t_next *)malloc(sizeof(t_next));
-	shortest = (t_next *)malloc(sizeof(t_next));
-	possible->steps = -1;
-	possible->room = NULL;
-	shortest->steps = -1;
-	shortest->room = NULL;
+	(*possible) = (t_next *)malloc(sizeof(t_next));
+	(*shortest) = (t_next *)malloc(sizeof(t_next));
+	(*possible)->steps = -1;
+	(*possible)->room = NULL;
+	(*shortest)->steps = -1;
+	(*shortest)->room = NULL;
 }
 
 t_tube			*get_shortest_path(t_paths *paths, t_tube *from, t_infos *infos)
@@ -64,21 +67,23 @@ t_tube			*get_shortest_path(t_paths *paths, t_tube *from, t_infos *infos)
 	next = NULL;
 	possible = NULL;
 	shortest = NULL;
-	init_next(possible, shortest);
+	init_next(&possible, &shortest);
 	while (paths->prev)
 		paths = paths->prev;
-	while (paths->next)
+	while (paths)
 	{
 		if (paths->room != infos->start || paths->room != infos->end)
 				steps++;
 		if (paths->room == from)
 			next = paths->next->room;
+		if (next == infos->end)
+			return (next);
 		if (paths->room == infos->end\
 				&& (shortest->steps > steps || shortest->steps == -1) && next)
-			set_next(shortest, &steps, next);
+			set_next(&shortest, &steps, next);
 		if (paths->room == infos->end && next && !next->ants 
 				&& (possible->steps > steps || possible->steps == -1))
-			set_next(possible, &steps, next);
+			set_next(&possible, &steps, next);
 		paths = paths->next;
 	}
 	return (choose_path(shortest, possible));
