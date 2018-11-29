@@ -50,9 +50,16 @@ static int	save_room_if_valid(char *line, t_tube **rooms, int nline)
 	return (i);
 }
 
-static int	save_tube_if_valid(char *line, t_tube *rooms, int nline)
+static int	is_tube_valid(char *line)
 {
 	if (ft_strchr(line, '-') && !ft_strchr(line, ' '))
+		return (1);
+	return (0);
+}
+
+static int	save_tube_if_valid(char *line, t_tube *rooms, int nline)
+{
+	if (is_tube_valid(line))
 	{
 		if (make_tube(line, rooms))
 			return (1);
@@ -133,12 +140,13 @@ int			check_line(t_tube *tube, t_infos *infos)
 			state = check_command_comment(line, state, nline);
 		else if (state == STATE_ROOMS)
 		{
-			ret = save_room_if_valid(line, &tube, nline);
-			if (!ret)
+			if (is_tube_valid(line))
 			{
 				ret = save_tube_if_valid(line, tube, nline);
 				state = STATE_TUBES;
 			}
+			else
+				ret = save_room_if_valid(line, &tube, nline);
 		}
 		else if (state == STATE_TUBES)
 			ret = save_tube_if_valid(line, tube, nline);
