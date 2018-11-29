@@ -35,9 +35,7 @@ int				main(int argc, char **argv)
 	t_tube		*tube;
 	t_paths		*paths;
 	t_tube		**ants;
-	int			i;
 
-	i = 0;
 	ants = NULL;
 	if (!(tube = (t_tube *)malloc(sizeof(t_tube)))\
 			|| !(paths = (t_paths *)malloc(sizeof(t_paths)))\
@@ -51,7 +49,8 @@ int				main(int argc, char **argv)
 	paths->next = NULL;
 	paths->prev = NULL;
 	bonus_manager(argc, argv, infos);
-	if (!read_stdin(tube, infos) || !tube->name || !infos->start || !infos->end)
+	read_stdin(tube, infos);
+	if (!tube->name || !infos->start || !infos->end || infos->fourmis <= 0)
 		display_error(tube, paths, infos, ants);
 	else
 		set_research(infos, paths, ants, tube);

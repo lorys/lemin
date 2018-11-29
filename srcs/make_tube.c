@@ -12,10 +12,12 @@
 
 #include "lem_in.h"
 
-void	make_tube(char *line, t_tube *tube)
+int	make_tube(char *line, t_tube *tube)
 {
+	int		ret;
 	char	**split_tmp;
 
+	ret = 0;
 	split_tmp = ft_strsplit(line, '-');
 	if (find_room(split_tmp[0], &tube) && find_room(split_tmp[1], &tube))
 	{
@@ -23,6 +25,8 @@ void	make_tube(char *line, t_tube *tube)
 				find_room(split_tmp[0], &tube), find_room(split_tmp[1], &tube));
 		find_room(split_tmp[1], &tube)->links = realloc_links(\
 				find_room(split_tmp[1], &tube), find_room(split_tmp[0], &tube));
+		ret = 1;
 	}
 	free_char_tab(split_tmp);
+	return (ret);
 }

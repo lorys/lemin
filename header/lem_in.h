@@ -57,15 +57,12 @@ void			realloc_paths(t_paths *tube, t_tube *add);
 int				find_path(t_tube *room, t_infos *infos, t_tube *from,\
 			t_paths *paths);
 t_tube			*find_room(char *name, t_tube **list);
-void			make_tube(char *line, t_tube *tube);
-int				save_end(t_tube **tube, t_infos *infos);
+int				make_tube(char *line, t_tube *tube);
 int				save_room(t_tube **tube, char *name, int x, int y);
-int				save_start(t_tube **tube, t_infos *infos);
 void			show_struct(t_tube **tube);
 int				read_stdin(t_tube *tube, t_infos *infos);
 t_tube			*toend(t_tube *tube);
 int				ft_tubelen(t_tube *len);
-int				check_room(char *line);
 int				ft_strisdigit(char *str);
 int				ft_tubelen(t_tube *len);
 void			move_ants(t_paths *paths, t_infos *infos, t_tube **ants);
@@ -82,11 +79,6 @@ void			display_error(t_tube *tube, t_paths *paths, t_infos *infos,\
 t_tube			*get_shortest_path(t_paths *paths, t_tube *from,\
 			t_infos *infos);
 int				ft_strisdigit(char *str);
-int				check_room(char *line);
 int				int_free(void *data);
-int				check_ants(char *line, t_infos *infos);
-int				check_end(char *line, t_infos *infos, t_tube **tube);
-void			warn_parsing(char *str, int nline);
-void			error_parsing(char *str, int nline);
 
 #endif

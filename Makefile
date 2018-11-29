@@ -31,9 +31,7 @@ C_FILES		= main.c \
 			find_room.c \
 			make_tube.c \
 			realloc_links.c \
-			parser/save_end.c \
 			save_room.c \
-			parser/save_start.c \
 			show_struct.c \
 			parser/read_stdin.c \
 			paser/errors.c \
