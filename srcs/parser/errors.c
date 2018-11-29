@@ -12,5 +12,4 @@ void	error_parsing(char *str, int nline)
 		ft_printf("\e[91;1merror\e[0m: line %d: %s\n", nline, str);
 	else
 		ft_putstr("ERROR\n");
-	exit(EXIT_FAILURE);
 }

@@ -36,9 +36,7 @@ int				main(int argc, char **argv)
 	t_tube		*tube;
 	t_paths		*paths;
 	t_tube		**ants;
-	int			i;
 
-	i = 0;
 	ants = NULL;
 	if (!(tube = (t_tube *)malloc(sizeof(t_tube)))\
 			|| !(paths = (t_paths *)malloc(sizeof(t_paths)))\

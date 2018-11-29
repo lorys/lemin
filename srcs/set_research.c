@@ -15,11 +15,6 @@
 void	set_research(t_infos *infos, t_paths *paths, t_tube **ants,\
 		t_tube *tube)
 {
-	int i;
-	int count;
-
-	count = 0;
-	i = 0;
 	if (!find_path(infos->start, infos, infos->start, paths))
 		display_error(tube, paths, infos, ants);
 	else
