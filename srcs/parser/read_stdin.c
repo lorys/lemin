@@ -30,7 +30,11 @@ static int	save_room_if_valid(char *line, t_tube **rooms, int nline)
 	else
 	{
 		i = 1;
-		save_room(rooms, tmp[0], ft_atoi(tmp[1]), ft_atoi(tmp[2]));
+		if (!save_room(rooms, tmp[0], ft_atoi(tmp[1]), ft_atoi(tmp[2])))
+		{
+			error_parsing("room already exists", nline);
+			i = 0;
+		}
 	}
 	free_char_tab(tmp);
 	return (i);
