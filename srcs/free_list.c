@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 07:06:44 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/12 07:06:54 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/29 05:03:53 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,16 @@ void	free_list(t_tube *list)
 	free(list);
 	if (tmp)
 		free_list(tmp);
+}
+
+void	free_paths(t_paths *paths)
+{
+	t_paths *tmp;
+
+	if (!paths)
+		return ;
+	tmp = paths->prev;
+	free(paths);
+	if (tmp)
+		free_paths(tmp);
 }

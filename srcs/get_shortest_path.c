@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 05:19:09 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/29 00:52:10 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/29 04:52:27 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ static t_tube	*choose_path(t_next *shortest, t_next *possible)
 
 	tmp = NULL;
 	if (!shortest || !possible)
-	{
-		printf("short ou possible a NULL\n");
 		return (NULL);
-	}
 	if (shortest->room && !shortest->room->ants)
 	{
 		tmp = shortest->room;
@@ -43,6 +40,8 @@ static t_tube	*choose_path(t_next *shortest, t_next *possible)
 		free(shortest);
 		return (tmp);
 	}
+	free(possible);
+	free(shortest);
 	return (NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 14:51:28 by llopez            #+#    #+#             */
-/*   Updated: 2017/12/15 16:57:45 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/29 05:17:45 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ static int		ft_fill_buff(int fd, char **line, char **buff)
 
 	while ((i_buff = read(fd, line_read, BUFF_SIZE)) > 0)
 	{
-		break_found = find_break(line_read);
 		line_read[i_buff] = '\0';
+		break_found = find_break(line_read);
 		if (break_found > -1)
 		{
 			line_read[break_found] = '\0';

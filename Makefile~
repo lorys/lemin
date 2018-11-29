@@ -6,15 +6,15 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2018/11/29 05:28:18 by llopez           ###   ########.fr        #
+#    Updated: 2018/11/29 05:13:31 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= lem-in
 
 CC			= gcc
-C_FLAGS		= -Wall -Wextra -Werror  -g3 -fsanitize=address
-LD_FLAGS	= #-g3 -fsanitize=address
+C_FLAGS		= -Wall -Wextra -Werror -g3 -fsanitize=address
+LD_FLAGS	=
 
 OBJDIR		= obj/
 SRCDIR		= srcs/
@@ -24,7 +24,7 @@ LIBDIR		= libft/
 H_FILES		= lem_in.h \
 			libft.h \
 			ft_printf.h \
-			get_next_line.h
+			get_next_line.h \
 
 C_FILES		= main.c \
 			find_path.c \
