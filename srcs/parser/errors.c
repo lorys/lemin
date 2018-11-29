@@ -1,4 +1,5 @@
 #include "lem_in.h"
+#include "parser.h"
 
 void	warn_parsing(char *str, int nline)
 {
@@ -10,6 +11,4 @@ void	error_parsing(char *str, int nline)
 {
 	if (str && DEBUG)
 		ft_printf("\e[91;1merror\e[0m: line %d: %s\n", nline, str);
-	else
-		ft_putstr("ERROR\n");
 }

@@ -6,4 +6,7 @@
 # define STATE_START_ROOM 3
 # define STATE_END_ROOM 4
 
+void			warn_parsing(char *str, int nline);
+void			error_parsing(char *str, int nline);
+
 #endif

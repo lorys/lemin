@@ -56,7 +56,7 @@ void			realloc_paths(t_paths *tube, t_tube *add);
 int				find_path(t_tube *room, t_infos *infos, t_tube *from,\
 			t_paths *paths);
 t_tube			*find_room(char *name, t_tube **list);
-void			make_tube(char *line, t_tube *tube);
+int				make_tube(char *line, t_tube *tube);
 int				save_end(t_tube **tube, t_infos *infos);
 int				save_room(t_tube **tube, char *name, int x, int y);
 int				save_start(t_tube **tube, t_infos *infos);
@@ -85,7 +85,5 @@ int				check_room(char *line);
 int				int_free(void *data);
 int				check_ants(char *line, t_infos *infos);
 int				check_end(char *line, t_infos *infos, t_tube **tube);
-void			warn_parsing(char *str, int nline);
-void			error_parsing(char *str, int nline);
 
 #endif

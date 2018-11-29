@@ -54,8 +54,10 @@ static int	save_tube_if_valid(char *line, t_tube *rooms, int nline)
 {
 	if (ft_strchr(line, '-') && !ft_strchr(line, ' '))
 	{
-		make_tube(line, rooms);
-		return (1);
+		if (make_tube(line, rooms))
+			return (1);
+		error_parsing("unknow room", nline);
+		return (0);
 	}
 	error_parsing("tube not well formated", nline);
 	return (0);
@@ -102,8 +104,6 @@ static int	add_end_or_start_room(char *line, int state, t_infos *infos, t_tube *
 				infos->end = (*rooms)->prev;
 			return (1);
 		}
-		else
-			error_parsing(state == 1 ? "your start room is not well formated" : "your end room is not well formated", 1);
 	}
 	return (0);
 }
