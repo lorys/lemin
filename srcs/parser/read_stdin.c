@@ -13,20 +13,6 @@
 #include "lem_in.h"
 #include "parser.h"
 
-int		check_start(char *line, t_infos *infos, t_tube **tube)
-{
-	if (!ft_strcmp("##start", line))
-	{
-		if (!save_start(tube, infos))
-		{
-			free(line);
-			return (-1);
-		}
-		return (1);
-	}
-	return (0);
-}
-
 static int	save_room_if_valid(char *line, t_tube **rooms, int nline)
 {
 	char	**tmp;
@@ -128,7 +114,6 @@ int			check_line(t_tube *tube, t_infos *infos)
 	ret = 0;
 	while (get_next_line(0, &line) > 0 && ++nline)
 	{
-		ft_printf("%s\n", line);
 		if (state == STATE_START_ROOM || state == STATE_END_ROOM)
 		{
 			ret = add_end_or_start_room(line, state, infos, &tube, nline);
@@ -150,6 +135,8 @@ int			check_line(t_tube *tube, t_infos *infos)
 		}
 		else if (state == STATE_TUBES)
 			ret = save_tube_if_valid(line, tube, nline);
+		if (ret)
+			ft_printf("%s\n", line);
 		ft_strdel(&line);
 		if (!ret)
 			return (0);
@@ -160,8 +147,7 @@ int			check_line(t_tube *tube, t_infos *infos)
 
 int		read_stdin(t_tube *tube, t_infos *infos)
 {
-	if (!check_line(tube, infos))
-		return (0);
+	check_line(tube, infos);
 	write(1, "\n", 1);
 	if (infos->fourmis <= 0)
 		return (0);
