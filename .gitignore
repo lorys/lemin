@@ -4,4 +4,6 @@
 *.map
 lem_in
 lem-in
+vizualizer
+.vscode
 .DS_Store
