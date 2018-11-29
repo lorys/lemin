@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 05:19:09 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/29 04:52:27 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/29 06:45:57 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,11 @@ t_tube			*get_shortest_path(t_paths *paths, t_tube *from, t_infos *infos)
 		if (paths->room == from)
 			next = paths->next->room;
 		if (next == infos->end)
+		{
+			free(possible);
+			free(shortest);
 			return (next);
+		}
 		if (paths->room == infos->end\
 				&& (shortest->steps > steps || shortest->steps == -1) && next)
 			set_next(&shortest, &steps, next);
