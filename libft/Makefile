@@ -117,7 +117,7 @@ SOURCES = ft_atoi.c \
 
 OBJ = $(SOURCES:%.c=$(OBJDIR)%.o)
 
-C_FLAGS ?= -Wall -Werror -Wextra -g3 -fsanitize=address
+C_FLAGS ?= -Wall -Werror -Wextra
 
 OBJDIR = obj/
 
