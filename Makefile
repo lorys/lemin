@@ -117,6 +117,8 @@ fclean:
 	@printf "\033[35m DELETE $(OBJDIR) \033[0m\n"
 	@rm -f $(NAME)
 	@printf "\033[35m DELETE $(NAME) \033[0m\n"
+	@rm -f $(NAME_1)
+	@printf "\033[35m DELETE $(NAME_1) \033[0m\n"
 
 re: fclean all
 
