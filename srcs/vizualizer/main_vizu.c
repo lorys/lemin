@@ -21,7 +21,7 @@ static void		init_anthill(t_anthill *anthill, t_tube *rooms)
 	anthill->max_y = rooms->y;
 	anthill->max_x = rooms->x;
 	anthill->min_y = rooms->y;
-	while (rooms->next)
+	while (rooms->name)
 	{
 		if (rooms->x < anthill->min_x)
 			anthill->min_x = rooms->x;
@@ -42,7 +42,7 @@ static void		set_real_position(t_tube *tube, t_anthill *anthill, \
 {
 	*height -= *height * 0.1;
 	*width -= *width * 0.1;
-	while (tube)
+	while (tube->name)
 	{
 		tube->x = ((*width * tube->x) + *width * 0.2) / (anthill->max_x);
 		tube->y = ((*height * tube->y) + *height * 0.2) / (anthill->max_y);
@@ -54,10 +54,10 @@ static void		display_map(t_tube *tube)
 {
 	t_tube		**links;
 
-	if (tube->next)
+	if (tube->name)
 	{
 		links = tube->links;
-		while (*links)
+		while (links && *links)
 		{
 			plot_line(tube->x, tube->y, (*links)->x, (*links)->y);
 			links++;
@@ -72,13 +72,12 @@ static void		display_map(t_tube *tube)
 	}
 }
 
-static void		launch(t_tube *tube, t_infos *infos)
+static void		launch(t_tube *tube)
 {
 	int			screen_height;
 	int			screen_width;
 	t_anthill	anthill;
 
-	(void)infos;
 	init_anthill(&anthill, tube);
 	getmaxyx(stdscr, screen_height, screen_width);
 	set_real_position(tube, &anthill, &screen_height, &screen_width);
@@ -96,10 +95,12 @@ int				main(void)
 	set_tube(tube);
 	set_infos(infos);
 	parse(tube, infos);
+	if (!tube->name)
+		return (EXIT_FAILURE);
 	initscr();
 	start_color();
 	init_pair(1, COLOR_RED, COLOR_BLACK);
-	launch(tube, infos);
+	launch(tube);
 	refresh();
 	free_everything(tube, infos, NULL, NULL);
 	sleep(1000);
