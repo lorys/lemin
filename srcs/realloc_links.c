@@ -41,7 +41,7 @@ void		realloc_paths(t_paths *tube, t_tube *add)
 
 	first = 0;
 	if (add == NULL || tube == NULL)
-		return;
+		return ;
 	while (tube->prev)
 		tube = tube->prev;
 	if (tube->room == add)

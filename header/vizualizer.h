@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   vizualizer.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcarles <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/30 05:35:58 by pcarles           #+#    #+#             */
-/*   Updated: 2018/11/30 05:36:01 by pcarles          ###   ########.fr       */
+/*   Created: 2018/11/30 05:36:06 by pcarles           #+#    #+#             */
+/*   Updated: 2018/11/30 05:36:07 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#ifndef VIZUALIZER_H
+# define VIZUALIZER_H
 
-# define STATE_ROOMS 1
-# define STATE_TUBES 2
-# define STATE_START_ROOM 3
-# define STATE_END_ROOM 4
+# include "lem_in.h"
 
-int				save_room_if_valid(char *line, t_tube **rooms, int nline);
-int				save_tube_if_valid(char *line, t_tube *rooms, int nline);
-int				is_tube_valid(char *line);
-void			warn_parsing(char *str, int nline);
-void			error_parsing(char *str, int nline);
+typedef struct	s_anthill
+{
+	int			min_y;
+	int			max_y;
+	int			min_x;
+	int			max_x;
+	int			height;
+	int			width;
+}				t_anthill;
+
+int				parse(t_tube *tube, t_infos *infos);
+void			plot_line(int x0, int y0, int x1, int y1);
 
 #endif

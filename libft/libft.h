@@ -86,5 +86,6 @@ void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 char				*ft_realloc(char *src, size_t new_size);
 int					ft_sqrt(int nb);
+int					ft_abs(int x);
 
 #endif

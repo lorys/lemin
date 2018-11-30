@@ -112,7 +112,8 @@ SOURCES = ft_atoi.c \
 		  ft_putwstr.c \
 		  ft_wchar_one_o.c \
 		  ft_putwchar.c \
-		  get_next_line.c
+		  get_next_line.c \
+		  ft_abs.c
 
 OBJ = $(SOURCES:%.c=$(OBJDIR)%.o)
 
