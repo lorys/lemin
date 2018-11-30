@@ -16,14 +16,24 @@
 static int		check_number_of_ants(char *line, t_infos *infos)
 {
 	int		ret;
+	long	tmp;
 
 	ret = 0;
 	if (!ft_strisdigit(line))
 		error_parsing("the first line must be the number of ants", 1);
 	else
 	{
-		infos->fourmis = ft_atoi(line);
-		ret = 1;
+		tmp = ft_atoi_long(line);
+		if (tmp > INT_MAX || tmp < INT_MIN || ft_strlen(line) > 10)
+		{
+			error_parsing("int overflow", 1);
+			ret = 0;
+		}
+		else
+		{
+			infos->fourmis = (int)tmp;
+			ret = 1;
+		}
 	}
 	return (ret);
 }

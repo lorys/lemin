@@ -33,6 +33,22 @@ int			save_tube_if_valid(char *line, t_tube *rooms, int nline)
 	return (0);
 }
 
+static int	check_overflow(char *n1, char *n2, int nline)
+{
+	long	tmp1;
+	long	tmp2;
+
+	tmp1 = ft_atoi_long(n1);
+	tmp2 = ft_atoi_long(n2);
+	if (tmp1 < INT_MIN || tmp1 > INT_MAX || tmp2 < INT_MIN || \
+	tmp2 > INT_MAX || ft_strlen(n1) > 10 || ft_strlen(n2) > 10)
+	{
+		error_parsing("int overflow", nline);
+		return (0);
+	}
+	return (1);
+}
+
 int			save_room_if_valid(char *line, t_tube **rooms, int nline)
 {
 	char	**tmp;
@@ -48,15 +64,42 @@ int			save_room_if_valid(char *line, t_tube **rooms, int nline)
 		i = 0;
 		error_parsing("room not well formated", nline);
 	}
+	else if (!check_overflow(tmp[1], tmp[2], nline))
+		i = 0;
 	else
 	{
-		i = 1;
-		if (!save_room(rooms, tmp[0], ft_atoi(tmp[1]), ft_atoi(tmp[2])))
-		{
+		i = 0;
+		if (save_room(rooms, tmp[0], ft_atoi(tmp[1]), ft_atoi(tmp[2])))
+			i = 1;
+		else
 			error_parsing("room already exists", nline);
-			i = 0;
-		}
 	}
 	free_char_tab(tmp);
 	return (i);
+}
+
+long		ft_atoi_long(char const *s)
+{
+	int		flag;
+	long	res;
+
+	flag = 0;
+	res = 0;
+	while ((*s >= 9 && *s <= 13) || *s == ' ')
+		s++;
+	if (*s == '-' || *s == '+')
+	{
+		if (*s == '-')
+			flag = 1;
+		s++;
+	}
+	while (*s <= '9' && *s >= '0')
+	{
+		res *= 10;
+		res += *s - '0';
+		s++;
+	}
+	if (flag)
+		res = -res;
+	return (res);
 }

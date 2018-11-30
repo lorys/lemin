@@ -20,6 +20,7 @@
 
 int				save_room_if_valid(char *line, t_tube **rooms, int nline);
 int				save_tube_if_valid(char *line, t_tube *rooms, int nline);
+long			ft_atoi_long(char const *s);
 int				is_tube_valid(char *line);
 void			warn_parsing(char *str, int nline);
 void			error_parsing(char *str, int nline);
