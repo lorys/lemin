@@ -15,7 +15,7 @@
 
 # include "lem_in.h"
 
-typedef struct s_anthill
+typedef struct	s_anthill
 {
 	int			min_y;
 	int			max_y;

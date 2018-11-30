@@ -72,7 +72,7 @@ t_tube			*get_shortest_path(t_paths *paths, t_tube *from, t_infos *infos)
 	while (paths)
 	{
 		if (paths->room != infos->start || paths->room != infos->end)
-				steps++;
+			steps++;
 		if (paths->room == from)
 			next = paths->next->room;
 		if (next == infos->end)
@@ -84,7 +84,7 @@ t_tube			*get_shortest_path(t_paths *paths, t_tube *from, t_infos *infos)
 		if (paths->room == infos->end\
 				&& (shortest->steps > steps || shortest->steps == -1) && next)
 			set_next(&shortest, &steps, next);
-		if (paths->room == infos->end && next && !next->ants 
+		if (paths->room == infos->end && next && !next->ants \
 				&& (possible->steps > steps || possible->steps == -1))
 			set_next(&possible, &steps, next);
 		paths = paths->next;

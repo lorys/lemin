@@ -14,7 +14,7 @@
 
 static	void	bonus_manager(int argc, char **argv, t_infos *infos)
 {
-	int 		i;
+	int			i;
 
 	i = 0;
 	infos->select = -1;
