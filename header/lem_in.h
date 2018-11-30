@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 05:43:04 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/30 10:30:25 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/30 11:57:26 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include "ft_printf.h"
 # include "get_next_line.h"
 
-# define DEBUG 1
+# define DEBUG 0
 
 typedef	struct	s_tube {
 	char			*name;
