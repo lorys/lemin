@@ -6,7 +6,7 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2018/11/30 06:14:04 by llopez           ###   ########.fr        #
+#    Updated: 2018/11/30 11:37:34 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME_1		= visualizer
 
 CC			= gcc
 C_FLAGS		= -Wall -Wextra -Werror
-LD_FLAGS	=
+LD_FLAGS	= 
 
 OBJDIR		= obj/
 SRCDIR		= srcs/
@@ -45,7 +45,6 @@ C_FILES		= main.c \
 			toend.c \
 			ft_tubelen.c \
 			move_ants.c \
-			set_ants.c \
 			free_char_tab.c \
 			set_research.c \
 			display_error.c \
