@@ -6,59 +6,12 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 10:48:59 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/24 19:37:38 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/30 05:51:33 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 #include "parser.h"
-
-static int	is_tube_valid(char *line)
-{
-	if (ft_strchr(line, '-') && !ft_strchr(line, ' '))
-		return (1);
-	return (0);
-}
-
-static int	save_tube_if_valid(char *line, t_tube *rooms, int nline)
-{
-	if (is_tube_valid(line))
-	{
-		if (make_tube(line, rooms))
-			return (1);
-		error_parsing("unknow room", nline);
-		return (0);
-	}
-	error_parsing("tube not well formated", nline);
-	return (0);
-}
-
-static int	save_room_if_valid(char *line, t_tube **rooms, int nline)
-{
-	char	**tmp;
-	int		i;
-
-	i = 0;
-	tmp = ft_strsplit(line, ' ');
-	while (tmp[i])
-		i++;
-	if (i != 3 || **tmp == 'L' || **tmp == '#' || !ft_strisdigit(tmp[1]) || !ft_strisdigit(tmp[2]))
-	{
-		i = 0;
-		error_parsing("room not well formated", nline);
-	}
-	else
-	{
-		i = 1;
-		if (!save_room(rooms, tmp[0], ft_atoi(tmp[1]), ft_atoi(tmp[2])))
-		{
-			error_parsing("room already exists", nline);
-			i = 0;
-		}
-	}
-	free_char_tab(tmp);
-	return (i);
-}
 
 static int	check_number_of_ants(char *line, t_infos *infos)
 {
@@ -84,12 +37,13 @@ static int	check_command_comment(char *line, int state, int nline)
 	else
 	{
 		if (line[1] == '#')
-			warn_parsing("unknow command, ignoring it", nline);
+			warn_parsing("unknown command, ignoring it", nline);
 		return (state);
 	}
 }
 
-static int	add_end_or_start_room(char *line, int state, t_infos *infos, t_tube **rooms, int nline)
+static int	add_end_or_start_room(char *line, int state, t_infos *infos, \
+		t_tube **rooms, int nline)
 {
 	if (state == STATE_START_ROOM || state == STATE_END_ROOM)
 	{
@@ -149,7 +103,7 @@ int			check_line(t_tube *tube, t_infos *infos)
 	return (1);
 }
 
-int		read_stdin(t_tube *tube, t_infos *infos)
+int			read_stdin(t_tube *tube, t_infos *infos)
 {
 	check_line(tube, infos);
 	write(1, "\n", 1);

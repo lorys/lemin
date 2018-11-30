@@ -13,29 +13,6 @@
 #include <ncurses.h>
 #include "vizualizer.h"
 
-/*
-static void		trace_segment(int x1, int x2, int y1, int y2)
-{
-	int			dx;
-	int			dy;
-	int			e;
-
-	e = x2 - x1;
-	dx = e * 2;
-	dy = (y2 - y1) * 2;
-	while (x1 <= x2)
-	{
-		mvaddch(y1, x1, '*');
-		++x1;
-		if ((e = e - dy) <= 0)
-		{
-			++y1;
-			e += dx;
-		}
-	}
-}
-*/
-
 static void		plot_line_low(int x0, int y0, int x1, int y1)
 {
 	int			dx;
