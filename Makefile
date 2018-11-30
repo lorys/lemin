@@ -68,7 +68,8 @@ C_FILES_1	= vizualizer/main_vizu.c \
 			toend.c \
 			find_room.c \
 			free_list.c \
-			realloc_links.c 
+			realloc_links.c \
+			vizualizer/bresenham.c
 
 LIBFT		= $(LIBDIR)libft.a
 
