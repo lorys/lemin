@@ -102,7 +102,7 @@ int				main(void)
 	init_pair(1, COLOR_RED, COLOR_BLACK);
 	launch(tube);
 	refresh();
-	free_everything(tube, infos, NULL, NULL);
+	free_everything(tube, infos, NULL);
 	sleep(1000);
 	endwin();
 	return (EXIT_SUCCESS);
