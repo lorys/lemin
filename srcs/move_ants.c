@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:03:15 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/30 04:29:35 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/30 06:39:11 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,26 +36,37 @@ static void		show_ant(int i, t_tube **ants, t_infos *infos)
 		ft_printf("L%d-%s", i + 1, ants[i]->name);
 }
 
+static int		change_room(int i, t_paths *paths, t_tube **ants,\
+		t_infos *infos)
+{
+	t_tube	*new_room;
+
+	new_room = NULL;
+	new_room = get_shortest_path(paths, ants[i], infos);
+	if (new_room)
+	{
+		ants[i]->ants = 0;
+		ants[i] = new_room;
+		if (ants[i] != infos->end)
+			ants[i]->ants = 1;
+		return (1);
+	}
+	return (0);
+}
+
 void			move_ants(t_paths *paths, t_infos *infos, t_tube **ants)
 {
 	int		i;
-	t_tube	*new_room;
 	int		ants_moved;
 
 	ants_moved = 0;
 	i = 0;
-	new_room = NULL;
 	while (ants[i])
 	{
 		if (ants[i] == infos->end && ++i)
 			continue;
-		new_room = get_shortest_path(paths, ants[i], infos);
-		if (new_room)
+		if (change_room(i, paths, ants, infos))
 		{
-			ants[i]->ants = 0;
-			ants[i] = new_room;
-			if (ants[i] != infos->end)
-				ants[i]->ants = 1;
 			if (ants_moved)
 				write(1, " ", 1);
 			show_ant(i, ants, infos);

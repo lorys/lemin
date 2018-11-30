@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 05:43:04 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/30 04:03:37 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/30 06:23:20 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef	struct	s_next {
 	int				steps;
 }				t_next;
 
+t_tube			*found_next(t_tube *next, t_next *possible, t_next *shortest);
 void			free_paths(t_paths *paths);
 t_tube			**realloc_links(t_tube *tube, t_tube *add);
 void			realloc_paths(t_paths *tube, t_tube *add);
