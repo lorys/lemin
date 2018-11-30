@@ -19,7 +19,7 @@
 # include "ft_printf.h"
 # include "get_next_line.h"
 
-# define DEBUG 0
+# define DEBUG 1
 
 typedef	struct	s_tube {
 	char			*name;
