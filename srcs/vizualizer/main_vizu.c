@@ -96,7 +96,10 @@ int				main(void)
 	set_infos(infos);
 	parse(tube, infos);
 	if (!tube->name)
+	{
+		free_everything(tube, infos, NULL);
 		return (EXIT_FAILURE);
+	}
 	initscr();
 	start_color();
 	init_pair(1, COLOR_RED, COLOR_BLACK);
