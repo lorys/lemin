@@ -6,16 +6,15 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 07:02:40 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/22 08:46:18 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/30 10:29:27 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	display_error(t_tube *tube, t_paths *paths, t_infos *infos,\
-		t_tube **ants)
+void	display_error(t_tube *tube, t_paths *paths, t_infos *infos)
 {
-	free_everything(tube, infos, paths, ants);
+	free_everything(tube, infos, paths);
 	write(2, "ERROR\n", 6);
 	exit(EXIT_FAILURE);
 }

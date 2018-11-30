@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 05:43:04 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/30 06:23:20 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/30 10:30:25 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,13 @@ t_tube			*toend(t_tube *tube);
 int				ft_tubelen(t_tube *len);
 int				ft_strisdigit(char *str);
 int				ft_tubelen(t_tube *len);
-void			move_ants(t_paths *paths, t_infos *infos, t_tube **ants);
-int				set_ants(t_infos *infos, t_tube ***ants);
+void			move_ants(t_paths *paths, t_infos *infos);
 void			free_char_tab(char **str);
-void			free_everything(t_tube *tube, t_infos *infos, t_paths *paths,\
-			t_tube **ants);
+void			free_everything(t_tube *tube, t_infos *infos, t_paths *paths);
 void			free_list(t_tube *list);
-void			set_research(t_infos *infos, t_paths *paths, t_tube **ants,\
-			t_tube *tube);
+void			set_research(t_infos *infos, t_paths *paths, t_tube *tube);
 void			set_tube(t_tube *tube);
-void			display_error(t_tube *tube, t_paths *paths, t_infos *infos,\
-			t_tube **ants);
+void			display_error(t_tube *tube, t_paths *paths, t_infos *infos);
 t_tube			*get_shortest_path(t_paths *paths, t_tube *from,\
 			t_infos *infos);
 int				ft_strisdigit(char *str);
