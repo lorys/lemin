@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME		= lem-in
-NAME_1		= vizualizer
+NAME_1		= visualizer
 
 CC			= gcc
 C_FLAGS		= -Wall -Wextra -Werror
