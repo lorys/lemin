@@ -13,6 +13,26 @@
 #include "lem_in.h"
 #include "parser.h"
 
+static int	is_tube_valid(char *line)
+{
+	if (ft_strchr(line, '-') && !ft_strchr(line, ' '))
+		return (1);
+	return (0);
+}
+
+static int	save_tube_if_valid(char *line, t_tube *rooms, int nline)
+{
+	if (is_tube_valid(line))
+	{
+		if (make_tube(line, rooms))
+			return (1);
+		error_parsing("unknow room", nline);
+		return (0);
+	}
+	error_parsing("tube not well formated", nline);
+	return (0);
+}
+
 static int	save_room_if_valid(char *line, t_tube **rooms, int nline)
 {
 	char	**tmp;
@@ -38,26 +58,6 @@ static int	save_room_if_valid(char *line, t_tube **rooms, int nline)
 	}
 	free_char_tab(tmp);
 	return (i);
-}
-
-static int	is_tube_valid(char *line)
-{
-	if (ft_strchr(line, '-') && !ft_strchr(line, ' '))
-		return (1);
-	return (0);
-}
-
-static int	save_tube_if_valid(char *line, t_tube *rooms, int nline)
-{
-	if (is_tube_valid(line))
-	{
-		if (make_tube(line, rooms))
-			return (1);
-		error_parsing("unknow room", nline);
-		return (0);
-	}
-	error_parsing("tube not well formated", nline);
-	return (0);
 }
 
 static int	check_number_of_ants(char *line, t_infos *infos)
