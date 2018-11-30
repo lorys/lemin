@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 05:19:09 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/29 06:47:07 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/30 01:26:09 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,40 +19,46 @@ static void		set_next(t_next **choice, int *steps, t_tube *room)
 	*steps = 0;
 }
 
-static t_tube	*choose_path(t_next *shortest, t_next *possible)
+static t_tube	*choose_path(t_next *shortest, t_next *possible, t_infos *infos)
 {
 	t_tube *tmp;
 
 	tmp = NULL;
 	if (!shortest || !possible)
 		return (NULL);
+	(void)infos;
 	if (shortest->room && !shortest->room->ants)
-	{
 		tmp = shortest->room;
-		free(possible);
-		free(shortest);
-		return (tmp);
-	}
-	if (possible->room && !possible->room->ants)
-	{
+	if (possible->room && !tmp && possible->steps != -1)
 		tmp = possible->room;
-		free(possible);
-		free(shortest);
-		return (tmp);
-	}
 	free(possible);
 	free(shortest);
-	return (NULL);
+	return (tmp);
 }
 
 static void		init_next(t_next **possible, t_next **shortest)
 {
 	(*possible) = (t_next *)malloc(sizeof(t_next));
 	(*shortest) = (t_next *)malloc(sizeof(t_next));
-	(*possible)->steps = -1;
+	(*possible)->steps = INT_MAX;
 	(*possible)->room = NULL;
-	(*shortest)->steps = -1;
+	(*shortest)->steps = INT_MAX;
 	(*shortest)->room = NULL;
+}
+
+static int		get_distance(t_paths *paths, t_tube *from)
+{
+	int	i;
+
+	i = 0;
+	if (!paths)
+		return (-1);
+	while (paths && paths->room != from)
+	{
+		i++;
+		paths = paths->next;
+	}
+	return (i);
 }
 
 t_tube			*get_shortest_path(t_paths *paths, t_tube *from, t_infos *infos)
@@ -71,23 +77,22 @@ t_tube			*get_shortest_path(t_paths *paths, t_tube *from, t_infos *infos)
 		paths = paths->prev;
 	while (paths)
 	{
-		if (paths->room != infos->start || paths->room != infos->end)
-				steps++;
 		if (paths->room == from)
-			next = paths->next->room;
-		if (next == infos->end)
 		{
-			free(possible);
-			free(shortest);
-			return (next);
+			steps = get_distance(paths, infos->end);
+			next = paths->next->room;
+			if (next == infos->end)
+			{
+				free(possible);
+				free(shortest);
+				return (next);
+			}
+			if (steps < shortest->steps)
+				set_next(&shortest, &steps, next);
+			if (steps < possible->steps && !next->ants)
+				set_next(&possible, &steps, next);
 		}
-		if (paths->room == infos->end\
-				&& (shortest->steps > steps || shortest->steps == -1) && next)
-			set_next(&shortest, &steps, next);
-		if (paths->room == infos->end && next && !next->ants 
-				&& (possible->steps > steps || possible->steps == -1))
-			set_next(&possible, &steps, next);
 		paths = paths->next;
 	}
-	return (choose_path(shortest, possible));
+	return (choose_path(shortest, possible, infos));
 }

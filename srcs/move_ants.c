@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:03:15 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/29 00:16:43 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/30 04:29:35 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,20 @@ static int		need_to_move(t_tube **ants, t_infos *infos)
 static void		show_ant(int i, t_tube **ants, t_infos *infos)
 {
 	if (infos->select == (i + 1))
-		ft_printf("\033[41mL%d-%s\033[0m ", i + 1, ants[i]->name);
+		ft_printf("\033[41mL%d-%s\033[0m", i + 1, ants[i]->name);
 	else if (infos->bonus)
-		ft_printf("\033[%dmL%d-%s\033[0m ", i, i + 1, ants[i]->name);
+		ft_printf("\033[%dmL%d-%s\033[0m", i, i + 1, ants[i]->name);
 	else
-		ft_printf("L%d-%s ", i + 1, ants[i]->name);
+		ft_printf("L%d-%s", i + 1, ants[i]->name);
 }
 
 void			move_ants(t_paths *paths, t_infos *infos, t_tube **ants)
 {
 	int		i;
 	t_tube	*new_room;
+	int		ants_moved;
 
+	ants_moved = 0;
 	i = 0;
 	new_room = NULL;
 	while (ants[i])
@@ -54,11 +56,14 @@ void			move_ants(t_paths *paths, t_infos *infos, t_tube **ants)
 			ants[i] = new_room;
 			if (ants[i] != infos->end)
 				ants[i]->ants = 1;
+			if (ants_moved)
+				write(1, " ", 1);
 			show_ant(i, ants, infos);
+			ants_moved++;
 		}
 		i++;
 	}
-	ft_printf("\n");
+	write(1, "\n", 1);
 	if (need_to_move(ants, infos))
 		move_ants(paths, infos, ants);
 }

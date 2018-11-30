@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 05:43:04 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/29 06:55:45 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/30 04:03:37 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef	struct	s_infos {
 	int				fourmis;
 	int				bonus;
 	int				select;
+	int				bonusants;
 }				t_infos;
 
 typedef	struct	s_paths {
@@ -80,5 +81,7 @@ t_tube			*get_shortest_path(t_paths *paths, t_tube *from,\
 			t_infos *infos);
 int				ft_strisdigit(char *str);
 int				int_free(void *data);
+void			set_infos(t_infos *infos);
+void			set_paths(t_paths *paths);
 
 #endif
