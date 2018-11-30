@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 05:19:09 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/30 06:11:11 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/30 06:42:13 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,8 @@ t_tube			*get_shortest_path(t_paths *paths, t_tube *from, t_infos *infos)
 	int		steps;
 	t_next	*possible;
 	t_next	*shortest;
-	t_tube	*next;
 
 	steps = 0;
-	next = NULL;
 	possible = NULL;
 	shortest = NULL;
 	init_next(&possible, &shortest);
@@ -80,17 +78,12 @@ t_tube			*get_shortest_path(t_paths *paths, t_tube *from, t_infos *infos)
 		if (paths->room == from)
 		{
 			steps = get_distance(paths, infos->end);
-			next = paths->next->room;
-			if (next == infos->end)
-			{
-				free(possible);
-				free(shortest);
-				return (next);
-			}
+			if (paths->next->room == infos->end)
+				return (found_next(paths->next->room, possible, shortest));
 			if (steps < shortest->steps)
-				set_next(&shortest, &steps, next);
-			if (steps < possible->steps && !next->ants)
-				set_next(&possible, &steps, next);
+				set_next(&shortest, &steps, paths->next->room);
+			if (steps < possible->steps && !paths->next->room->ants)
+				set_next(&possible, &steps, paths->next->room);
 		}
 		paths = paths->next;
 	}

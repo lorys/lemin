@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 07:07:06 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/30 04:02:28 by llopez           ###   ########.fr       */
+/*   Updated: 2018/11/30 06:42:39 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,11 @@ void	set_paths(t_paths *paths)
 	paths->room = NULL;
 	paths->next = NULL;
 	paths->prev = NULL;
+}
+
+t_tube	*found_next(t_tube *next, t_next *possible, t_next *shortest)
+{
+	free(shortest);
+	free(possible);
+	return (next);
 }

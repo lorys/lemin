@@ -6,7 +6,7 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2018/11/29 05:28:18 by llopez           ###   ########.fr        #
+#    Updated: 2018/11/30 06:14:04 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,7 +96,7 @@ $(NAME): $(OBJ) $(LIBFT)
 
 $(NAME_1): $(OBJ_1) $(LIBFT)
 	@$(CC) -o $@ -L$(LIBDIR) -lft -lncurses $(OBJ_1) $(C_FLAGS) $(LD_FLAGS)
-	@printf "\033[32m BINARY FILE $@ CREATED \033[0m\n"
+	@printf "\n\033[32m BINARY FILE $@ CREATED \033[0m\n"
 
 $(LIBFT):
 	@$(MAKE) -C $(LIBDIR)
