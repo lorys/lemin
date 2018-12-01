@@ -52,6 +52,7 @@ static int		add_start_or_end_room(char *line, t_tube **to_change, \
 {
 	if (is_room_valid(line, *room_listp, nline))
 	{
+		save_room(*room_listp, )
 		*to_change = (*rooms)->prev;
 		return (1);
 	}
