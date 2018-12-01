@@ -18,7 +18,7 @@ static int		check_number_of_ants(char *line, t_infos *infos)
 	int		ret;
 
 	ret = 0;
-	if (!ft_strisdigit(line))
+	if (!ft_stris(line, &ft_isdigit))
 		error_parsing("the first line must be the number of ants", 1);
 	else
 	{

@@ -12,20 +12,24 @@
 
 #include "lem_in.h"
 
-t_tube	*find_room(char *name, t_tube **list)
+t_tube		*find_room(char *room_name, t_tube *room_list)
 {
-	t_tube *tube;
+	t_tube	*tmp;
 
-	tube = *list;
-	while (tube && tube->prev != NULL)
-		tube = tube->prev;
-	while (tube && tube->next != NULL && tube->name)
+	if (!room_name || !room_list)
+		return (NULL);
+	tmp = room_list;
+	while (room_list->prev != NULL && room_list->name)
 	{
-		if (name && tube->name && !ft_strcmp(tube->name, name))
-			return (tube);
-		tube = tube->next;
+		if (!ft_strcmp(room_list->name, room_name))
+			return (room_list);
+		room_list = room_list->prev;
+	}	
+	while (tmp->next != NULL && tmp->name)
+	{
+		if (!ft_strcmp(tmp->name, room_name))
+			return (tmp);
+		tmp = tmp->next;
 	}
-	while (tube && tube->next != NULL && tube->next->name)
-		tube = tube->next;
 	return (NULL);
 }
