@@ -1,5 +1,11 @@
+*.o
+*.a
+*.dYSM
+*.map
+lem_in
+lem-in
+vizualizer
+visualizer
+!srcs/vizualizer
+.vscode
 .DS_Store
-*.gch
-*.dSYM
-a.out
-Lem-in

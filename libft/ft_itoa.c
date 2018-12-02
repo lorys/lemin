@@ -12,31 +12,45 @@
 
 #include "libft.h"
 
+static int	ft_nbrlen(int n)
+{
+	int		len;
+
+	len = 0;
+	if (n <= 0)
+		len++;
+	while (n != 0)
+	{
+		n /= 10;
+		len++;
+	}
+	return (len);
+}
+
 char		*ft_itoa(int n)
 {
-	char	*alloc;
-	char	neg;
-	int		i;
-	int		count;
-	int		min_index;
+	int				len;
+	unsigned int	n_ui;
+	char			*p;
 
-	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
-	i = n;
-	neg = (n < 0) ? '-' : '+';
-	n = (n < 0) ? n * -1 : n;
-	count = (neg == '-') ? ft_intlen(n) + 1 : ft_intlen(n);
-	if (!(alloc = (char *)malloc(sizeof(char) * count - 1)))
-		return (NULL);
-	alloc[count] = '\0';
-	min_index = (neg == '-') ? 1 : 0;
-	while (count-- > min_index)
+	len = ft_nbrlen(n);
+	n_ui = n;
+	p = ft_strnew(len);
+	if (p)
 	{
-		i = n % 10;
-		n = n / 10;
-		alloc[count] = i + '0';
+		if (n < 0)
+		{
+			n_ui = -n;
+			*p = '-';
+		}
+		len--;
+		while (len > 0)
+		{
+			p[len--] = n_ui % 10 + '0';
+			n_ui /= 10;
+		}
+		if (*p != '-')
+			*p = n_ui + '0';
 	}
-	if (min_index == 1)
-		alloc[0] = '-';
-	return (alloc);
+	return (p);
 }
