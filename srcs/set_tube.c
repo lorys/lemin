@@ -29,7 +29,7 @@ void	set_paths(t_paths *paths)
 	paths->prev = NULL;
 }
 
-t_room	*found_next(t_room *next, t_next *possible, t_next *shortest)
+t_tube	*found_next(t_tube *next, t_next *possible, t_next *shortest)
 {
 	free(shortest);
 	free(possible);

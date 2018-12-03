@@ -19,7 +19,8 @@ int			is_tube_valid(char *line, t_tube *room_list, int nline)
 	char	**tmp;
 
 	ret = 0;
-	if (!(ft_strchr(line, '-') && !ft_strchr(line, ' ')) && (tmp = ft_strsplit(line, '-')))
+	tmp = ft_strsplit(line, '-');
+	if (!(ft_strchr(line, '-') && !ft_strchr(line, ' ')) || !tmp)
 		error_parsing("tube not well formated", nline);
 	else if (!find_room(tmp[0], room_list) || !find_room(tmp[1], room_list))
 		error_parsing("unknown room", nline);
@@ -29,7 +30,7 @@ int			is_tube_valid(char *line, t_tube *room_list, int nline)
 	return (ret);
 }
 
-int			is_room_valid(char *line, t_tube *room_list, int nline)
+t_tube		*is_room_valid(char *line, t_tube *room_list, int nline)
 {
 	int		i;
 	char	**tmp;
@@ -39,16 +40,16 @@ int			is_room_valid(char *line, t_tube *room_list, int nline)
 	while (tmp[i])
 		i++;
 	if ((i != 3 || **tmp == 'L' || **tmp == '#' || !ft_strisnumber(tmp[1]) || \
-		!ft_strisnumber(tmp[2])) && !(i = 0))
+		!ft_strisnumber(tmp[2])))
 		error_parsing("room not well formated", nline);
-	else if (!check_overflow(tmp[1]) && !check_overflow(tmp[2]) && !(i = 0))
+	else if (!check_overflow(tmp[1]) && !check_overflow(tmp[2]))
 		error_parsing("int overflow on room coordinates", nline);
-	else if (find_room(tmp[0], room_list) && !(i = 0))
+	else if (find_room(tmp[0], room_list))
 		error_parsing("room already exists", nline);
 	else
-		i = 1;
+		return (parse_room(tmp[0], ft_atoi(tmp[1]), ft_atoi(tmp[2])));
 	free_char_tab(tmp);
-	return (i);
+	return (NULL);
 }
 
 int			save_tube_if_valid(char *line, t_tube *rooms, int nline)
@@ -59,6 +60,17 @@ int			save_tube_if_valid(char *line, t_tube *rooms, int nline)
 		return (1);
 	}
 	return (0);
+}
+
+int			save_room_if_valid(char *line, t_tube **room_listp, nline)
+{
+	t_tube 	*tmp;
+
+	tmp = is_room_valid(line, *room_listp, nline);
+	if (tmp)
+	{
+		save_room(tmp, room_listp);
+	}
 }
 
 int			check_overflow(char *str)

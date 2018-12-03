@@ -18,10 +18,12 @@
 # define STATE_START_ROOM 3
 # define STATE_END_ROOM 4
 
-int				is_room_valid(char *line, t_tube *room_list, int nline);
+t_tube			*is_room_valid(char *line, t_tube *room_list, int nline);
 int				is_tube_valid(char *line, t_tube *room_list, int nline);
 int				save_room_if_valid(char *line, t_tube **rooms, int nline);
 int				save_tube_if_valid(char *line, t_tube *rooms, int nline);
+t_tube			*parse_room(char *name, int x, int y);
+t_tube		    *save_room(t_tube *room_list, t_tube *room);
 long			ft_atoi_long(char const *s);
 int				check_overflow(char *str);
 void			warn_parsing(char *str, int nline);

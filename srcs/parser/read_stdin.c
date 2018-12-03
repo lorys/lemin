@@ -50,10 +50,13 @@ static int		check_command_comment(char *line, int *state, int nline)
 static int		add_start_or_end_room(char *line, t_tube **to_change, \
 				t_tube **room_listp, int nline)
 {
-	if (is_room_valid(line, *room_listp, nline))
+	t_tube		*tmp;
+
+	tmp = is_room_valid(line, *room_listp, nline);
+	if (tmp)
 	{
-		save_room(*room_listp, )
-		*to_change = (*rooms)->prev;
+		*room_listp = save_room(*room_listp, tmp);
+		*to_change = tmp;
 		return (1);
 	}
 	return (0);
@@ -78,7 +81,7 @@ static int		line_is_valid(t_tube **room_listp, t_infos *infos, \
 		ret = check_number_of_ants(line, infos);
 	else if (*line == '#')
 		ret = check_command_comment(line, &state, nline);
-	else if (is_tube_valid(line))
+	else if (state == STATE_ROOMS && is_tube_valid(line, *room_listp, nline))
 		state = STATE_TUBES;
 	else if (state == STATE_ROOMS)
 		ret = save_room_if_valid(line, room_listp, nline);

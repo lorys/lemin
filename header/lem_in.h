@@ -60,7 +60,6 @@ int				find_path(t_tube *room, t_infos *infos, t_tube *from,\
 			t_paths *paths);
 t_tube			*find_room(char *room_name, t_tube *room_list);
 void			make_tube(char *line, t_tube *room_list);
-t_tube			*save_room(t_tube *tube, char *name, int x, int y);
 void			show_struct(t_tube **tube);
 int				read_stdin(t_tube **room_listp, t_infos *infos);
 t_tube			*toend(t_tube *tube);

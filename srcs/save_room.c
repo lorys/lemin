@@ -12,10 +12,9 @@
 
 #include "lem_in.h"
 
-t_tube		*save_room(t_tube *room_list, char *name, int x, int y)
+t_tube		*parse_room(char *name, int x, int y)
 {
 	t_tube	*new;
-	t_tube	*tmp;
 
 	if (!(new = (t_tube *)ft_memalloc(sizeof(*new))))
 		return (NULL);
@@ -26,16 +25,24 @@ t_tube		*save_room(t_tube *room_list, char *name, int x, int y)
 	}
 	new->x = x;
 	new->y = y;
-	new->prev = room_list;
+	new->prev = NULL;
 	new->next = NULL;
+	new->links = NULL;
 	new->ants = 0;
 	new->vu = 0;
-	new->links = NULL;
-	if (!room_list)
-		return (new);
-	tmp = room_list;
+	return (new);
+}
+
+t_tube		*save_room(t_tube **room_listp, t_tube *room)
+{
+	t_tube	*tmp;
+
+	if (!room_listp || !(*room_listp))
+		return (room);
+	tmp = *room_listp;
 	while (tmp->next)
 		tmp = tmp->next;
-	tmp->next = new;
+	tmp->next = room;
+	room->prev = tmp;
 	return (room_list);
 }
