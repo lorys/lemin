@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:03:15 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/30 11:31:27 by llopez           ###   ########.fr       */
+/*   Updated: 2018/12/03 20:40:41 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,58 @@ static t_tube	*whereis(int ants, t_paths *paths, t_infos *infos)
 	return (infos->start);
 }
 
-static void		show_ant(int l, t_tube *room, t_infos *infos)
+static void		fill_buffer(char *str, char *buffer)
 {
+	int i;
+	int	a;
+
+	a = 0;
+	i = 0;
+	while (i < 2000)
+	{
+		if (buffer[i] == '\0')
+		{
+			while (str[a] && a+i < 2000)
+			{
+				buffer[i+a] = str[a];
+				a++;
+			}
+			if (a+i == 2000)
+			{
+				write(1, buffer, ft_strlen(buffer));
+				bzero(buffer, 2000);
+			}
+		}
+		i++;
+	}
+}
+
+static void		show_ant(int l, t_tube *room, t_infos *infos, char *buffer)
+{
+	(void)buffer;
 	if (infos->select == l)
-		ft_printf("\033[41mL%d-%s\033[0m", l, room->name);
+	{
+		fill_buffer("\033[41mL", buffer);
+		fill_buffer(ft_itoa(l), buffer);
+		fill_buffer(room->name, buffer);
+		fill_buffer("\033[0m", buffer);
+	}
 	else if (infos->bonus)
-		ft_printf("\033[%dmL%d-%s\033[0m", l, l, room->name);
+	{
+		fill_buffer("\033[", buffer);
+		fill_buffer(ft_itoa(l), buffer);
+		fill_buffer("mL", buffer);
+		fill_buffer(ft_itoa(l), buffer);
+		fill_buffer(room->name, buffer);
+		fill_buffer("\033[0m", buffer);
+	}
 	else
-		ft_printf("L%d-%s", l, room->name);
+	{
+		fill_buffer("L", buffer);
+		fill_buffer(ft_itoa(l + 1), buffer);
+		fill_buffer("-", buffer);
+		fill_buffer(room->name, buffer);
+	}
 }
 
 static int		change_room(int l, t_paths *paths, t_infos *infos)
@@ -59,29 +103,27 @@ static int		change_room(int l, t_paths *paths, t_infos *infos)
 	return (0);
 }
 
-void			move_ants(t_paths *paths, t_infos *infos)
+void			move_ants(t_paths *paths, t_infos *infos, char *buffer)
 {
 	int		i;
 	int		ants_moved;
 
 	ants_moved = 0;
 	i = infos->end->ants;
-	while ((i + 1) <= infos->fourmis)
+	while ((i + 1) < infos->fourmis)
 	{
-		if ((i + 1) <= infos->end->ants && ++i)
-			continue;
 		if (change_room((i + 1), paths, infos))
 		{
 			if (ants_moved)
-				write(1, " ", 1);
-			show_ant((i + 1), whereis((i + 1), paths, infos), infos);
+				fill_buffer(" ", buffer);
+			show_ant((i + 1), whereis((i + 1), paths, infos), infos, buffer);
 			ants_moved++;
 		}
 		i++;
 	}
 	if (ants_moved)
 	{
-		write(1, "\n", 1);
-		move_ants(paths, infos);
+		fill_buffer("\n", buffer);
+		move_ants(paths, infos, buffer);
 	}
 }

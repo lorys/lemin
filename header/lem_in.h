@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 05:43:04 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/30 11:57:26 by llopez           ###   ########.fr       */
+/*   Updated: 2018/12/03 20:17:59 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_tube			*toend(t_tube *tube);
 int				ft_tubelen(t_tube *len);
 int				ft_strisdigit(char *str);
 int				ft_tubelen(t_tube *len);
-void			move_ants(t_paths *paths, t_infos *infos);
+void			move_ants(t_paths *paths, t_infos *infos, char *buffer);
 void			free_char_tab(char **str);
 void			free_everything(t_tube *tube, t_infos *infos, t_paths *paths);
 void			free_list(t_tube *list);
