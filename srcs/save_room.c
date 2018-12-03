@@ -33,7 +33,8 @@ t_tube		*parse_room(char *name, int x, int y)
 	return (new);
 }
 
-t_tube		*save_room(t_tube **room_listp, t_tube *room)
+//TODO save room in pointer pointer
+void		save_room(t_tube **room_listp, t_tube *room)
 {
 	t_tube	*tmp;
 
@@ -44,5 +45,5 @@ t_tube		*save_room(t_tube **room_listp, t_tube *room)
 		tmp = tmp->next;
 	tmp->next = room;
 	room->prev = tmp;
-	return (room_list);
+	*room_listp = ;
 }
