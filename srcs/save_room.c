@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-t_tube		*parse_room(char *name, int x, int y)
+t_tube		*create_room(char *name, int x, int y)
 {
 	t_tube	*new;
 

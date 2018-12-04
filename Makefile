@@ -17,10 +17,10 @@ CC			= gcc
 C_FLAGS		= -Wall -Wextra -Werror
 LD_FLAGS	=
 
-OBJDIR		= obj/
 SRCDIR		= srcs/
 INCLDIR		= header/
 LIBDIR		= libft/
+OBJDIR		= obj/
 
 H_FILES		= lem_in.h \
 			libft.h \

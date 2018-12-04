@@ -49,7 +49,7 @@ t_tube		*is_room_valid(char *line, t_tube *room_list, int nline)
 	else if (find_room(tmp[0], room_list))
 		error_parsing("room already exists", nline);
 	else
-		new = parse_room(tmp[0], ft_atoi(tmp[1]), ft_atoi(tmp[2]));
+		new = create_room(tmp[0], ft_atoi(tmp[1]), ft_atoi(tmp[2]));
 	free_char_tab(tmp);
 	return (new);
 }
