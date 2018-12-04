@@ -15,9 +15,6 @@
 
 static int		check_number_of_ants(char *line, t_infos *infos)
 {
-	int		ret;
-
-	ret = 0;
 	if (!ft_stris(line, &ft_isdigit))
 		error_parsing("the first line must be the number of ants", 1);
 	else
@@ -27,18 +24,17 @@ static int		check_number_of_ants(char *line, t_infos *infos)
 		else
 		{
 			infos->fourmis = ft_atoi(line);
-			ret = 1;
+			return (1);
 		}
 	}
-	return (ret);
+	return (0);
 }
 
-// TODO check this bug correction
 static int		check_command_comment(char *line, int *state, int nline)
 {
-	if (!ft_strcmp(line, "##start") && *state != STATE_TUBES)
+	if (!ft_strcmp(line, "##start"))
 		*state = STATE_START_ROOM;
-	else if (!ft_strcmp(line, "##end") && *state != STATE_TUBES)
+	else if (!ft_strcmp(line, "##end"))
 		*state = STATE_END_ROOM;
 	else
 	{
@@ -100,7 +96,7 @@ int				read_stdin(t_tube **room_listp, t_infos *infos)
 	nline = 0;
 	while (get_next_line(0, &line) > 0 && ++nline)
 	{
-		if (line_is_valid(room_listp, infos, line, nline))
+		if (*line != '\0' && line_is_valid(room_listp, infos, line, nline))
 			ft_printf("%s\n", line);
 		else
 			break ;
