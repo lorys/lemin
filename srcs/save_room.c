@@ -21,7 +21,7 @@ t_tube		*parse_room(char *name, int x, int y)
 	if (!(new->name = ft_strdup(name)))
 	{
 		ft_memdel((void **)&new);
-		return (new);
+		return (NULL);
 	}
 	new->x = x;
 	new->y = y;
@@ -33,17 +33,20 @@ t_tube		*parse_room(char *name, int x, int y)
 	return (new);
 }
 
-//TODO save room in pointer pointer
 void		save_room(t_tube **room_listp, t_tube *room)
 {
 	t_tube	*tmp;
 
-	if (!room_listp || !(*room_listp))
-		return (room);
+	if (!room_listp || !room)
+		return ;
+	if (!(*room_listp))
+	{
+		*room_listp = room;
+		return ;
+	}
 	tmp = *room_listp;
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = room;
 	room->prev = tmp;
-	*room_listp = ;
 }

@@ -15,7 +15,7 @@ NAME_1		= visualizer
 
 CC			= gcc
 C_FLAGS		= -Wall -Wextra -Werror
-LD_FLAGS	= 
+LD_FLAGS	=
 
 OBJDIR		= obj/
 SRCDIR		= srcs/
@@ -87,7 +87,7 @@ export CC C_FLAGS LD_FLAGS
 
 .PHONY: all clean fclean re norm
 
-all: $(NAME) $(NAME_1)
+all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
 	@$(CC) -o $@ -L$(LIBDIR) -lft $(OBJ) $(C_FLAGS) $(LD_FLAGS)

@@ -34,9 +34,11 @@ t_tube		*is_room_valid(char *line, t_tube *room_list, int nline)
 {
 	int		i;
 	char	**tmp;
+	t_tube	*new;
 
 	i = 0;
 	tmp = ft_strsplit(line, ' ');
+	new = NULL;
 	while (tmp[i])
 		i++;
 	if ((i != 3 || **tmp == 'L' || **tmp == '#' || !ft_strisnumber(tmp[1]) || \
@@ -47,9 +49,9 @@ t_tube		*is_room_valid(char *line, t_tube *room_list, int nline)
 	else if (find_room(tmp[0], room_list))
 		error_parsing("room already exists", nline);
 	else
-		return (parse_room(tmp[0], ft_atoi(tmp[1]), ft_atoi(tmp[2])));
+		new = parse_room(tmp[0], ft_atoi(tmp[1]), ft_atoi(tmp[2]));
 	free_char_tab(tmp);
-	return (NULL);
+	return (new);
 }
 
 int			save_tube_if_valid(char *line, t_tube *rooms, int nline)
@@ -62,15 +64,17 @@ int			save_tube_if_valid(char *line, t_tube *rooms, int nline)
 	return (0);
 }
 
-int			save_room_if_valid(char *line, t_tube **room_listp, nline)
+int			save_room_if_valid(char *line, t_tube **room_listp, int nline)
 {
 	t_tube 	*tmp;
 
 	tmp = is_room_valid(line, *room_listp, nline);
 	if (tmp)
 	{
-		save_room(tmp, room_listp);
+		save_room(room_listp, tmp);
+		return (1);
 	}
+	return (0);
 }
 
 int			check_overflow(char *str)

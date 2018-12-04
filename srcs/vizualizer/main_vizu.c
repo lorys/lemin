@@ -92,7 +92,7 @@ int				main(void)
 	if (!(tube = (t_tube *)malloc(sizeof(t_tube))) \
 	|| !(infos = (t_infos *)malloc(sizeof(t_infos))))
 		exit(EXIT_FAILURE);
-	set_tube(tube);
+	//set_tube(tube);
 	set_infos(infos);
 	parse(tube, infos);
 	if (!tube->name)

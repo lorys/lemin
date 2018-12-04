@@ -19,13 +19,13 @@ t_tube		*find_room(char *room_name, t_tube *room_list)
 	if (!room_name || !room_list)
 		return (NULL);
 	tmp = room_list;
-	while (room_list->prev != NULL && room_list->name)
+	while (room_list)
 	{
 		if (!ft_strcmp(room_list->name, room_name))
 			return (room_list);
 		room_list = room_list->prev;
 	}	
-	while (tmp->next != NULL && tmp->name)
+	while (tmp)
 	{
 		if (!ft_strcmp(tmp->name, room_name))
 			return (tmp);
