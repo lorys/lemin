@@ -59,7 +59,7 @@ static int		add_start_or_end_room(char *line, t_tube **to_change, \
 	return (0);
 }
 
-static int		line_is_valid(t_tube **room_listp, t_infos *infos, \
+int				line_is_valid(t_tube **room_listp, t_infos *infos, \
 				char *line, int nline)
 {
 	static int	state = STATE_ROOMS;

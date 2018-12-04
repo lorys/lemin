@@ -18,6 +18,8 @@
 # define STATE_START_ROOM 3
 # define STATE_END_ROOM 4
 
+int				line_is_valid(t_tube **room_listp, t_infos *infos, \
+				char *line, int nline);
 t_tube			*is_room_valid(char *line, t_tube *room_list, int nline);
 int				is_tube_valid(char *line, t_tube *room_list, int nline);
 int				save_room_if_valid(char *line, t_tube **rooms, int nline);

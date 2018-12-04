@@ -14,7 +14,7 @@ NAME		= lem-in
 NAME_1		= visualizer
 
 CC			= gcc
-C_FLAGS		= -Wall -Wextra -Werror
+C_FLAGS		= -Wall -Wextra -Werror -g3 -fsanitize=address
 LD_FLAGS	=
 
 SRCDIR		= srcs/
@@ -87,7 +87,7 @@ export CC C_FLAGS LD_FLAGS
 
 .PHONY: all clean fclean re norm
 
-all: $(NAME)
+all: $(NAME) $(NAME_1)
 
 $(NAME): $(OBJ) $(LIBFT)
 	@$(CC) -o $@ -L$(LIBDIR) -lft $(OBJ) $(C_FLAGS) $(LD_FLAGS)

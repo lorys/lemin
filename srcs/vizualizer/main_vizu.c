@@ -87,25 +87,24 @@ static void		launch(t_tube *tube)
 int				main(void)
 {
 	t_infos		*infos;
-	t_tube		*tube;
+	t_tube		*room_list;
 
-	if (!(tube = (t_tube *)malloc(sizeof(t_tube))) \
-	|| !(infos = (t_infos *)malloc(sizeof(t_infos))))
+	if (!(infos = (t_infos *)malloc(sizeof(t_infos))))
 		exit(EXIT_FAILURE);
-	//set_tube(tube);
+	
 	set_infos(infos);
-	parse(tube, infos);
-	if (!tube->name)
+	parse(&room_list, infos);
+	if (!room_list)
 	{
-		free_everything(tube, infos, NULL);
+		free_everything(room_list, infos, NULL);
 		return (EXIT_FAILURE);
 	}
 	initscr();
 	start_color();
 	init_pair(1, COLOR_RED, COLOR_BLACK);
-	launch(tube);
+	launch(room_list);
 	refresh();
-	free_everything(tube, infos, NULL);
+	free_everything(room_list, infos, NULL);
 	sleep(1000);
 	endwin();
 	return (EXIT_SUCCESS);
