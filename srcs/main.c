@@ -38,8 +38,8 @@ int				main(int argc, char **argv)
 	t_paths		*paths;
 
 	if (!(paths = (t_paths *)malloc(sizeof(t_paths)))\
-			|| !(infos = (t_infos *)malloc(sizeof(t_infos))))
-		exit(EXIT_FAILURE);
+		|| !(infos = (t_infos *)malloc(sizeof(t_infos))))
+		return (EXIT_FAILURE);
 	room_list = NULL;
 	set_infos(infos);
 	set_paths(paths);

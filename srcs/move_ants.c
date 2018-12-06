@@ -49,9 +49,9 @@ static void		fill_buffer(char *str, char *buffer)
 				buffer[i+a] = str[a];
 				a++;
 			}
-			if (a+i == BUFFER_SIZE)
+			if (a + i == BUFFER_SIZE)
 			{
-				write(1, buffer, ft_strlen(buffer));
+				write(1, buffer, BUFFER_SIZE);
 				buffer[0] = '\0';
 			}
 		}

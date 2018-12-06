@@ -6,6 +6,7 @@ lem_in
 lem-in
 vizualizer
 visualizer
+generator
 !srcs/vizualizer
 .vscode
 .DS_Store

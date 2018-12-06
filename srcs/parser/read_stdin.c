@@ -105,5 +105,19 @@ int				read_stdin(t_tube **room_listp, t_infos *infos)
 	write(1, "\n", 1);
 	if (infos->fourmis <= 0)
 		return (0);
+	// t_tube	*tmp = *room_listp;
+	// t_paths	*tmp1;
+	// while (tmp)
+	// {
+	// 	ft_printf("Room name: %s\n", tmp->name);
+	// 	tmp1 = tmp->links;
+	// 	while (tmp1)
+	// 	{
+	// 		ft_printf("Link name: %p\n", tmp1->room);
+	// 		tmp1 = tmp1->next;
+	// 	}
+	// 	ft_putchar('\n');
+	// 	tmp = tmp->next;
+	// }
 	return (1);
 }

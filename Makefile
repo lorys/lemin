@@ -14,7 +14,7 @@ NAME		= lem-in
 NAME_1		= visualizer
 
 CC			= gcc
-C_FLAGS		= -Wall -Wextra -Werror -g3 -fsanitize=address
+C_FLAGS		= -Wall -Wextra -Werror
 LD_FLAGS	=
 
 SRCDIR		= srcs/
@@ -36,12 +36,12 @@ H_FILES_1	= lem_in.h \
 C_FILES		= main.c \
 			find_path.c \
 			find_room.c \
-			make_tube.c \
 			realloc_links.c \
 			save_room.c \
 			show_struct.c \
 			parser/read_stdin.c \
 			paser/errors.c \
+			parser/links.c \
 			toend.c \
 			ft_tubelen.c \
 			move_ants.c \
@@ -59,9 +59,9 @@ C_FILES_1	= vizualizer/main_vizu.c \
 			vizualizer/parser.c \
 			parser/read_stdin.c \
 			parser/errors.c \
+			parser/links.c \
 			set_tube.c \
 			save_room.c \
-			make_tube.c \
 			utils.c \
 			free_everything.c \
 			free_char_tab.c \
@@ -87,7 +87,7 @@ export CC C_FLAGS LD_FLAGS
 
 .PHONY: all clean fclean re norm
 
-all: $(NAME) $(NAME_1)
+all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
 	@$(CC) -o $@ -L$(LIBDIR) -lft $(OBJ) $(C_FLAGS) $(LD_FLAGS)

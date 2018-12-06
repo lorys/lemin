@@ -20,11 +20,11 @@ static int	check_every_path(t_tube *room, t_paths *paths, t_infos *infos,\
 	
 	found = 0;
 	tmp = room->links;
-	while (tmp->prev)
+	while (tmp && tmp->prev)
 		tmp = tmp->prev;
 	while (tmp)
 	{
-		if ((tmp->room->vu || tmp->room == from))
+		if (tmp->room && (tmp->room->vu || tmp->room == from))
 		{
 			tmp = tmp->next;
 			continue;
@@ -46,7 +46,7 @@ static int	check_links_end(t_tube *room, t_infos *infos, t_paths *paths)
 	t_paths *tmp;
 
 	tmp = room->links;
-	while (tmp->prev)
+	while (tmp && tmp->prev)
 		tmp = tmp->prev;
 	while (tmp)
 	{
@@ -63,7 +63,7 @@ static int	check_links_end(t_tube *room, t_infos *infos, t_paths *paths)
 }
 
 int			find_path(t_tube *room, t_infos *infos, t_tube *from, \
-		t_paths *paths)
+			t_paths *paths)
 {
 	int	found;
 

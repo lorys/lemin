@@ -20,13 +20,14 @@
 # include "get_next_line.h"
 
 # define DEBUG 1
-# define BUFFER_SIZE 1000
+# define BUFFER_SIZE 5000
 
 typedef	struct	s_paths {
 	struct s_paths	*next;
 	struct s_paths	*prev;
 	struct s_tube	*room;
 }				t_paths;
+
 typedef	struct	s_tube {
 	char			*name;
 	int				x;
