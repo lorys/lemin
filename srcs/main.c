@@ -33,23 +33,22 @@ static	void	bonus_manager(int argc, char **argv, t_infos *infos)
 
 int				main(int argc, char **argv)
 {
+	t_tube		*room_list;
 	t_infos		*infos;
-	t_tube		*tube;
 	t_paths		*paths;
 
-	if (!(tube = (t_tube *)malloc(sizeof(t_tube)))\
-			|| !(paths = (t_paths *)malloc(sizeof(t_paths)))\
+	if (!(paths = (t_paths *)malloc(sizeof(t_paths)))\
 			|| !(infos = (t_infos *)malloc(sizeof(t_infos))))
 		exit(EXIT_FAILURE);
-	set_tube(tube);
+	room_list = NULL;
 	set_infos(infos);
 	set_paths(paths);
 	bonus_manager(argc, argv, infos);
-	read_stdin(tube, infos);
-	if (!tube->name || !infos->start || !infos->end || infos->fourmis <= 0)
-		display_error(tube, paths, infos);
+	read_stdin(&room_list, infos);
+	if (!room_list || !infos->start || !infos->end || infos->fourmis <= 0)
+		display_error(room_list, paths, infos);
 	else
-		set_research(infos, paths, tube);
-	free_everything(tube, infos, paths);
+		set_research(infos, paths, room_list);
+	free_everything(room_list, infos, paths);
 	return (EXIT_SUCCESS);
 }

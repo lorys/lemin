@@ -21,7 +21,7 @@ static void		init_anthill(t_anthill *anthill, t_tube *rooms)
 	anthill->max_y = rooms->y;
 	anthill->max_x = rooms->x;
 	anthill->min_y = rooms->y;
-	while (rooms->name)
+	while (rooms)
 	{
 		if (rooms->x < anthill->min_x)
 			anthill->min_x = rooms->x;
@@ -37,75 +37,103 @@ static void		init_anthill(t_anthill *anthill, t_tube *rooms)
 	anthill->width = anthill->max_x - anthill->min_x;
 }
 
-static void		set_real_position(t_tube *tube, t_anthill *anthill, \
+static void		compute_real_position(t_tube *room_list, t_anthill *anthill, \
 				int *height, int *width)
 {
 	*height -= *height * 0.1;
 	*width -= *width * 0.1;
-	while (tube->name)
+	while (room_list)
 	{
-		tube->x = ((*width * tube->x) + *width * 0.2) / (anthill->max_x);
-		tube->y = ((*height * tube->y) + *height * 0.2) / (anthill->max_y);
-		tube = tube->next;
+		room_list->x = ((*width * room_list->x) / (anthill->max_x)) + (*width * 0.05);
+		room_list->y = ((*height * room_list->y) / (anthill->max_y)) + (*height * 0.05);
+		room_list = room_list->next;
 	}
 }
 
-static void		display_map(t_tube *tube)
+static void		display_map(t_tube *room_list)
 {
 	t_tube		**links;
 
-	if (tube->name)
+	if (room_list)
 	{
-		links = tube->links;
+		links = room_list->links;
 		while (links && *links)
 		{
-			plot_line(tube->x, tube->y, (*links)->x, (*links)->y);
+			plot_line(room_list->x, room_list->y, (*links)->x, (*links)->y);
 			links++;
 		}
-		display_map(tube->next);
+		display_map(room_list->next);
 		attron(A_BOLD);
 		attron(COLOR_PAIR(1));
-		mvprintw(tube->y, tube->x - (ft_strlen(tube->name) + 2) / 2, \
-		"[%.5s]", tube->name);
+		mvprintw(room_list->y, room_list->x - (ft_strlen(room_list->name) + 2) / 2, \
+		"[%.5s]", room_list->name);
 		attroff(COLOR_PAIR(1));
 		attroff(A_BOLD);
 	}
 }
 
-static void		launch(t_tube *tube)
+static void		draw_map(t_tube *room_list)
 {
 	int			screen_height;
 	int			screen_width;
 	t_anthill	anthill;
 
-	init_anthill(&anthill, tube);
+	init_anthill(&anthill, room_list);
 	getmaxyx(stdscr, screen_height, screen_width);
-	set_real_position(tube, &anthill, &screen_height, &screen_width);
-	display_map(tube);
+	compute_real_position(room_list, &anthill, &screen_height, &screen_width);
+	display_map(room_list);
+}
+
+// static t_ant	*find_ant(char *name, t_ant *ant_list)
+// {
+
+// }
+
+// static int		parse_line(t_ant *antlist)
+// {
+// 	t_ant		*current_ant;
+
+// 	if (*line++ != 'L')
+// 		return (0);
+// 	current_ant = find_ant(line);
+// }
+
+static void		do_animation(t_tube *room_list)
+{
+	char		*line;
+
+	(void)room_list;
+	while (get_next_line(0, &line) > 0)
+	{
+		
+		ft_strdel(&line);
+	}
+	ft_strdel(&line);
 }
 
 int				main(void)
 {
 	t_infos		*infos;
-	t_tube		*tube;
+	t_tube		*room_list;
 
-	if (!(tube = (t_tube *)malloc(sizeof(t_tube))) \
-	|| !(infos = (t_infos *)malloc(sizeof(t_infos))))
-		exit(EXIT_FAILURE);
-	set_tube(tube);
+	if (!(infos = (t_infos *)malloc(sizeof(t_infos))))
+		return (EXIT_FAILURE);
+	room_list = NULL;
 	set_infos(infos);
-	parse(tube, infos);
-	if (!tube->name)
+	parse(&room_list, infos);
+	if (!room_list)
 	{
-		free_everything(tube, infos, NULL);
+		free_everything(room_list, infos, NULL);
 		return (EXIT_FAILURE);
 	}
 	initscr();
+	curs_set(0);
 	start_color();
 	init_pair(1, COLOR_RED, COLOR_BLACK);
-	launch(tube);
+	draw_map(room_list);
 	refresh();
-	free_everything(tube, infos, NULL);
+	do_animation(room_list);
+	free_everything(room_list, infos, NULL);
 	sleep(1000);
 	endwin();
 	return (EXIT_SUCCESS);

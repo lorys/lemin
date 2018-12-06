@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_tube.c                                         :+:      :+:    :+:   */
+/*   set_room.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,18 +11,6 @@
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-void	set_tube(t_tube *tube)
-{
-	tube->prev = NULL;
-	tube->next = NULL;
-	tube->name = NULL;
-	tube->ants = 0;
-	tube->x = 0;
-	tube->y = 0;
-	tube->vu = 0;
-	tube->links = NULL;
-}
 
 void	set_infos(t_infos *infos)
 {
