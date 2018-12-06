@@ -25,6 +25,12 @@ typedef struct	s_anthill
 	int			width;
 }				t_anthill;
 
+typedef struct	s_ant
+{
+	int			name;
+	t_tube		*current_room;
+}				t_ant;
+
 int				parse(t_tube **room_listp, t_infos *infos);
 void			plot_line(int x0, int y0, int x1, int y1);
 
