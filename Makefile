@@ -14,13 +14,13 @@ NAME		= lem-in
 NAME_1		= visualizer
 
 CC			= gcc
-C_FLAGS		= -Wall -Wextra -Werror
-LD_FLAGS	= 
+C_FLAGS		= -Wall -Wextra -Werror -g3 -fsanitize=address
+LD_FLAGS	=
 
-OBJDIR		= obj/
 SRCDIR		= srcs/
 INCLDIR		= header/
 LIBDIR		= libft/
+OBJDIR		= obj/
 
 H_FILES		= lem_in.h \
 			libft.h \

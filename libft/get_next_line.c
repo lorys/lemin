@@ -3,101 +3,84 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: pcarles <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/27 14:51:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/29 05:17:45 by llopez           ###   ########.fr       */
+/*   Created: 2017/12/05 15:34:07 by pcarles           #+#    #+#             */
+/*   Updated: 2017/12/07 17:49:38 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
 #include <unistd.h>
+#include <stdlib.h>
+#include <limits.h>
+#include "libft.h"
+#include "get_next_line.h"
 
-static int		find_break(char *str)
+static char	*join_until(char *s1, char *s2, char c)
 {
-	int i;
+	char	*p;
+	int		i;
+	int		j;
 
 	i = 0;
-	while (str[i])
-		if (str[i++] == '\n')
-			return (i - 1);
-	return (-1);
-}
-
-static char		*ft_strfjoin(char *s1, char const *s2)
-{
-	char		*alloc;
-	int			s_len[2];
-	int			i;
-	int			x;
-
+	j = 0;
+	while (s2[i] && s2[i] != c)
+		i++;
+	p = ft_strnew(ft_strlen(s1) + i);
 	i = 0;
-	x = 0;
-	s_len[0] = ft_strlen(s1);
-	s_len[1] = ft_strlen(s2);
-	if (!s1 || !s2)
-		return (NULL);
-	alloc = ft_strnew(s_len[0] + s_len[1]);
-	if (!alloc)
-		return (NULL);
-	while (s1[i] != '\0')
-		alloc[x++] = s1[i++];
-	i = 0;
-	while (s2[i] != '\0')
-		alloc[x++] = s2[i++];
-	alloc[x] = '\0';
+	while (s1[i])
+	{
+		p[i] = s1[i];
+		i++;
+	}
 	free(s1);
-	return (alloc);
+	while (s2[j] && s2[j] != c)
+		p[i++] = s2[j++];
+	return (p);
 }
 
-static int		ft_fill_buff(int fd, char **line, char **buff)
+static int	put_rest(char **rest, char **line)
 {
-	int			break_found;
-	int			i_buff;
-	char		line_read[BUFF_SIZE + 1];
+	char	*tmp;
 
-	while ((i_buff = read(fd, line_read, BUFF_SIZE)) > 0)
+	if (*rest)
 	{
-		line_read[i_buff] = '\0';
-		break_found = find_break(line_read);
-		if (break_found > -1)
+		if ((tmp = ft_strchr(*rest, '\n')))
 		{
-			line_read[break_found] = '\0';
-			*line = ft_strfjoin(*line, line_read);
-			*buff = ft_strfjoin(*buff, (line_read + break_found + 1));
+			*line = join_until(*line, *rest, '\n');
+			tmp = ft_strdup(tmp + 1);
+			free(*rest);
+			*rest = tmp;
 			return (1);
 		}
-		else
-			*line = ft_strfjoin(*line, line_read);
+		*line = join_until(*line, *rest, '\n');
+		ft_memdel((void**)&*rest);
 	}
-	return (ft_strlen(*line) > 0);
+	return (0);
 }
 
-int				get_next_line(const int fd, char **line)
+int			get_next_line(const int fd, char **line)
 {
-	static char	*buff[1000];
+	char		buff[BUFF_SIZE + 1];
+	static char	*lst[OPEN_MAX] = {NULL};
+	int			count;
 
-	if (fd < 0 || read(fd, NULL, 0) == -1 || line == NULL)
+	if (fd < 0 || !line || BUFF_SIZE < 1 || fd > OPEN_MAX)
 		return (-1);
-	if (buff[fd] != NULL)
+	*line = ft_strnew(0);
+	if (put_rest(&lst[fd], line))
+		return (1);
+	while ((count = read(fd, buff, BUFF_SIZE)))
 	{
-		if (find_break(buff[fd]) > -1)
+		if (count == -1)
+			return (-1);
+		buff[count] = '\0';
+		*line = join_until(*line, buff, '\n');
+		if ((lst[fd] = ft_strchr(buff, '\n')))
 		{
-			*line = ft_strndup(buff[fd], find_break(buff[fd]));
-			ft_strcpy(buff[fd], (buff[fd] + find_break(buff[fd]) + 1));
-			return (1);
-		}
-		else
-		{
-			*line = ft_strdup(buff[fd]);
-			free(buff[fd]);
-			buff[fd] = ft_strnew(0);
+			lst[fd] = ft_strdup(lst[fd] + 1);
+			break ;
 		}
 	}
-	else
-	{
-		buff[fd] = ft_strnew(0);
-		*line = ft_strnew(0);
-	}
-	return (ft_fill_buff(fd, line, &buff[fd]));
+	return (count == 0 && ft_strlen(*line) == 0 ? 0 : 1);
 }

@@ -12,19 +12,20 @@
 
 #include "lem_in.h"
 
-int		ft_strisdigit(char *str)
+int		ft_stris(char *str, int (*f)(int c))
 {
 	while (*str)
 	{
-		if (!ft_isdigit(*str))
+		if (!f((int)*str))
 			return (0);
 		str++;
 	}
 	return (1);
 }
 
-int		int_free(void *data)
+int		ft_strisnumber(char *str)
 {
-	free(data);
-	return (1);
+	if (*str == '-' || *str == '+')
+		str++;
+	return (ft_stris(str, &ft_isdigit));
 }

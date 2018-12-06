@@ -14,12 +14,11 @@
 
 int				make_tube(char *line, t_tube *tube)
 {
-	int		ret;
 	char	**split_tmp;
 	t_tube	*room_first;
 	t_tube	*room_second;
 
-	ret = 0;
+
 	split_tmp = ft_strsplit(line, '-');
 	room_first = find_room(split_tmp[0], &tube);
 	room_second = find_room(split_tmp[1], &tube);
@@ -30,5 +29,4 @@ int				make_tube(char *line, t_tube *tube)
 		ret = 1;
 	}
 	free_char_tab(split_tmp);
-	return (ret);
 }

@@ -12,11 +12,11 @@
 
 #include "lem_in.h"
 
-void	free_everything(t_tube *tube, t_infos *infos, t_paths *paths)
+void	free_everything(t_tube *room_list, t_infos *infos, t_paths *paths)
 {
-	free_list(toend(tube));
+	free_list(room_list);
 	free(infos);
-	while (paths && paths->next)
-		paths = paths->next;
+	while (paths && paths->prev)
+		paths = paths->prev;
 	free_paths(paths);
 }

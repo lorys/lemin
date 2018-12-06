@@ -12,28 +12,21 @@
 
 #include "lem_in.h"
 
-void	free_list(t_tube *list)
+void	free_list(t_tube *room_list)
 {
-	t_tube *tmp;
-
-	if (!list)
+	if (!room_list)
 		return ;
-	tmp = list->prev;
-	free(list->name);
-	free(list->links);
-	free(list);
-	if (tmp)
-		free_list(tmp);
+	free(room_list->name);
+	free(room_list->links);
+	free_list(room_list->next);
+	free(room_list);
 }
 
-void	free_paths(t_paths *paths)
+void	free_paths(t_paths *path_list)
 {
-	t_paths *tmp;
 
-	if (!paths)
+	if (!path_list)
 		return ;
-	tmp = paths->prev;
-	free(paths);
-	if (tmp)
-		free_paths(tmp);
+	free_paths(path_list->next);
+	free(path_list);
 }
