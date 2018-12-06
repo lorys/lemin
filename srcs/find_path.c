@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 22:12:07 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/29 23:41:33 by llopez           ###   ########.fr       */
+/*   Updated: 2018/12/06 18:41:38 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,42 +15,55 @@
 static int	check_every_path(t_tube *room, t_paths *paths, t_infos *infos,\
 		t_tube *from)
 {
-	int	i;
-	int found;
-
+	t_paths		*tmp;
+	int			found;
+	
 	found = 0;
-	i = 0;
-	while (room->links && room->links[i])
+	tmp = room->links;
+	while (tmp->prev)
 	{
-		if ((room->links[i]->vu || room->links[i] == from) && ++i)
+		printf("%p (%s) retour %p (%s)\n", tmp, tmp->room->name, tmp->prev, tmp->prev->room->name);
+		tmp = tmp->prev;
+	}
+	while (tmp)
+	{
+		if ((tmp->room->vu || tmp->room == from))
+		{
+			tmp = tmp->next;
 			continue;
-		if (find_path(room->links[i], infos, room, paths))
+		}
+		if (find_path(tmp->room, infos, room, paths))
 		{
 			found++;
 			realloc_paths(paths, room);
-			if (room->links[i + 1])
+			if (tmp->next && room->links->next)
 				realloc_paths(paths, from);
 		}
-		i++;
+		tmp = tmp->next;
 	}
 	return (found);
 }
 
 static int	check_links_end(t_tube *room, t_infos *infos, t_paths *paths)
 {
-	int i;
+	t_paths *tmp;
 
-	i = 0;
-	while (room->links && room->links[i])
+	tmp = room->links;
+	while (tmp->prev)
 	{
-		if (room->links[i] == infos->end)
+		printf("retour\n");
+		tmp = tmp->prev;
+	}
+	while (tmp)
+	{
+		if (tmp->room == infos->end)
 		{
-			realloc_paths(paths, room->links[i]);
+			realloc_paths(paths, tmp->room);
 			realloc_paths(paths, room);
 			room->vu = 0;
 			return (1);
 		}
-		i++;
+		tmp = tmp->next;
 	}
 	return (0);
 }

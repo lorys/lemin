@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:03:15 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/03 20:40:41 by llopez           ###   ########.fr       */
+/*   Updated: 2018/12/06 18:33:53 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,24 @@ static void		fill_buffer(char *str, char *buffer)
 
 	a = 0;
 	i = 0;
-	while (i < 2000)
+	while (i < 6000)
 	{
 		if (buffer[i] == '\0')
 		{
-			while (str[a] && a+i < 2000)
+			while (a+i < 6000)
 			{
+				if (!str[a])
+				{
+					buffer[i+a] = '\0';
+					break;
+				}
 				buffer[i+a] = str[a];
 				a++;
 			}
-			if (a+i == 2000)
+			if (a+i == 6000)
 			{
 				write(1, buffer, ft_strlen(buffer));
-				bzero(buffer, 2000);
+				buffer[0] = '\0';
 			}
 		}
 		i++;
@@ -56,7 +61,6 @@ static void		fill_buffer(char *str, char *buffer)
 
 static void		show_ant(int l, t_tube *room, t_infos *infos, char *buffer)
 {
-	(void)buffer;
 	if (infos->select == l)
 	{
 		fill_buffer("\033[41mL", buffer);
@@ -110,13 +114,13 @@ void			move_ants(t_paths *paths, t_infos *infos, char *buffer)
 
 	ants_moved = 0;
 	i = infos->end->ants;
-	while ((i + 1) < infos->fourmis)
+	while (i < infos->fourmis)
 	{
 		if (change_room((i + 1), paths, infos))
 		{
 			if (ants_moved)
 				fill_buffer(" ", buffer);
-			show_ant((i + 1), whereis((i + 1), paths, infos), infos, buffer);
+			show_ant(i, whereis((i + 1), paths, infos), infos, buffer);
 			ants_moved++;
 		}
 		i++;

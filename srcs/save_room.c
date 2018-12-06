@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 22:11:45 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/30 08:16:56 by llopez           ###   ########.fr       */
+/*   Updated: 2018/12/04 23:12:33 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ int		save_room(t_tube **tube, char *name, int x, int y)
 	(*tube)->y = y;
 	(*tube)->vu = 0;
 	(*tube)->ants = 0;
-	(*tube)->links = NULL;
+	(*tube)->links = (t_paths *)malloc(sizeof(t_paths));
+	(*tube)->links->prev = NULL;
+	(*tube)->links->next = NULL;
+	(*tube)->links->room = NULL;
 	if (!((*tube)->next = malloc(sizeof(t_tube))))
 		return (0);
 	set_tube((*tube)->next);
@@ -29,5 +32,9 @@ int		save_room(t_tube **tube, char *name, int x, int y)
 	(*tube)->next->name = NULL;
 	(*tube)->next->next = NULL;
 	(*tube) = (*tube)->next;
+	(*tube)->links = (t_paths *)malloc(sizeof(t_paths));
+	(*tube)->links->prev = NULL;
+	(*tube)->links->next = NULL;
+	(*tube)->links->room = NULL;
 	return (1);
 }

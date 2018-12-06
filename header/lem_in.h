@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 05:43:04 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/03 20:17:59 by llopez           ###   ########.fr       */
+/*   Updated: 2018/12/04 21:30:22 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,13 @@
 # include "ft_printf.h"
 # include "get_next_line.h"
 
-# define DEBUG 0
+# define DEBUG 1
+
+typedef	struct	s_paths {
+	struct s_paths	*next;
+	struct s_paths	*prev;
+	struct s_tube	*room;
+}				t_paths;
 
 typedef	struct	s_tube {
 	char			*name;
@@ -27,7 +33,7 @@ typedef	struct	s_tube {
 	int				y;
 	int				vu;
 	int				ants;
-	struct s_tube	**links;
+	struct s_paths	*links;
 	struct s_tube	*next;
 	struct s_tube	*prev;
 }				t_tube;
@@ -41,12 +47,6 @@ typedef	struct	s_infos {
 	int				bonusants;
 }				t_infos;
 
-typedef	struct	s_paths {
-	struct s_paths		*next;
-	struct s_paths		*prev;
-	struct s_tube		*room;
-}				t_paths;
-
 typedef	struct	s_next {
 	struct s_tube	*room;
 	int				steps;
@@ -54,14 +54,12 @@ typedef	struct	s_next {
 
 t_tube			*found_next(t_tube *next, t_next *possible, t_next *shortest);
 void			free_paths(t_paths *paths);
-t_tube			**realloc_links(t_tube *tube, t_tube *add);
 void			realloc_paths(t_paths *tube, t_tube *add);
 int				find_path(t_tube *room, t_infos *infos, t_tube *from,\
 			t_paths *paths);
 t_tube			*find_room(char *name, t_tube **list);
 int				make_tube(char *line, t_tube *tube);
 int				save_room(t_tube **tube, char *name, int x, int y);
-void			show_struct(t_tube **tube);
 int				read_stdin(t_tube *tube, t_infos *infos);
 t_tube			*toend(t_tube *tube);
 int				ft_tubelen(t_tube *len);
