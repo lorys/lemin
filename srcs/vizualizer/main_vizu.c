@@ -21,7 +21,7 @@ static void		init_anthill(t_anthill *anthill, t_tube *rooms)
 	anthill->max_y = rooms->y;
 	anthill->max_x = rooms->x;
 	anthill->min_y = rooms->y;
-	while (rooms->name)
+	while (rooms)
 	{
 		if (rooms->x < anthill->min_x)
 			anthill->min_x = rooms->x;
@@ -42,10 +42,10 @@ static void		set_real_position(t_tube *tube, t_anthill *anthill, \
 {
 	*height -= *height * 0.1;
 	*width -= *width * 0.1;
-	while (tube->name)
+	while (tube)
 	{
-		tube->x = ((*width * tube->x) + *width * 0.2) / (anthill->max_x);
-		tube->y = ((*height * tube->y) + *height * 0.2) / (anthill->max_y);
+		tube->x = ((*width * tube->x) / (anthill->max_x)) + (*width * 0.05);
+		tube->y = ((*height * tube->y) / (anthill->max_y)) + (*height * 0.05);
 		tube = tube->next;
 	}
 }
@@ -54,7 +54,7 @@ static void		display_map(t_tube *tube)
 {
 	t_tube		**links;
 
-	if (tube->name)
+	if (tube)
 	{
 		links = tube->links;
 		while (links && *links)
@@ -90,8 +90,8 @@ int				main(void)
 	t_tube		*room_list;
 
 	if (!(infos = (t_infos *)malloc(sizeof(t_infos))))
-		exit(EXIT_FAILURE);
-	
+		return (EXIT_FAILURE);
+	room_list = NULL;
 	set_infos(infos);
 	parse(&room_list, infos);
 	if (!room_list)
@@ -100,6 +100,7 @@ int				main(void)
 		return (EXIT_FAILURE);
 	}
 	initscr();
+	curs_set(0);
 	start_color();
 	init_pair(1, COLOR_RED, COLOR_BLACK);
 	launch(room_list);

@@ -16,12 +16,16 @@
 int				parse(t_tube **room_listp, t_infos *infos)
 {
 	char		*line;
+	int			nline;
 	int			ret;
 
 	line = NULL;
-	while (get_next_line(0, &line) > 0)
+	nline = 0;
+	while (get_next_line(0, &line) > 0 && ++nline)
 	{
-		ret = line_is_valid(room_listp, infos, line, 0);
+		if (*line == '\0')
+			break ;
+		ret = line_is_valid(room_listp, infos, line, nline);
 		if (!ret)
 			break ;
 		ft_strdel(&line);
