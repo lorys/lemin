@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:03:15 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/06 18:33:53 by llopez           ###   ########.fr       */
+/*   Updated: 2018/12/06 19:01:54 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ static void		fill_buffer(char *str, char *buffer)
 
 	a = 0;
 	i = 0;
-	while (i < 6000)
+	while (i < BUFFER_SIZE)
 	{
 		if (buffer[i] == '\0')
 		{
-			while (a+i < 6000)
+			while (a+i < BUFFER_SIZE)
 			{
 				if (!str[a])
 				{
@@ -49,7 +49,7 @@ static void		fill_buffer(char *str, char *buffer)
 				buffer[i+a] = str[a];
 				a++;
 			}
-			if (a+i == 6000)
+			if (a+i == BUFFER_SIZE)
 			{
 				write(1, buffer, ft_strlen(buffer));
 				buffer[0] = '\0';

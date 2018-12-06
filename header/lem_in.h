@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 05:43:04 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/04 21:30:22 by llopez           ###   ########.fr       */
+/*   Updated: 2018/12/06 19:05:09 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "get_next_line.h"
 
 # define DEBUG 1
+# define BUFFER_SIZE 1000
 
 typedef	struct	s_paths {
 	struct s_paths	*next;

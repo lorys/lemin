@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 22:12:07 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/06 18:41:38 by llopez           ###   ########.fr       */
+/*   Updated: 2018/12/06 19:03:57 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ static int	check_every_path(t_tube *room, t_paths *paths, t_infos *infos,\
 	found = 0;
 	tmp = room->links;
 	while (tmp->prev)
-	{
-		printf("%p (%s) retour %p (%s)\n", tmp, tmp->room->name, tmp->prev, tmp->prev->room->name);
 		tmp = tmp->prev;
-	}
 	while (tmp)
 	{
 		if ((tmp->room->vu || tmp->room == from))
@@ -50,10 +47,7 @@ static int	check_links_end(t_tube *room, t_infos *infos, t_paths *paths)
 
 	tmp = room->links;
 	while (tmp->prev)
-	{
-		printf("retour\n");
 		tmp = tmp->prev;
-	}
 	while (tmp)
 	{
 		if (tmp->room == infos->end)
