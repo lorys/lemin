@@ -33,7 +33,7 @@ t_tube		*create_room(char *name, int x, int y)
 	return (new);
 }
 
-void		save_room(t_tube **room_listp, t_tube *room)
+void		append_room(t_tube **room_listp, t_tube *room)
 {
 	t_tube	*tmp;
 

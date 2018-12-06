@@ -68,10 +68,9 @@ int			save_room_if_valid(char *line, t_tube **room_listp, int nline)
 {
 	t_tube 	*tmp;
 
-	tmp = is_room_valid(line, *room_listp, nline);
-	if (tmp)
+	if ((tmp = is_room_valid(line, *room_listp, nline)))
 	{
-		save_room(room_listp, tmp);
+		append_room(room_listp, tmp);
 		return (1);
 	}
 	return (0);
