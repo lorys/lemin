@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 11:28:05 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/12 06:18:57 by llopez           ###   ########.fr       */
+/*   Updated: 2018/12/04 19:10:01 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ int		ft_tubelen(t_tube *len)
 	int i;
 
 	i = 0;
-	while (len->links && len->links[i])
+	while (len->links && len->links->next)
+	{
+		len->links = len->links->next;
 		i++;
-	return (i - 1);
+	}
+	return (i);
 }
