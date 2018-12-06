@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:03:15 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/06 19:01:54 by llopez           ###   ########.fr       */
+/*   Updated: 2018/12/07 00:11:38 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ static void		fill_buffer(char *str, char *buffer)
 
 	a = 0;
 	i = 0;
-	while (i < BUFFER_SIZE)
-	{
+	while (i < BUFFER_SIZE && buffer[i] != '\0')
+		i++;
 		if (buffer[i] == '\0')
 		{
 			while (a+i < BUFFER_SIZE)
@@ -56,7 +56,6 @@ static void		fill_buffer(char *str, char *buffer)
 			}
 		}
 		i++;
-	}
 }
 
 static void		show_ant(int l, t_tube *room, t_infos *infos, char *buffer)
