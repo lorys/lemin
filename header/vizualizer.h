@@ -27,8 +27,11 @@ typedef struct	s_anthill
 
 typedef struct	s_ant
 {
-	int			name;
-	t_tube		*current_room;
+	int				name;
+	int				color;
+	int				in_anthill;
+	t_tube			*current_room;
+	struct s_ant	*next;
 }				t_ant;
 
 int				parse(t_tube **room_listp, t_infos *infos);
