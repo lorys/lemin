@@ -142,17 +142,12 @@ static void		reset_ants(t_ant *ant_list)
 static void		display_ants(t_ant *ant_list)
 {
 	t_tube		*room;
-	char		*format;
 
 	while (ant_list)
 	{
-		if (ant_list->in_anthill)
-			format = "[L%.2d]";
-		else
-			format = "       ";
 		room = ant_list->current_room;
 		attron(COLOR_PAIR(ant_list->color));
-		mvprintw(room->y - 1, room->x - 2, format, ant_list->name);
+		mvprintw(room->y - 1, room->x - 2, "[L%.2d]", ant_list->name);
 		attroff(COLOR_PAIR(ant_list->color));
 		ant_list->in_anthill = 0;
 
@@ -165,15 +160,24 @@ static void		parse_line_ants(char *line, t_ant **ant_list, t_tube *room_list, t_
 	char		*tmp;
 	char		*room_name;
 
-	line++;
-	while((tmp = ft_strchr(line, ' ')))
+	while(*line)
 	{
+		if (*line++ != 'L')
+			return ;
+		if (!(tmp = ft_strchr(line, ' ')))
+			break ;
 		*tmp = '\0';
 		room_name = ft_strdup(ft_strchr(line, '-') + 1);
 		*tmp = '\n';
 		move_ant(ft_atoi(line), room_name, ant_list, room_list, &infos->fourmis);
 		ft_strdel(&room_name);
-		line = tmp + 2;
+		line = tmp + 1;
+	}
+	if (*line)
+	{
+		room_name = ft_strdup(ft_strchr(line, '-') + 1);
+		move_ant(ft_atoi(line), room_name, ant_list, room_list, &infos->fourmis);
+		ft_strdel(&room_name);
 	}
 }
 
@@ -195,7 +199,7 @@ static void		parse_ants(t_tube *room_list, t_infos *infos)
 		mvprintw(0, 0, "ligne:%d", nline);
 		mvprintw(infos->start->y - 1, infos->start->x - 2, "[%d]", infos->fourmis);
 		refresh();
-		sleep(1);
+		sleep(2);
 	}
 	ft_strdel(&line);
 }
