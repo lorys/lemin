@@ -6,7 +6,7 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2018/11/30 11:37:34 by llopez           ###   ########.fr        #
+#    Updated: 2018/12/07 04:56:08 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,6 @@ C_FILES		= main.c \
 			find_room.c \
 			realloc_links.c \
 			save_room.c \
-			show_struct.c \
 			parser/read_stdin.c \
 			paser/errors.c \
 			parser/links.c \

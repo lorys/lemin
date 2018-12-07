@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:03:15 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/07 01:30:05 by llopez           ###   ########.fr       */
+/*   Updated: 2018/12/07 07:26:52 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,29 @@ static t_tube	*whereis(int ants, t_paths *paths, t_infos *infos)
 	return (infos->start);
 }
 
- void			fill_buffer(const char *str, char *buffer, int print)
+void			fill_buffer(const char *str, char *buffer, int print,\
+		t_infos *infos)
 {
 	static size_t	index = 0;
 	int				str_len;
 	char			*tmp;
 
-	if (print)
+	if (print || infos->bonus || infos->select > 0)
 	{
-		write(1, buffer, index);
+		if (print)
+			write(1, buffer, index);
+		else
+			write(1, str, ft_strlen(str));
 		index = 0;
 		return ;
 	}
 	tmp = buffer + index;
 	str_len = ft_strlen(str);
-	if (index + str_len >= BUFFER_SIZE-1)
+	if (index + str_len >= BUFFER_SIZE - 1)
 	{
 		write(1, buffer, index);
 		index = 0;
-		fill_buffer(str, buffer, 1);
+		fill_buffer(str, buffer, 0, infos);
 		return ;
 	}
 	ft_memcpy(tmp, str, str_len);
@@ -55,28 +59,20 @@ static t_tube	*whereis(int ants, t_paths *paths, t_infos *infos)
 
 static void		show_ant(int l, t_tube *room, t_infos *infos, char *buffer)
 {
+	char	*tmp;
+
 	if (infos->select == l)
-	{
-		fill_buffer("\033[41mL", buffer, 0);
-		fill_buffer(ft_itoa(l), buffer, 0);
-		fill_buffer(room->name, buffer, 0);
-		fill_buffer("\033[0m", buffer, 0);
-	}
+		ft_printf("\033[41mL%d-%s\033[0m", l + 1, room->name);
 	else if (infos->bonus)
-	{
-		fill_buffer("\033[", buffer, 0);
-		fill_buffer(ft_itoa(l), buffer, 0);
-		fill_buffer("mL", buffer, 0);
-		fill_buffer(ft_itoa(l), buffer, 0);
-		fill_buffer(room->name, buffer, 0);
-		fill_buffer("\033[0m", buffer, 0);
-	}
+		ft_printf("\033[%dmL%d-%s\033[0m", l, l + 1, room->name);
 	else
 	{
-		fill_buffer("L", buffer, 0);
-		fill_buffer(ft_itoa(l + 1), buffer, 0);
-		fill_buffer("-", buffer, 0);
-		fill_buffer(room->name, buffer, 0);
+		tmp = ft_itoa(l + 1);
+		fill_buffer("L", buffer, 0, infos);
+		fill_buffer(tmp, buffer, 0, infos);
+		fill_buffer("-", buffer, 0, infos);
+		fill_buffer(room->name, buffer, 0, infos);
+		free(tmp);
 	}
 }
 
@@ -108,20 +104,22 @@ void			move_ants(t_paths *paths, t_infos *infos, char *buffer)
 
 	ants_moved = 0;
 	i = infos->end->ants;
-	while (i < infos->fourmis)
+	while (i < infos->fourmis && i < (infos->end->ants + infos->room_total))
 	{
 		if (change_room((i + 1), paths, infos))
 		{
 			if (ants_moved)
-				fill_buffer(" ", buffer, 0);
+				fill_buffer(" ", buffer, 0, infos);
+			else
+				ants_moved = 1;
 			show_ant(i, whereis((i + 1), paths, infos), infos, buffer);
-			ants_moved++;
 		}
 		i++;
 	}
 	if (ants_moved)
 	{
-		fill_buffer("\n", buffer, 0);
+		infos->rounds++;
+		fill_buffer("\n", buffer, 0, infos);
 		move_ants(paths, infos, buffer);
 	}
 }

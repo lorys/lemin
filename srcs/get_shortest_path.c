@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 05:19:09 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/06 18:35:18 by llopez           ###   ########.fr       */
+/*   Updated: 2018/12/07 07:17:21 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static t_tube	*choose_path(t_next *shortest, t_next *possible, t_infos *infos)
 	(void)infos;
 	if (shortest->room && !shortest->room->ants)
 		tmp = shortest->room;
-	if (possible->room && !tmp && possible->steps != -1)
+	if (possible->room && !tmp && possible->steps != -1\
+			&& possible->steps < shortest->steps*2)
 		tmp = possible->room;
 	free(possible);
 	free(shortest);

@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 05:43:04 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/07 01:28:09 by llopez           ###   ########.fr       */
+/*   Updated: 2018/12/07 06:44:00 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef	struct	s_infos {
 	int				bonus;
 	int				select;
 	int				bonusants;
+	int				room_total;
+	int				rounds;
 }				t_infos;
 
 typedef	struct	s_next {
@@ -58,9 +60,9 @@ void			free_paths(t_paths *paths);
 void			realloc_paths(t_paths *tube, t_tube *add);
 int				find_path(t_tube *room, t_infos *infos, t_tube *from,\
 			t_paths *paths);
-
 t_tube			*find_room(char *room_name, t_tube *room_list);
-void			fill_buffer(const char *str, char *buffer, int print);
+void			fill_buffer(const char *str, char *buffer, int print,\
+		t_infos *infos);
 void			make_tube(char *line, t_tube *room_list);
 void			show_struct(t_tube **tube);
 int				read_stdin(t_tube **room_listp, t_infos *infos);
