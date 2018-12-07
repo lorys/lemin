@@ -87,7 +87,7 @@ export CC C_FLAGS LD_FLAGS
 
 .PHONY: all clean fclean re norm
 
-all: $(NAME)
+all: $(NAME) $(NAME_1)
 
 $(NAME): $(OBJ) $(LIBFT)
 	@$(CC) -o $@ -L$(LIBDIR) -lft $(OBJ) $(C_FLAGS) $(LD_FLAGS)
