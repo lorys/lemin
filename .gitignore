@@ -1,6 +1,6 @@
 *.o
 *.a
-*.dYSM
+*.dSYM
 *.map
 lem_in
 lem-in
