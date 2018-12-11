@@ -77,11 +77,10 @@ void			free_everything(t_tube *tube, t_infos *infos, t_paths *paths);
 void			free_list(t_tube *list);
 void			set_research(t_infos *infos, t_paths *paths, t_tube *tube);
 void			display_error(t_tube *tube, t_paths *paths, t_infos *infos);
-t_tube			*get_shortest_path(t_paths *paths, t_tube *from,\
-			t_infos *infos);
 int				ft_stris(char *str, int (*f)(int c));
 int				ft_strisnumber(char *str);
 void			set_infos(t_infos *infos);
 void			set_paths(t_paths *paths);
+int				make_line(t_paths *path_list, t_infos *infos, int ant);
 
 #endif

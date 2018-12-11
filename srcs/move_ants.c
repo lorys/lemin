@@ -82,7 +82,7 @@ static int		change_room(int l, t_paths *paths, t_infos *infos)
 	t_tube	*from;
 
 	from = whereis(l, paths, infos);
-	new_room = get_shortest_path(paths, from, infos);
+	new_room = NULL;
 	if (new_room)
 	{
 		from->ants = 0;

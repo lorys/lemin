@@ -12,81 +12,95 @@
 
 #include "lem_in.h"
 
-static void		set_next(t_next **choice, int *steps, t_tube *room)
+// static void		set_next(t_next **choice, int *steps, t_tube *room)
+// {
+// 	(*choice)->steps = *steps;
+// 	(*choice)->room = room;
+// 	*steps = 0;
+// }
+
+// static t_tube	*choose_path(t_next *shortest, t_next *possible, t_infos *infos)
+// {
+// 	t_tube *tmp;
+
+// 	tmp = NULL;
+// 	if (!shortest || !possible)
+// 		return (NULL);
+// 	(void)infos;
+// 	if (shortest->room && !shortest->room->ants)
+// 		tmp = shortest->room;
+// 	if (possible->room && !tmp && possible->steps != -1\
+// 			&& possible->steps < shortest->steps*2)
+// 		tmp = possible->room;
+// 	free(possible);
+// 	free(shortest);
+// 	return (tmp);
+// }
+
+// static void		init_next(t_next **possible, t_next **shortest)
+// {
+// 	(*possible) = (t_next *)malloc(sizeof(t_next));
+// 	(*shortest) = (t_next *)malloc(sizeof(t_next));
+// 	(*possible)->steps = INT_MAX;
+// 	(*possible)->room = NULL;
+// 	(*shortest)->steps = INT_MAX;
+// 	(*shortest)->room = NULL;
+// }
+
+// static int		get_distance(t_paths *paths, t_tube *from)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	if (!paths)
+// 		return (-1);
+// 	while (paths && paths->room != from)
+// 	{
+// 		i++;
+// 		paths = paths->next;
+// 	}
+// 	return (i);
+// }
+
+static void		swap(int *a, int *b)
 {
-	(*choice)->steps = *steps;
-	(*choice)->room = room;
-	*steps = 0;
+	int			tmp;
+
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
 }
 
-static t_tube	*choose_path(t_next *shortest, t_next *possible, t_infos *infos)
+int				make_line(t_paths *path_list, t_infos *infos, int ant)
 {
-	t_tube *tmp;
+	int			tmp;
 
-	tmp = NULL;
-	if (!shortest || !possible)
-		return (NULL);
-	(void)infos;
-	if (shortest->room && !shortest->room->ants)
-		tmp = shortest->room;
-	if (possible->room && !tmp && possible->steps != -1\
-			&& possible->steps < shortest->steps*2)
-		tmp = possible->room;
-	free(possible);
-	free(shortest);
-	return (tmp);
-}
-
-static void		init_next(t_next **possible, t_next **shortest)
-{
-	(*possible) = (t_next *)malloc(sizeof(t_next));
-	(*shortest) = (t_next *)malloc(sizeof(t_next));
-	(*possible)->steps = INT_MAX;
-	(*possible)->room = NULL;
-	(*shortest)->steps = INT_MAX;
-	(*shortest)->room = NULL;
-}
-
-static int		get_distance(t_paths *paths, t_tube *from)
-{
-	int	i;
-
-	i = 0;
-	if (!paths)
-		return (-1);
-	while (paths && paths->room != from)
+	tmp = 0;
+	while (path_list)
 	{
-		i++;
-		paths = paths->next;
-	}
-	return (i);
-}
-
-t_tube			*get_shortest_path(t_paths *paths, t_tube *from, t_infos *infos)
-{
-	int		steps;
-	t_next	*possible;
-	t_next	*shortest;
-
-	steps = 0;
-	possible = NULL;
-	shortest = NULL;
-	init_next(&possible, &shortest);
-	while (paths->prev)
-		paths = paths->prev;
-	while (paths)
-	{
-		if (paths->room == from)
+		if (path_list->room == infos->start)
+			ant++;
+		else if (path_list->room == infos->end)
+			infos->end->ants++;
+		else if (tmp && path_list->room->ants)
 		{
-			steps = get_distance(paths, infos->end);
-			if (paths->next->room == infos->end)
-				return (found_next(paths->next->room, possible, shortest));
-			if (steps < shortest->steps)
-				set_next(&shortest, &steps, paths->next->room);
-			if (steps < possible->steps && !paths->next->room->ants)
-				set_next(&possible, &steps, paths->next->room);
+			swap(&tmp, &path_list->room->ants);
 		}
-		paths = paths->next;
+		else if (tmp)
+		{
+			path_list->room->ants = tmp;
+			tmp = 0;
+		}
+		else if (path_list->room->ants)
+			tmp = path_list->room->ants;
+		else
+			path_list->room->ants = ant;
+		ft_printf("L%d-%s ", path_list->room->ants, path_list->room->name);
+		if (tmp)
+			path_list = path_list->next;
+		else
+			break ;
 	}
-	return (choose_path(shortest, possible, infos));
+	ft_putchar('\n');
+	return (ant);
 }

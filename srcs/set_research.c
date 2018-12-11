@@ -43,7 +43,7 @@ void	set_research(t_infos *infos, t_paths *paths, t_tube *tube)
 		infos->rounds = 0;
 		infos->start->ants = infos->fourmis;
 		buffer = malloc(sizeof(char) * BUFFER_SIZE);
-		move_ants(paths, infos, buffer);
+		make_line(paths, infos, 1);
 		if (!infos->bonus)
 			fill_buffer(NULL, buffer, 1, infos);
 		free(buffer);
