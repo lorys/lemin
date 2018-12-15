@@ -74,33 +74,110 @@ static void		swap(int *a, int *b)
 int				make_line(t_paths *path_list, t_infos *infos, int ant)
 {
 	int			tmp;
+	int			flag;
+	t_tube		*to_place;
+	t_tube		*cur_room;
 
 	tmp = 0;
-	while (path_list)
+	flag = 1;
+	to_place = NULL;
+	while (path_list && flag)
 	{
-		if (path_list->room == infos->start)
+		cur_room = path_list->room;
+		if (cur_room == infos->start)
 			ant++;
-		else if (path_list->room == infos->end)
-			infos->end->ants++;
-		else if (tmp && path_list->room->ants)
+		else if (cur_room == infos->end)
 		{
-			swap(&tmp, &path_list->room->ants);
+			infos->end->ants++;
+			tmp = 0;
+			flag = 0;
 		}
+		else if (tmp && cur_room->ants)
+			swap(&tmp, &cur_room->ants);
 		else if (tmp)
 		{
-			path_list->room->ants = tmp;
+			cur_room->ants = tmp;
 			tmp = 0;
 		}
-		else if (path_list->room->ants)
-			tmp = path_list->room->ants;
+		else if (cur_room->ants)
+		{
+			to_place = cur_room;
+			tmp = cur_room->ants;
+		}
+		else if (to_place)
+		{
+			cur_room = to_place;
+			to_place = NULL;
+			cur_room->ants = ant;
+			flag = 0;
+		}
 		else
-			path_list->room->ants = ant;
-		ft_printf("L%d-%s ", path_list->room->ants, path_list->room->name);
-		if (tmp)
-			path_list = path_list->next;
-		else
-			break ;
+		{
+			flag = 0;
+			cur_room->ants = ant;
+		}
+		if (cur_room != infos->start)
+			ft_printf("L%d-%s ", cur_room->ants, cur_room->name);
+		path_list = path_list->next;
 	}
 	ft_putchar('\n');
+	infos->rounds++;
 	return (ant);
 }
+
+// int				make_line(t_paths *path_list, t_infos *infos, int ant)
+// {
+// 	int			tmp;
+// 	t_tube		*to_place;
+
+// 	tmp = 0;
+// 	to_place = NULL;
+// 	while (path_list)
+// 	{
+// 		if (path_list->room == infos->start)
+// 		{
+// 			path_list = path_list->next;
+// 			ant++;
+// 			continue ;
+// 		}
+// 		else if (path_list->room == infos->end)
+// 		{
+// 			infos->end->ants++;
+// 			ft_printf("L%d-%s", tmp, path_list->room->name);
+// 			tmp = 0;
+// 			path_list = path_list->next;
+// 			continue ;
+// 		}
+// 		else if (tmp && path_list->room->ants)
+// 			swap(&tmp, &path_list->room->ants);
+// 		else if (tmp)
+// 		{
+// 			path_list->room->ants = tmp;
+// 			tmp = 0;
+// 		}
+// 		else if (path_list->room->ants)
+// 		{
+// 			tmp = path_list->room->ants;
+// 			to_place = path_list->room;
+// 		}
+// 		else if (!tmp && to_place)
+// 		{
+// 			to_place->ants = ant;
+// 			ft_printf("L%d-%s", to_place->ants, to_place->name);
+// 			to_place = NULL;
+// 		}
+// 		else
+// 		{
+// 			if (to_place)
+// 				to_place->ants = ant;
+// 			else
+// 				path_list->room->ants = ant;
+// 		}
+// 		ft_printf("L%d-%s", path_list->room->ants, path_list->room->name);
+// 		path_list = path_list->next;
+// 		ft_putchar(' ');
+// 	}
+// 	ft_putchar('\n');
+// 	infos->rounds++;
+// 	return (ant++);
+// }

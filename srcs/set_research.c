@@ -32,18 +32,35 @@ int		count_room_linked(t_tube *tube)
 void	set_research(t_infos *infos, t_paths *paths, t_tube *tube)
 {
 	char	*buffer;
+	int		ant_num;
+	t_paths	*tmp;
 
+	ant_num = 1;
 	if (!find_path(infos->start, infos, infos->start, paths))
 		display_error(tube, paths, infos);
 	else
 	{
+		while (paths->prev)
+			paths = paths->prev;
 		if (infos->bonusants > 0)
 			infos->fourmis = infos->bonusants;
 		infos->room_total = count_room_linked(tube);
 		infos->rounds = 0;
 		infos->start->ants = infos->fourmis;
-		buffer = malloc(sizeof(char) * BUFFER_SIZE);
-		make_line(paths, infos, 1);
+		if (!(buffer = (char *)malloc(sizeof(*buffer) * BUFFER_SIZE)))
+			return ;
+		infos->start->ants = 0;
+		while (ant_num < infos->fourmis)
+		{
+			ant_num = make_line(paths->next, infos, ant_num);
+			ant_num++;
+		}
+		tmp = paths;
+		while (tmp)
+		{
+			ft_printf("Name: %s\n", tmp->room->name);
+			tmp = tmp->next;
+		}
 		if (!infos->bonus)
 			fill_buffer(NULL, buffer, 1, infos);
 		free(buffer);
