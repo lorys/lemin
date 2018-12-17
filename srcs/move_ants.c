@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:03:15 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/17 10:01:07 by llopez           ###   ########.fr       */
+/*   Updated: 2018/12/17 21:52:55 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static int		change_room(int l, t_paths *paths, t_infos *infos)
 			new_room->ants = l;
 		else if (new_room == infos->end)
 			new_room->ants++;
-		else if (new_room == infos->start)
+		if (from == infos->start)
 			new_room->ants--;
 		return (1);
 	}
