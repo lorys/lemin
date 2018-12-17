@@ -52,7 +52,8 @@ C_FILES		= main.c \
 			set_tube.c \
 			get_shortest_path.c \
 			utils.c \
-			parser/parsing_functions.c
+			parser/parsing_functions.c \
+			parser/utils_parser.c \
 
 C_FILES_1	= vizualizer/main_vizu.c \
 			vizualizer/parser.c \
@@ -69,7 +70,8 @@ C_FILES_1	= vizualizer/main_vizu.c \
 			free_list.c \
 			realloc_links.c \
 			vizualizer/bresenham.c \
-			parser/parsing_functions.c
+			parser/parsing_functions.c \
+			parser/utils_parser.c
 
 LIBFT		= $(LIBDIR)libft.a
 

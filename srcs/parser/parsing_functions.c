@@ -42,7 +42,7 @@ t_tube		*is_room_valid(char *line, t_tube *room_list, int nline)
 	while (tmp[i])
 		i++;
 	if ((i != 3 || **tmp == 'L' || **tmp == '#' || !ft_strisnumber(tmp[1]) || \
-		!ft_strisnumber(tmp[2])))
+		!ft_strisnumber(tmp[2]) || count_char(line, ' ') != 2))
 		error_parsing("room not well formated", nline);
 	else if (!check_overflow(tmp[1]) && !check_overflow(tmp[2]))
 		error_parsing("int overflow on room coordinates", nline);

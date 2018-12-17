@@ -13,6 +13,8 @@
 #ifndef PARSER_H
 # define PARSER_H
 
+# include "lem_in.h"
+
 # define STATE_ROOMS 1
 # define STATE_TUBES 2
 # define STATE_START_ROOM 3
@@ -30,5 +32,6 @@ long			ft_atoi_long(char const *s);
 int				check_overflow(char *str);
 void			warn_parsing(char *str, int nline);
 void			error_parsing(char *str, int nline);
+int				count_char(char *str, char c);
 
 #endif
