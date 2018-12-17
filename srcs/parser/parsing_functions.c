@@ -20,7 +20,7 @@ int			is_tube_valid(char *line, t_tube *room_list, int nline)
 
 	ret = 0;
 	tmp = ft_strsplit(line, '-');
-	if (!(ft_strchr(line, '-') && !ft_strchr(line, ' ')) || !tmp)
+	if (!(ft_strchr(line, '-') && !ft_strchr(line, ' ')) || !tmp || count_char(line, '-') != 1)
 		error_parsing("tube not well formated", nline);
 	else if (!find_room(tmp[0], room_list) || !find_room(tmp[1], room_list))
 		error_parsing("unknown room", nline);
@@ -41,8 +41,8 @@ t_tube		*is_room_valid(char *line, t_tube *room_list, int nline)
 	new = NULL;
 	while (tmp[i])
 		i++;
-	if ((i != 3 || **tmp == 'L' || **tmp == '#' || !ft_strisnumber(tmp[1]) || \
-		!ft_strisnumber(tmp[2]) || count_char(line, ' ') != 2))
+	if (i != 3 || **tmp == 'L' || **tmp == '#' || !ft_strisnumber(tmp[1]) || \
+		!ft_strisnumber(tmp[2]) || count_char(line, ' ') != 2 || ft_strchr(tmp[0], '-'))
 		error_parsing("room not well formated", nline);
 	else if (!check_overflow(tmp[1]) && !check_overflow(tmp[2]))
 		error_parsing("int overflow on room coordinates", nline);
