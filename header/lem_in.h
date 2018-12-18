@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 05:43:04 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/07 06:44:00 by llopez           ###   ########.fr       */
+/*   Updated: 2018/12/18 15:39:43 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef	struct	s_tube {
 	int				y;
 	int				vu;
 	int				ants;
+	int				steps;
 	struct s_paths	*links;
 	struct s_tube	*next;
 	struct s_tube	*prev;
@@ -56,10 +57,8 @@ typedef	struct	s_next {
 }				t_next;
 
 t_tube			*found_next(t_tube *next, t_next *possible, t_next *shortest);
-void			free_paths(t_paths *paths);
 void			realloc_paths(t_paths *tube, t_tube *add);
-int				find_path(t_tube *room, t_infos *infos, t_tube *from,\
-			t_paths *paths);
+int				find_path(t_tube *room, t_infos *infos, t_tube *from, int nb);
 t_tube			*find_room(char *room_name, t_tube *room_list);
 void			fill_buffer(const char *str, char *buffer, int print,\
 		t_infos *infos);
@@ -71,14 +70,12 @@ t_tube			*toend(t_tube *tube);
 int				ft_tubelen(t_tube *len);
 int				ft_strisdigit(char *str);
 int				ft_tubelen(t_tube *len);
-void			move_ants(t_paths *paths, t_infos *infos, char *buffer);
+void			move_ants(t_infos *infos, char *buffer);
 void			free_char_tab(char **str);
-void			free_everything(t_tube *tube, t_infos *infos, t_paths *paths);
+void			free_everything(t_tube *tube, t_infos *infos);
 void			free_list(t_tube *list);
-void			set_research(t_infos *infos, t_paths *paths, t_tube *tube);
-void			display_error(t_tube *tube, t_paths *paths, t_infos *infos);
-t_tube			*get_shortest_path(t_paths *paths, t_tube *from,\
-			t_infos *infos);
+void			set_research(t_infos *infos, t_tube *tube);
+void			display_error(t_tube *tube, t_infos *infos);
 int				ft_stris(char *str, int (*f)(int c));
 int				ft_strisnumber(char *str);
 void			set_infos(t_infos *infos);

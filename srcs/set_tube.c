@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 07:07:06 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/04 19:11:33 by llopez           ###   ########.fr       */
+/*   Updated: 2018/12/18 15:53:11 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	set_tube(t_tube *tube)
 	tube->x = 0;
 	tube->y = 0;
 	tube->vu = 0;
+	tube->steps = 0;
 	tube->links = (t_paths *)malloc(sizeof(t_paths));
 	tube->links->next = NULL;
 	tube->links->prev = NULL;

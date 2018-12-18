@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 05:19:09 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/17 21:51:56 by llopez           ###   ########.fr       */
+/*   Updated: 2018/12/18 15:34:12 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int				is_linked(t_tube *room1, t_tube *room2)
 	return (0);
 }
 
-t_tube			*get_shortest_path(t_paths *paths, t_tube *from, t_infos *infos)
+t_tube			*get_shortest_path(t_tube *from, t_infos *infos)
 {
 /*	int		steps;
 	t_next	*possible;
@@ -89,37 +89,4 @@ t_tube			*get_shortest_path(t_paths *paths, t_tube *from, t_infos *infos)
 	shortest = NULL;
 	init_next(&possible, &shortest);
 */
-	t_paths	*tmp;
-	t_tube	*minus_next;
-	int		count;
-	int		minus;
-
-	minus_next = NULL;
-	minus = INT_MAX;
-	if (is_linked(from, infos->end))
-		return (infos->end);
-	while (paths->prev)
-		paths = paths->prev;
-	while (paths)
-	{
-		if (is_linked(paths->room, from) && !paths->room->ants)
-		{
-			count = 0;
-			tmp = paths;
-			while (tmp && tmp->room != infos->end && tmp->room != infos->start)
-			{
-				count++;
-				tmp = tmp->next;
-			}
-			if (count > 0 && count < minus)
-			{
-				minus_next = paths->room;
-				minus = count;
-				paths = tmp;
-				continue;
-			}
-		}
-		paths = paths->next;
-	}
-	return ((minus_next && !minus_next->ants) ? minus_next : NULL);
 }

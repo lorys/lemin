@@ -6,26 +6,28 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:03:15 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/17 21:52:55 by llopez           ###   ########.fr       */
+/*   Updated: 2018/12/18 18:13:04 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static t_tube	*whereis(int ants, t_paths *paths, t_infos *infos)
+static t_tube	*whereis(int ants, t_infos *infos)
 {
-	if (ants <= infos->end->ants)
-		return (paths->room);
-	while (paths->prev)
-		paths = paths->prev;
-	while (paths && paths->next)
+	t_tube	*tmp;
+
+	tmp = infos->start->next;
+	while (tmp)
 	{
-		if (paths->room->ants == ants && paths->room != infos->start \
-					&& paths->room != infos->end)
-			return (paths->room);
-		paths = paths->next;
+		if (tmp != infos->end && tmp->ants == ants)
+			return (tmp);
+		tmp = tmp->next;
 	}
-	return (infos->start);
+	if (ants < infos->end->ants)
+		return (infos->end);
+	else if (ants < (infos->end->ants + infos->start->ants))
+		return (infos->start);
+	return (NULL);
 }
 
 void			fill_buffer(const char *str, char *buffer, int print,\
@@ -76,13 +78,21 @@ static void		show_ant(int l, t_tube *room, t_infos *infos, char *buffer)
 	}
 }
 
-static int		change_room(int l, t_paths *paths, t_infos *infos)
+static int		change_room(int l, t_infos *infos)
 {
 	t_tube	*new_room;
 	t_tube	*from;
+	t_tube	*minus;
 
-	from = whereis(l, paths, infos);
-	new_room = get_shortest_path(paths, from, infos);
+	new_room = NULL;
+	from = whereis(l, infos);
+	while (from && from->links->prev)
+		from->links = from->links->prev;
+	while (from && from->links)
+	{
+		if (!minus || from->links->room->steps < minus->steps)
+			minus = from->links->room;
+	}
 	if (new_room)
 	{
 		from->ants = 0;
@@ -97,7 +107,7 @@ static int		change_room(int l, t_paths *paths, t_infos *infos)
 	return (0);
 }
 
-void			move_ants(t_paths *paths, t_infos *infos, char *buffer)
+void			move_ants(t_infos *infos, char *buffer)
 {
 	int		i;
 	int		ants_moved;
@@ -106,13 +116,13 @@ void			move_ants(t_paths *paths, t_infos *infos, char *buffer)
 	i = infos->end->ants;
 	while (i < infos->fourmis && i < (infos->end->ants + infos->room_total))
 	{
-		if (change_room((i + 1), paths, infos))
+		if (change_room((i + 1), infos))
 		{
 			if (ants_moved)
 				fill_buffer(" ", buffer, 0, infos);
 			else
 				ants_moved = 1;
-			show_ant(i, whereis((i + 1), paths, infos), infos, buffer);
+			show_ant(i, whereis((i + 1), infos), infos, buffer);
 		}
 		i++;
 	}
@@ -120,6 +130,6 @@ void			move_ants(t_paths *paths, t_infos *infos, char *buffer)
 	{
 		infos->rounds++;
 		fill_buffer("\n", buffer, 0, infos);
-		move_ants(paths, infos, buffer);
+		move_ants(infos, buffer);
 	}
 }

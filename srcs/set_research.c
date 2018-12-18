@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 06:51:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/17 20:28:35 by llopez           ###   ########.fr       */
+/*   Updated: 2018/12/18 16:09:43 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,14 @@ int		count_room_linked(t_tube *tube)
 	return (count);
 }
 
-void	set_research(t_infos *infos, t_paths *paths, t_tube *tube)
+void	set_research(t_infos *infos, t_tube *tube)
 {
 	char	*buffer;
+	t_tube	*tmp;
 
-	if (!find_path(infos->start, infos, infos->start, paths))
-		display_error(tube, paths, infos);
+	tmp = NULL;
+	if (!find_path(infos->start, infos, NULL, 0))
+		display_error(tube, infos);
 	else
 	{
 		if (infos->bonusants > 0)
@@ -43,9 +45,13 @@ void	set_research(t_infos *infos, t_paths *paths, t_tube *tube)
 		infos->rounds = 0;
 		infos->start->ants = infos->fourmis;
 		buffer = malloc(sizeof(char) * BUFFER_SIZE);
-		while (paths->prev)
-			paths = paths->prev;
-		move_ants(paths, infos, buffer);
+		tmp = infos->start;
+		while (tmp)
+		{
+			printf("%s : %d\n", tmp->name, tmp->steps);
+			tmp = tmp->next;
+		}
+		move_ants(infos, buffer);
 		if (!infos->bonus)
 			fill_buffer(NULL, buffer, 1, infos);
 		free(buffer);

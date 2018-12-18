@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/30 10:24:17 by llopez           ###   ########.fr       */
+/*   Updated: 2018/12/18 15:52:52 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,17 @@ int				main(int argc, char **argv)
 {
 	t_tube		*room_list;
 	t_infos		*infos;
-	t_paths		*paths;
 
-	if (!(paths = (t_paths *)malloc(sizeof(t_paths)))\
-		|| !(infos = (t_infos *)malloc(sizeof(t_infos))))
+	if (!(infos = (t_infos *)malloc(sizeof(t_infos))))
 		return (EXIT_FAILURE);
 	room_list = NULL;
 	set_infos(infos);
-	set_paths(paths);
 	bonus_manager(argc, argv, infos);
 	read_stdin(&room_list, infos);
 	if (!room_list || !infos->start || !infos->end || infos->fourmis <= 0)
-		display_error(room_list, paths, infos);
+		display_error(room_list, infos);
 	else
-		set_research(infos, paths, room_list);
-	free_everything(room_list, infos, paths);
+		set_research(infos, room_list);
+	free_everything(room_list, infos);
 	return (EXIT_SUCCESS);
 }

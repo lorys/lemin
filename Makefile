@@ -6,7 +6,7 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2018/12/07 04:56:08 by llopez           ###   ########.fr        #
+#    Updated: 2018/12/18 15:47:51 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,6 @@ C_FILES		= main.c \
 			free_everything.c \
 			free_list.c \
 			set_tube.c \
-			get_shortest_path.c \
 			utils.c \
 			parser/parsing_functions.c
 
