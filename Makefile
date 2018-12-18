@@ -44,11 +44,9 @@ C_FILES		= main.c \
 			toend.c \
 			ft_tubelen.c \
 			move_ants.c \
-			free_char_tab.c \
 			set_research.c \
 			display_error.c \
-			free_everything.c \
-			free_list.c \
+			free.c \
 			set_tube.c \
 			get_shortest_path.c \
 			utils.c \
@@ -63,11 +61,9 @@ C_FILES_1	= vizualizer/main_vizu.c \
 			set_tube.c \
 			save_room.c \
 			utils.c \
-			free_everything.c \
-			free_char_tab.c \
+			free.c \
 			toend.c \
 			find_room.c \
-			free_list.c \
 			realloc_links.c \
 			vizualizer/bresenham.c \
 			parser/parsing_functions.c \

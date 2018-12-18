@@ -12,28 +12,41 @@
 
 #include "lem_in.h"
 
-void	free_links(t_paths *room_list)
-{
-	if (!room_list)
-		return ;
-	free_links(room_list->next);
-	free(room_list);
-}
-
-void	free_list(t_tube *room_list)
-{
-	if (!room_list)
-		return ;
-	free(room_list->name);
-	free_links(room_list->links);
-	free_list(room_list->next);
-	free(room_list);
-}
-
-void	free_paths(t_paths *path_list)
+static void	free_paths(t_paths *path_list)
 {
 	if (!path_list)
 		return ;
 	free_paths(path_list->next);
 	free(path_list);
+}
+
+static void	free_rooms(t_tube *room_list)
+{
+	if (!room_list)
+		return ;
+	free(room_list->name);
+	free_paths(room_list->links);
+	free_rooms(room_list->next);
+	free(room_list);
+}
+
+void		free_everything(t_tube *room_list, t_infos *infos, t_paths *paths)
+{
+	free(infos);
+	while (room_list && room_list->prev)
+		room_list = room_list->prev;
+	while (paths && paths->prev)
+		paths = paths->prev;
+	free_rooms(room_list);
+	free_paths(paths);
+}
+
+void	free_char_tab(char **str)
+{
+	int	a;
+
+	a = 0;
+	while (str[a])
+		free(str[a++]);
+	free(str);
 }

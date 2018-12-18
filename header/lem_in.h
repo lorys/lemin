@@ -56,7 +56,6 @@ typedef	struct	s_next {
 }				t_next;
 
 t_tube			*found_next(t_tube *next, t_next *possible, t_next *shortest);
-void			free_paths(t_paths *paths);
 void			realloc_paths(t_paths *tube, t_tube *add);
 int				find_path(t_tube *room, t_infos *infos, t_tube *from,\
 			t_paths *paths);
@@ -74,7 +73,6 @@ int				ft_tubelen(t_tube *len);
 void			move_ants(t_paths *paths, t_infos *infos, char *buffer);
 void			free_char_tab(char **str);
 void			free_everything(t_tube *tube, t_infos *infos, t_paths *paths);
-void			free_list(t_tube *list);
 void			set_research(t_infos *infos, t_paths *paths, t_tube *tube);
 void			display_error(t_tube *tube, t_paths *paths, t_infos *infos);
 int				ft_stris(char *str, int (*f)(int c));
