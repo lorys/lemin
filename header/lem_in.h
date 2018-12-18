@@ -80,5 +80,6 @@ int				ft_strisnumber(char *str);
 void			set_infos(t_infos *infos);
 void			set_paths(t_paths *paths);
 int				make_line(t_paths *path_list, t_infos *infos, int ant);
+int				find_paths(t_tube *room_list, t_infos *infos);
 
 #endif

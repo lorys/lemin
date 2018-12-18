@@ -227,6 +227,7 @@ int				main(void)
 	if (!room_list)
 		return (EXIT_FAILURE);
 	initscr();
+	curs_set(0);
 	start_color();
 	init_pair(20, COLOR_BLUE, COLOR_BLACK);
 	init_pair(21, COLOR_GREEN, COLOR_BLACK);

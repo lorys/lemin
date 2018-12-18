@@ -34,8 +34,10 @@ static	void	bonus_manager(int argc, char **argv, t_infos *infos)
 int				main(int argc, char **argv)
 {
 	t_tube		*room_list;
+	t_tube		*tmp;
 	t_infos		*infos;
 	t_paths		*paths;
+int				ret;
 
 	if (!(paths = (t_paths *)malloc(sizeof(t_paths)))\
 		|| !(infos = (t_infos *)malloc(sizeof(t_infos))))
@@ -48,7 +50,15 @@ int				main(int argc, char **argv)
 	if (!room_list || !infos->start || !infos->end || infos->fourmis <= 0)
 		display_error(room_list, paths, infos);
 	else
-		set_research(infos, paths, room_list);
+	{
+		ret = find_paths(room_list, infos);
+		tmp = room_list;
+		while (tmp)
+		{
+			ft_printf("Name: %s | nb: %d\n", tmp->name, tmp->vu);
+			tmp = tmp->next;
+		}
+	}
 	free_everything(room_list, infos, paths);
 	return (EXIT_SUCCESS);
 }
