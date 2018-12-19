@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:03:15 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/18 18:13:04 by llopez           ###   ########.fr       */
+/*   Updated: 2018/12/19 17:40:27 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,15 @@ static int		change_room(int l, t_infos *infos)
 
 	new_room = NULL;
 	from = whereis(l, infos);
-	while (from && from->links->prev)
+	while (from && from->links && from->links->prev)
 		from->links = from->links->prev;
 	while (from && from->links)
 	{
 		if (!minus || from->links->room->steps < minus->steps)
 			minus = from->links->room;
+		from->links = from->links->next;
 	}
+	new_room = minus;
 	if (new_room)
 	{
 		from->ants = 0;

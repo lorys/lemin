@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 06:51:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/18 16:09:43 by llopez           ###   ########.fr       */
+/*   Updated: 2018/12/19 17:11:53 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	set_research(t_infos *infos, t_tube *tube)
 	t_tube	*tmp;
 
 	tmp = NULL;
-	if (!find_path(infos->start, infos, NULL, 0))
+	if (!find_path(infos->end, infos, NULL, 1))
 		display_error(tube, infos);
 	else
 	{
