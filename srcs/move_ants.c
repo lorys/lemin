@@ -15,17 +15,23 @@
 static t_tube	*whereis(int ants, t_infos *infos)
 {
 	t_tube	*tmp;
+	int	ants_moving;
 
-	tmp = infos->start->next;
+	ants_moving = 0;
+	tmp = infos->start;
+	if (infos->end->ants >= ants)
+		return (infos->end);
+	while (tmp->prev)
+		tmp = tmp->prev;
 	while (tmp)
 	{
-		if (tmp != infos->end && tmp->ants == ants)
+		if (tmp != infos->start && tmp != infos->end && tmp->ants)
+			ants_moving++;
+		if (tmp != infos->start && tmp != infos->end && tmp->ants == ants)
 			return (tmp);
 		tmp = tmp->next;
 	}
-	if (ants < infos->end->ants)
-		return (infos->end);
-	else if (ants < (infos->end->ants + infos->start->ants))
+	if (ants > (ants_moving + infos->end->ants))
 		return (infos->start);
 	return (NULL);
 }
@@ -63,6 +69,8 @@ static void		show_ant(int l, t_tube *room, t_infos *infos, char *buffer)
 {
 	char	*tmp;
 
+	if (!room || !infos)
+		return ;
 	if (infos->select == l)
 		ft_printf("\033[41mL%d-%s\033[0m", l + 1, room->name);
 	else if (infos->bonus)
@@ -78,57 +86,72 @@ static void		show_ant(int l, t_tube *room, t_infos *infos, char *buffer)
 	}
 }
 
-static int		change_room(int l, t_infos *infos)
+static t_tube		*change_room(int l, t_infos *infos)
 {
 	t_tube	*new_room;
 	t_tube	*from;
 	t_tube	*minus;
+	t_paths	*tmp;
 
 	new_room = NULL;
+	minus = NULL;
 	from = whereis(l, infos);
-	while (from && from->links && from->links->prev)
-		from->links = from->links->prev;
-	while (from && from->links)
+	if (from == infos->end || from == NULL)
+		return (NULL);
+	tmp = (from) ? from->links : NULL;
+	while (tmp && tmp->prev)
+		tmp = tmp->prev;
+	if (from)
+		from->links = tmp;
+	while (tmp)
 	{
-		if (!minus || from->links->room->steps < minus->steps)
-			minus = from->links->room;
-		from->links = from->links->next;
+		if (tmp->room == infos->end)
+		{
+			minus = infos->end;
+			break;
+		}
+		if ((!minus || (tmp->room->steps < minus->steps\
+			&& tmp->room->steps > 0)) && tmp->room->steps > 0\
+			&& !tmp->room->ants && tmp->room != infos->start)
+			minus = tmp->room;
+		tmp = tmp->next;
 	}
 	new_room = minus;
-	if (new_room)
+	if (new_room && ((new_room->steps > 0 && !new_room->ants) || new_room == infos->end))
 	{
-		from->ants = 0;
 		if (new_room != infos->end && new_room != infos->start)
 			new_room->ants = l;
 		else if (new_room == infos->end)
-			new_room->ants++;
+			infos->end->ants++;
 		if (from == infos->start)
-			new_room->ants--;
-		return (1);
+			infos->start->ants--;
+		else
+			from->ants = 0;
+		return (new_room);
 	}
-	return (0);
+	return (NULL);
 }
 
 void			move_ants(t_infos *infos, char *buffer)
 {
 	int		i;
 	int		ants_moved;
+	t_tube		*next;
 
+	next = NULL;
 	ants_moved = 0;
 	i = infos->end->ants;
-	while (i < infos->fourmis && i < (infos->end->ants + infos->room_total))
+	while (i < infos->fourmis)
 	{
-		if (change_room((i + 1), infos))
+		if ((next = change_room((i + 1), infos)))
 		{
-			if (ants_moved)
+			if (ants_moved++)
 				fill_buffer(" ", buffer, 0, infos);
-			else
-				ants_moved = 1;
-			show_ant(i, whereis((i + 1), infos), infos, buffer);
+			show_ant(i, next, infos, buffer);
 		}
 		i++;
 	}
-	if (ants_moved)
+	if (infos->end->ants < infos->fourmis)
 	{
 		infos->rounds++;
 		fill_buffer("\n", buffer, 0, infos);

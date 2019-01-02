@@ -239,7 +239,7 @@ int				main(void)
 	launch(room_list, &infos);
 	refresh();
 	parse_ants(room_list, &infos);
-	free_everything(room_list, NULL, NULL);
+	free_everything(room_list, NULL);
 	sleep(1000);
 	endwin();
 	return (EXIT_SUCCESS);
