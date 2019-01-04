@@ -34,8 +34,7 @@ void	set_research(t_infos *infos, t_tube *tube)
 	char	*buffer;
 	t_tube	*tmp;
 
-	tmp = NULL;
-	if (!find_path(infos->end, infos, NULL, 1))
+	if (!find_path(infos->end, infos, NULL, 5))
 		display_error(tube, infos);
 	else
 	{
@@ -45,10 +44,12 @@ void	set_research(t_infos *infos, t_tube *tube)
 		infos->rounds = 0;
 		infos->start->ants = infos->fourmis;
 		buffer = malloc(sizeof(char) * BUFFER_SIZE);
-		tmp = infos->start;
+		tmp = tube;
+		while (tmp->prev)
+			tmp = tmp->prev;
 		while (tmp)
 		{
-			printf("%s : %d\n", tmp->name, tmp->steps);
+			printf("%20s\tants(%2d)\tsteps(%d)\n", tmp->name, tmp->ants, tmp->steps);
 			tmp = tmp->next;
 		}
 		move_ants(infos, buffer);

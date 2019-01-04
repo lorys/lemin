@@ -25,6 +25,7 @@ static t_tube	*whereis(int ants, t_infos *infos)
 		tmp = tmp->prev;
 	while (tmp)
 	{
+		printf("have %d want %d\n", tmp->ants, ants);
 		if (tmp != infos->start && tmp != infos->end && tmp->ants)
 			ants_moving++;
 		if (tmp != infos->start && tmp != infos->end && tmp->ants == ants)
@@ -101,7 +102,7 @@ static t_tube		*change_room(int l, t_infos *infos)
 	tmp = (from) ? from->links : NULL;
 	while (tmp && tmp->prev)
 		tmp = tmp->prev;
-	if (from)
+	if (from && from->links != tmp)
 		from->links = tmp;
 	while (tmp)
 	{
@@ -110,8 +111,8 @@ static t_tube		*change_room(int l, t_infos *infos)
 			minus = infos->end;
 			break;
 		}
-		if ((!minus || (tmp->room->steps < minus->steps\
-			&& tmp->room->steps > 0)) && tmp->room->steps > 0\
+		if ((!minus || (tmp->room->steps < minus->steps && tmp->room->steps > 0))\
+			&& tmp->room->steps > 0\
 			&& !tmp->room->ants && tmp->room != infos->start)
 			minus = tmp->room;
 		tmp = tmp->next;
