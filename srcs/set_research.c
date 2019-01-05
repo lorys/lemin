@@ -34,7 +34,7 @@ void	set_research(t_infos *infos, t_tube *tube)
 	char	*buffer;
 	t_tube	*tmp;
 
-	if (!find_path(infos->end, infos, NULL, 5))
+	if (!find_path(infos->end, infos, NULL, 1))
 		display_error(tube, infos);
 	else
 	{

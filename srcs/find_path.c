@@ -15,26 +15,33 @@
 int		find_path(t_tube *room, t_infos *infos, t_tube *from, int nb)
 {
 	t_paths	*tmp;
+	t_paths	*tmpa;
 	int	ret;
 	int	tmpi;
 
 	tmpi = 0;
 	ret = 0;
 	tmp = (room) ? room->links : NULL;
-	(void)from;
-	if (room == infos->start)
-		return (1);
 	while (tmp && tmp->prev)
 		tmp = tmp->prev;
+	tmpa = tmp;
+	while (tmpa)
+	{
+		if (tmpa->room == infos->start)
+			return (1);
+		tmpa = tmpa->next;
+	}
 	while (tmp)
 	{
 		if (tmp->room == infos->start)
 			return (1);
+		if (tmp->room != from && tmp->room->vu && (tmp->room->steps > nb || !tmp->room->steps))
+			tmp->room->steps = nb;
 		if (tmp->room != from && !tmp->room->vu && (ret += find_path(tmp->room, infos, room, nb+1)))
-			tmp->room->steps = (tmp->room->steps > nb || !tmp->room->steps) ? nb : tmp->room->steps;
+			tmp->room->steps = nb;
+		printf("%s - %d", tmp->room->name, tmp->room->steps);
 		tmp->room->vu = 1;
 		tmp = tmp->next;
 	}
-	printf("(return %d)\n", ret);
 	return (ret);
 }
