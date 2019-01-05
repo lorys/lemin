@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_stdin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 10:48:59 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/04 22:43:42 by llopez           ###   ########.fr       */
+/*   Updated: 2019/01/05 18:13:55 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,13 @@ int				line_is_valid(t_tube **room_listp, t_infos *infos, \
 	else if (state == STATE_ROOMS && is_tube_valid(line, *room_listp, 0))
 		state = STATE_TUBES;
 	else if (state == STATE_ROOMS)
-		ret = save_room_if_valid(line, room_listp, nline);
+		ret = save_room_if_valid(line, room_listp, infos, nline);
 	if (state == STATE_TUBES && !ret)
 		ret = save_tube_if_valid(line, *room_listp, nline);
 	return (ret);
 }
 
-int				read_stdin(t_tube **room_listp, t_infos *infos)
+void				read_stdin(t_tube **room_listp, t_infos *infos)
 {
 	char		*line;
 	int			nline;
@@ -103,7 +103,6 @@ int				read_stdin(t_tube **room_listp, t_infos *infos)
 	}
 	ft_strdel(&line);
 	ft_putchar('\n');
-	if (infos->fourmis <= 0)
-		return (0);
-	return (1);
+	if (infos->start && infos->end)
+		infos->room_total += 2;
 }

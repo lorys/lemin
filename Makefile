@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2018/12/07 04:56:08 by llopez           ###   ########.fr        #
+#    Updated: 2019/01/05 17:43:24 by pcarles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ C_FILES		= main.c \
 			utils.c \
 			parser/parsing_functions.c \
 			parser/utils_parser.c \
+			algo/find_paths.c
 
 C_FILES_1	= vizualizer/main_vizu.c \
 			vizualizer/parser.c \

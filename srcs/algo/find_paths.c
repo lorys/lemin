@@ -1,30 +1,68 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   find_paths.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/03 12:51:27 by pcarles           #+#    #+#             */
+/*   Updated: 2019/01/05 18:16:53 by pcarles          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem_in.h"
 
-static int	find_path_recursive(t_tube *room, t_tube *from, t_infos *infos, int n)
+/* Temporary function */
+static void	print_path(t_tube **path, int size)
 {
-	t_paths	*tmp;
+	int		i;
 
-	if (room == infos->start)
-		return (1);
-	tmp = room->links;
-	while (tmp)
+	i = 0;
+	ft_putstr("Path: ");
+	while (i <= size)
 	{
-		if (tmp->room == from)
-		{
-			tmp = tmp->next;
-			continue ;
-		}
-		find_path_recursive(tmp->room, room, infos, n + 1);
-		room->vu = n;
-		tmp = tmp->next;
+		ft_printf("%s ", path[i]->name);
+		i++;
 	}
-	return (0);
+	ft_putchar('\n');
 }
 
-int			find_paths(t_tube *room_list, t_infos *infos)
+static void	explore(t_tube *position, t_infos *infos, int depth, t_tube **buf)
 {
-	(void)room_list;
-	if (find_path_recursive(infos->end, infos->end, infos, 0))
-		return (1);
-	return (0);
+	t_paths	*edges;
+
+	buf[depth] = position;
+	if (position == infos->end)
+	{
+		/* TODO: save path (save the buffer state) */
+		print_path(buf, depth);
+		return ;
+	}
+	edges = position->links;
+	position->vu = 1;
+	if (!edges || !edges->next)
+		position->vu = 2;
+	while (edges)
+	{
+		if (edges->room->vu || edges->room == position)
+		{
+			edges = edges->next;
+			continue ;
+		}
+		explore(edges->room, infos, depth + 1, buf);
+		edges = edges->next;
+	}
+	if (position->vu == 1)
+		position->vu = 0;
+}
+
+void		find_paths(t_infos *infos)
+{
+	t_tube		**res;
+
+	res = (t_tube**)malloc(sizeof(res) * infos->room_total);
+	if (!res)
+		return ;
+	explore(infos->start, infos, 0, res);
+	free(res);
 }

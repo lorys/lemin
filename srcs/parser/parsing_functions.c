@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_functions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcarles <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 07:49:24 by pcarles           #+#    #+#             */
-/*   Updated: 2018/12/04 22:04:06 by llopez           ###   ########.fr       */
+/*   Updated: 2019/01/05 15:30:54 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,14 @@ int			save_tube_if_valid(char *line, t_tube *rooms, int nline)
 	return (0);
 }
 
-int			save_room_if_valid(char *line, t_tube **room_listp, int nline)
+int			save_room_if_valid(char *line, t_tube **room_listp, t_infos *infos, int nline)
 {
 	t_tube 	*tmp;
 
 	if ((tmp = is_room_valid(line, *room_listp, nline)))
 	{
 		append_room(room_listp, tmp);
+		infos->room_total++;
 		return (1);
 	}
 	return (0);

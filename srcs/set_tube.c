@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_room.c                                         :+:      :+:    :+:   */
+/*   set_tube.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 07:07:06 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/04 19:11:33 by llopez           ###   ########.fr       */
+/*   Updated: 2019/01/05 15:28:12 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	set_infos(t_infos *infos)
 	infos->select = 0;
 	infos->start = NULL;
 	infos->end = NULL;
+	infos->room_total = 0;
 }
 
 void	set_paths(t_paths *paths)

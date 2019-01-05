@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/30 10:24:17 by llopez           ###   ########.fr       */
+/*   Updated: 2019/01/05 18:18:53 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int				main(int argc, char **argv)
 	t_tube		*tmp;
 	t_infos		*infos;
 	t_paths		*paths;
-int				ret;
 
 	if (!(paths = (t_paths *)malloc(sizeof(t_paths)))\
 		|| !(infos = (t_infos *)malloc(sizeof(t_infos))))
@@ -51,13 +50,26 @@ int				ret;
 		display_error(room_list, paths, infos);
 	else
 	{
-		ret = find_paths(room_list, infos);
+		find_paths(infos);
+		
+		// Debug informations
 		tmp = room_list;
 		while (tmp)
 		{
-			ft_printf("Name: %s | nb: %d\n", tmp->name, tmp->vu);
+			// Theses rooms should have only one other room connected
+			if (tmp->vu == 2)
+			{
+				paths = tmp->links;
+				while (paths)
+				{
+					ft_printf("Edge name: %s\n", paths->room->name);
+					paths = paths->next;
+				}
+			}
+			ft_printf("Name: %7.5s | nb: %d\n", tmp->name, tmp->vu);
 			tmp = tmp->next;
 		}
+		// End debug infos
 	}
 	free_everything(room_list, infos, paths);
 	return (EXIT_SUCCESS);

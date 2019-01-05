@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 05:43:04 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/07 06:44:00 by llopez           ###   ########.fr       */
+/*   Updated: 2019/01/05 18:17:04 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void			fill_buffer(const char *str, char *buffer, int print,\
 		t_infos *infos);
 void			make_tube(char *line, t_tube *room_list);
 void			show_struct(t_tube **tube);
-int				read_stdin(t_tube **room_listp, t_infos *infos);
+void			read_stdin(t_tube **room_listp, t_infos *infos);
 
 t_tube			*toend(t_tube *tube);
 int				ft_tubelen(t_tube *len);
@@ -80,6 +80,6 @@ int				ft_strisnumber(char *str);
 void			set_infos(t_infos *infos);
 void			set_paths(t_paths *paths);
 int				make_line(t_paths *path_list, t_infos *infos, int ant);
-int				find_paths(t_tube *room_list, t_infos *infos);
+void			find_paths(t_infos *infos);
 
 #endif
