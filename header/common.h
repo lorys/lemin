@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.h                                           :+:      :+:    :+:   */
+/*   common.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/12 05:43:04 by llopez            #+#    #+#             */
-/*   Updated: 2019/01/05 19:09:23 by pcarles          ###   ########.fr       */
+/*   Created: 2019/01/05 18:59:42 by pcarles           #+#    #+#             */
+/*   Updated: 2019/01/05 19:06:40 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEM_IN_H
-# define LEM_IN_H
+#ifndef COMMON_H
+# define COMMON_H
 
 #include "struct/infos.h"
 #include "struct/tube.h"
 #include "struct/path.h"
 
-# define BUFFER_SIZE 5000
+# define DEBUG 1
 
-t_tube			*find_room(char *room_name, t_tube *room_list);
-void			free_char_tab(char **str);
-void			set_infos(t_infos *infos);
-void			set_paths(t_paths *paths);
-int				make_line(t_paths *path_list, t_infos *infos, int ant);
-void			find_paths(t_infos *infos);
+int				ft_stris(char *str, int (*f)(int c));
+int				ft_strisnumber(char *str);
+void			free_everything(t_tube *tube, t_infos *infos, t_paths *paths);
+void			display_error(t_tube *tube, t_paths *paths, t_infos *infos);
 
 #endif

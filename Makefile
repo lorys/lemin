@@ -6,7 +6,7 @@
 #    By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2019/01/05 17:43:24 by pcarles          ###   ########.fr        #
+#    Updated: 2019/01/05 18:43:29 by pcarles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,41 +34,30 @@ H_FILES_1	= lem_in.h \
 			vizualizer.h
 
 C_FILES		= main.c \
-			find_path.c \
-			find_room.c \
-			realloc_links.c \
-			save_room.c \
-			parser/read_stdin.c \
-			paser/errors.c \
-			parser/links.c \
-			toend.c \
-			ft_tubelen.c \
-			move_ants.c \
-			set_research.c \
-			display_error.c \
 			free.c \
-			set_tube.c \
-			get_shortest_path.c \
+			init.c \
 			utils.c \
+			pasrer/errors.c \
+			parser/links.c \
 			parser/parsing_functions.c \
+			parser/read_stdin.c \
+			parser/save_room.c \
 			parser/utils_parser.c \
 			algo/find_paths.c
 
-C_FILES_1	= vizualizer/main_vizu.c \
-			vizualizer/parser.c \
-			parser/read_stdin.c \
+C_FILES_1	= free.c \
+			init.c \
+			utils.c \
 			parser/errors.c \
 			parser/links.c \
-			set_tube.c \
-			save_room.c \
-			utils.c \
-			free.c \
-			toend.c \
-			find_room.c \
-			realloc_links.c \
-			vizualizer/bresenham.c \
 			parser/parsing_functions.c \
-			parser/utils_parser.c
+			parser/read_stdin.c \
+			parser/save_room.c \
+			parser/utils_parser.c \
+			visualizer/main_vizu.c \
+			visualizer/parser.c \
+			visualizer/bresenham.c
+
 
 LIBFT		= $(LIBDIR)libft.a
 

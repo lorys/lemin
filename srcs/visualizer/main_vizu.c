@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   main_vizu.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcarles <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:40:31 by pcarles           #+#    #+#             */
-/*   Updated: 2018/11/30 05:40:32 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/01/05 19:11:51 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <ncurses.h>
-#include "lem_in.h"
+#include "ft_printf.h"
+#include "get_next_line.h"
+#include "common.h"
 #include "vizualizer.h"
 
 static void		init_anthill(t_anthill *anthill, t_tube *rooms)

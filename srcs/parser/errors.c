@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcarles <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:36:22 by pcarles           #+#    #+#             */
-/*   Updated: 2018/11/30 05:36:24 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/01/05 19:00:35 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
+#include "common.h"
 #include "parser.h"
 
 void	warn_parsing(char *str, int nline)

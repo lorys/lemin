@@ -8,5 +8,6 @@ vizualizer
 visualizer
 generator
 !srcs/vizualizer
+!srcs/visualizer
 .vscode
 .DS_Store

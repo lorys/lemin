@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   bresenham.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcarles <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:40:26 by pcarles           #+#    #+#             */
-/*   Updated: 2018/11/30 05:40:28 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/01/05 19:13:02 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ncurses.h>
+#include "libft.h"
 #include "vizualizer.h"
 
 static void		plot_line_low(int x0, int y0, int x1, int y1)

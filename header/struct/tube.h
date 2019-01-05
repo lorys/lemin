@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display_error.c                                    :+:      :+:    :+:   */
+/*   tube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/12 07:02:40 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/30 10:29:27 by llopez           ###   ########.fr       */
+/*   Created: 2019/01/05 18:48:49 by pcarles           #+#    #+#             */
+/*   Updated: 2019/01/05 18:51:35 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#ifndef TUBE_H
+# define TUBE_H
 
-void	display_error(t_tube *tube, t_paths *paths, t_infos *infos)
-{
-	free_everything(tube, infos, paths);
-	write(2, "ERROR\n", 6);
-	exit(EXIT_FAILURE);
-}
+# include "struct/path.h"
+
+typedef	struct		s_tube {
+	char			*name;
+	int				x;
+	int				y;
+	int				vu;
+	int				ants;
+	struct s_paths	*links;
+	struct s_tube	*next;
+	struct s_tube	*prev;
+}					t_tube;
+
+#endif

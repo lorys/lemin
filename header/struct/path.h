@@ -1,20 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   toend.c                                            :+:      :+:    :+:   */
+/*   path.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/07 11:04:09 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/30 08:11:22 by llopez           ###   ########.fr       */
+/*   Created: 2019/01/05 18:50:20 by pcarles           #+#    #+#             */
+/*   Updated: 2019/01/05 18:51:11 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#ifndef PATH_H
+# define PATH_H
 
-t_tube	*toend(t_tube *tube)
-{
-	while (tube && tube->next)
-		tube = tube->next;
-	return (tube);
-}
+#include "struct/tube.h"
+
+typedef	struct	s_paths {
+	struct s_paths	*next;
+	struct s_paths	*prev;
+	struct s_tube	*room;
+}				t_paths;
+
+#endif

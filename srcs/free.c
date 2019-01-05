@@ -6,10 +6,11 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 07:06:44 by llopez            #+#    #+#             */
-/*   Updated: 2019/01/05 15:10:15 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/01/05 18:56:40 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "lem_in.h"
 
 static void	free_paths(t_paths *path_list)

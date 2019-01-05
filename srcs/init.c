@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_tube.c                                         :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 07:07:06 by llopez            #+#    #+#             */
-/*   Updated: 2019/01/05 15:28:12 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/01/05 18:57:49 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "lem_in.h"
 
 void	set_tube(t_tube *tube)
@@ -43,11 +44,4 @@ void	set_paths(t_paths *paths)
 	paths->room = NULL;
 	paths->next = NULL;
 	paths->prev = NULL;
-}
-
-t_tube	*found_next(t_tube *next, t_next *possible, t_next *shortest)
-{
-	free(shortest);
-	free(possible);
-	return (next);
 }

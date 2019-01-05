@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   save_room.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 22:11:45 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/04 23:12:33 by llopez           ###   ########.fr       */
+/*   Updated: 2019/01/05 19:07:10 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
+#include "parser.h"
 
 t_tube		*create_room(char *name, int x, int y)
 {

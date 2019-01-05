@@ -6,10 +6,13 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 10:48:59 by llopez            #+#    #+#             */
-/*   Updated: 2019/01/05 18:13:55 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/01/05 19:05:52 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "get_next_line.h"
+#include "ft_printf.h"
+#include "common.h"
 #include "lem_in.h"
 #include "parser.h"
 

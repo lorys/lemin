@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcarles <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:40:44 by pcarles           #+#    #+#             */
-/*   Updated: 2018/11/30 05:40:47 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/01/05 19:12:42 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include <stddef.h>
+#include "libft.h"
+#include "get_next_line.h"
 #include "parser.h"
 
 int				parse(t_tube **room_listp, t_infos *infos)

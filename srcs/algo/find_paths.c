@@ -6,10 +6,11 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 12:51:27 by pcarles           #+#    #+#             */
-/*   Updated: 2019/01/05 18:16:53 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/01/05 19:08:25 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_printf.h"
 #include "lem_in.h"
 
 /* Temporary function */
@@ -60,8 +61,7 @@ void		find_paths(t_infos *infos)
 {
 	t_tube		**res;
 
-	res = (t_tube**)malloc(sizeof(res) * infos->room_total);
-	if (!res)
+	if (!(res = (t_tube**)malloc(sizeof(res) * infos->room_total)))
 		return ;
 	explore(infos->start, infos, 0, res);
 	free(res);
