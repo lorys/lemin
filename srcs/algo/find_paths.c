@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 12:51:27 by pcarles           #+#    #+#             */
-/*   Updated: 2019/01/05 19:08:25 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/01/05 19:25:58 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	print_path(t_tube **path, int size)
 	ft_putchar('\n');
 }
 
+/* This function find ALL the possible paths (too slow) */
 static void	explore(t_tube *position, t_infos *infos, int depth, t_tube **buf)
 {
 	t_paths	*edges;
