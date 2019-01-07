@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 12:51:27 by pcarles           #+#    #+#             */
-/*   Updated: 2019/01/07 16:44:56 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/01/07 16:57:23 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	explore(t_tube *position, t_infos *infos, int depth, t_tube **buf)
 	edges = position->links;
 	position->vu = 1;
 	if (!edges || !edges->next)
-		position->vu = 2;
+		position->vu = 2; // When `vu` is 2, it's a dead end
 	while (edges)
 	{
 		tmp = edges->room;
