@@ -35,6 +35,7 @@ typedef	struct	s_tube {
 	int				vu;
 	int				ants;
 	int				steps;
+	int				already_moved;
 	struct s_paths	*links;
 	struct s_tube	*next;
 	struct s_tube	*prev;

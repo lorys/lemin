@@ -39,7 +39,6 @@ int		find_path(t_tube *room, t_infos *infos, t_tube *from, int nb)
 			tmp->room->steps = nb;
 		if (tmp->room != from && !tmp->room->vu && (ret += find_path(tmp->room, infos, room, nb+1)))
 			tmp->room->steps = nb;
-		printf("%s - %d", tmp->room->name, tmp->room->steps);
 		tmp->room->vu = 1;
 		tmp = tmp->next;
 	}

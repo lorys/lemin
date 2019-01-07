@@ -18,6 +18,7 @@ void	set_tube(t_tube *tube)
 	tube->next = NULL;
 	tube->name = NULL;
 	tube->ants = 0;
+	tube->already_moved = 0;
 	tube->x = 0;
 	tube->y = 0;
 	tube->vu = 0;
