@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 15:17:38 by llopez            #+#    #+#             */
-/*   Updated: 2019/01/07 16:32:15 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/01/07 19:58:26 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ int		ft_strisnumber(char *str)
 	return (ft_stris(str, &ft_isdigit));
 }
 
-void	display_error(t_tube *tube, t_paths *paths, t_infos *infos)
+void	display_error(t_tube *tube)
 {
-	free_everything(tube, infos, paths);
+	free_everything(tube);
 	write(2, "ERROR\n", 6);
 	exit(EXIT_FAILURE);
 }

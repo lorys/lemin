@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 07:07:06 by llopez            #+#    #+#             */
-/*   Updated: 2019/01/07 16:30:13 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/01/07 19:55:18 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,4 @@ void	init_infos(t_infos *infos)
 	infos->bonusants = 0;
 	infos->room_total = 0;
 	infos->rounds = 0;
-}
-
-void	init_paths(t_paths *paths)
-{
-	paths->next = NULL;
-	paths->prev = NULL;
-	paths->room = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:40:31 by pcarles           #+#    #+#             */
-/*   Updated: 2019/01/07 16:25:35 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/01/07 19:59:13 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,16 @@ static void		set_real_position(t_tube *room_list, t_anthill *anthill, \
 	}
 }
 
+static void		display_room_name(t_tube *room, int color)
+{
+	attron(A_BOLD);
+	attron(COLOR_PAIR(color));
+	mvprintw(room->y, room->x - ((ft_strlen(room->name) + 2) / 2), \
+		"[%.5s]", room->name);
+	attroff(COLOR_PAIR(color));
+	attroff(A_BOLD);
+}
+
 static void		display_map(t_tube *room, t_infos *infos)
 {
 	t_paths		*link;
@@ -65,18 +75,7 @@ static void		display_map(t_tube *room, t_infos *infos)
 			link = link->next;
 		}
 		display_map(room->next, infos);
-		attron(A_BOLD);
-		if (room == infos->end || room == infos->start)
-			attron(COLOR_PAIR(21));
-		else
-			attron(COLOR_PAIR(20));
-		mvprintw(room->y, room->x - (ft_strlen(room->name) + 2) / 2, \
-		"[%.5s]", room->name);
-		if (room == infos->end || room == infos->start)
-			attroff(COLOR_PAIR(21));
-		else
-			attroff(COLOR_PAIR(20));
-		attroff(A_BOLD);
+		display_room_name(room, room == infos->start || room == infos->end ? 21 : 20);
 	}
 }
 
@@ -242,7 +241,7 @@ int				main(void)
 	launch(room_list, &infos);
 	refresh();
 	parse_ants(room_list, &infos);
-	free_everything(room_list, NULL, NULL);
+	free_everything(room_list);
 	sleep(1000);
 	endwin();
 	return (EXIT_SUCCESS);

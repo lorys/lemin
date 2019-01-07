@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2019/01/07 16:56:05 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/01/07 22:36:15 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,20 @@ static	void	bonus_manager(int argc, char **argv, t_infos *infos)
 
 int				main(int argc, char **argv)
 {
+	t_infos		infos;
 	t_tube		*room_list;
 	t_tube		*tmp;
-	t_infos		*infos;
-	t_paths		*paths;
+	t_paths		*paths_tmp;
 
-	if (!(paths = (t_paths *)malloc(sizeof(t_paths)))\
-		|| !(infos = (t_infos *)malloc(sizeof(t_infos))))
-		return (EXIT_FAILURE);
+	init_infos(&infos);
 	room_list = NULL;
-	init_infos(infos);
-	init_paths(paths);
-	bonus_manager(argc, argv, infos);
-	read_stdin(&room_list, infos);
-	if (!room_list || !infos->start || !infos->end || infos->fourmis <= 0)
-		display_error(room_list, paths, infos);
+	bonus_manager(argc, argv, &infos);
+	read_stdin(&room_list, &infos);
+	if (!room_list || !infos.start || !infos.end || infos.fourmis <= 0)
+		display_error(room_list);
 	else
 	{
-		find_paths(infos);
+		find_paths(&infos);
 		
 		// Debug informations
 		tmp = room_list;
@@ -62,11 +58,11 @@ int				main(int argc, char **argv)
 			// Theses rooms should have only one other room connected
 			if (tmp->vu == 2)
 			{
-				paths = tmp->links;
-				while (paths)
+				paths_tmp = tmp->links;
+				while (paths_tmp)
 				{
-					ft_printf("Edge name: %s\n", paths->room->name);
-					paths = paths->next;
+					ft_printf("Edge name: %s\n", paths_tmp->room->name);
+					paths_tmp = paths_tmp->next;
 				}
 			}
 			ft_printf("Name: %7.5s | nb: %d\n", tmp->name, tmp->vu);
@@ -74,6 +70,6 @@ int				main(int argc, char **argv)
 		}
 		// End debug infos
 	}
-	free_everything(room_list, infos, paths);
+	free_everything(room_list);
 	return (EXIT_SUCCESS);
 }

@@ -6,12 +6,13 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:27:40 by pcarles           #+#    #+#             */
-/*   Updated: 2019/01/05 19:01:43 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/01/07 19:58:53 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "libft.h"
+#include "common.h"
 #include "lem_in.h"
 #include "parser.h"
 
