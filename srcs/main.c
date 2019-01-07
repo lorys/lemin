@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2019/01/05 19:09:58 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/01/07 16:41:19 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int				main(int argc, char **argv)
 		|| !(infos = (t_infos *)malloc(sizeof(t_infos))))
 		return (EXIT_FAILURE);
 	room_list = NULL;
-	set_infos(infos);
-	set_paths(paths);
+	init_infos(infos);
+	init_paths(paths);
 	bonus_manager(argc, argv, infos);
 	read_stdin(&room_list, infos);
 	if (!room_list || !infos->start || !infos->end || infos->fourmis <= 0)

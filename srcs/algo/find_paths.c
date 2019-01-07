@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 12:51:27 by pcarles           #+#    #+#             */
-/*   Updated: 2019/01/05 19:25:58 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/01/07 16:44:56 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static void	print_path(t_tube **path, int size)
 static void	explore(t_tube *position, t_infos *infos, int depth, t_tube **buf)
 {
 	t_paths	*edges;
+	t_tube	*tmp;
 
 	buf[depth] = position;
 	if (position == infos->end)
@@ -46,12 +47,13 @@ static void	explore(t_tube *position, t_infos *infos, int depth, t_tube **buf)
 		position->vu = 2;
 	while (edges)
 	{
-		if (edges->room->vu || edges->room == position)
+		tmp = edges->room;
+		if (tmp->vu || tmp == position)
 		{
 			edges = edges->next;
 			continue ;
 		}
-		explore(edges->room, infos, depth + 1, buf);
+		explore(tmp, infos, depth + 1, buf);
 		edges = edges->next;
 	}
 	if (position->vu == 1)

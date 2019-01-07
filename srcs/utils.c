@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 15:17:38 by llopez            #+#    #+#             */
-/*   Updated: 2019/01/05 19:10:16 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/01/07 16:32:15 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	display_error(t_tube *tube, t_paths *paths, t_infos *infos)
 	exit(EXIT_FAILURE);
 }
 
-t_tube		*find_room(char *room_name, t_tube *room_list)
+t_tube	*find_room(char *room_name, t_tube *room_list)
 {
 	t_tube	*tmp;
 

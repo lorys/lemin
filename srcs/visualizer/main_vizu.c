@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:40:31 by pcarles           #+#    #+#             */
-/*   Updated: 2019/01/05 19:11:51 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/01/07 16:25:35 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,7 @@ int				main(void)
 	t_tube		*room_list;
 
 	room_list = NULL;
-	set_infos(&infos);
+	init_infos(&infos);
 	parse(&room_list, &infos);
 	if (!room_list)
 		return (EXIT_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 07:06:44 by llopez            #+#    #+#             */
-/*   Updated: 2019/01/05 18:56:40 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/01/07 16:32:52 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void		free_everything(t_tube *room_list, t_infos *infos, t_paths *paths)
 	free_paths(paths);
 }
 
-void	free_char_tab(char **str)
+void		free_char_tab(char **str)
 {
 	int	a;
 
