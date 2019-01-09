@@ -15,32 +15,45 @@
 int		find_path(t_tube *room, t_infos *infos, t_tube *from, int nb)
 {
 	t_paths	*tmp;
-	t_paths	*tmpa;
+	t_paths	*base;
 	int	ret;
-	int	tmpi;
+	int	init;
 
-	tmpi = 0;
 	ret = 0;
+	init = 0;
+	base = NULL;
 	tmp = (room) ? room->links : NULL;
-	while (tmp && tmp->prev)
-		tmp = tmp->prev;
-	tmpa = tmp;
-	while (tmpa)
-	{
-		if (tmpa->room == infos->start)
-			return (1);
-		tmpa = tmpa->next;
-	}
+	base = tmp;
+	while (base && base->prev)
+		base = base->prev;
+	tmp = base;
 	while (tmp)
 	{
 		if (tmp->room == infos->start)
 			return (1);
-		if (tmp->room != from && tmp->room->vu && (tmp->room->steps > nb || !tmp->room->steps))
-			tmp->room->steps = nb;
-		if (tmp->room != from && !tmp->room->vu && (ret += find_path(tmp->room, infos, room, nb+1)))
-			tmp->room->steps = nb;
-		tmp->room->vu = 1;
 		tmp = tmp->next;
 	}
+	tmp = base;
+	while (tmp)
+	{
+		if (!tmp->room->vu && tmp->room != from && (!tmp->room->steps || nb < tmp->room->steps))
+		{
+			tmp->room->steps = nb;
+			printf("\t%s is %d steps from end.\n", tmp->room->name, tmp->room->steps);
+		}
+		tmp = tmp->next;
+	}
+	tmp = base;
+	while (tmp)
+	{
+		if (!tmp->room->vu && tmp->room != from && !(init = find_path(tmp->room, infos, room, nb+1)))
+		{
+			ret += init;
+			printf("%s don't go anywhere\n", tmp->room->name);
+			tmp->room->steps = 0;
+		}
+		tmp = tmp->next;
+	}
+	tmp->room->vu = 1;
 	return (ret);
 }
