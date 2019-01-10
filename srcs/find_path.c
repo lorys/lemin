@@ -27,33 +27,20 @@ int		find_path(t_tube *room, t_infos *infos, t_tube *from, int nb)
 	while (base && base->prev)
 		base = base->prev;
 	tmp = base;
-	while (tmp)
-	{
-		if (tmp->room == infos->start)
-			return (1);
-		tmp = tmp->next;
-	}
+	if (room == infos->start)
+		return (1);
 	tmp = base;
-	while (tmp)
+	printf("\t\t\t%s\n", room->name);
+	while (tmp && base->room->links->room != from)
 	{
-		if (!tmp->room->vu && tmp->room != from && (!tmp->room->steps || nb < tmp->room->steps))
-		{
+		if (nb < tmp->room->steps)
 			tmp->room->steps = nb;
+		if (tmp->room != from && (init = find_path(tmp->room, infos, room, nb + 1)))
+		{
+			ret += init;
 			printf("\t%s is %d steps from end.\n", tmp->room->name, tmp->room->steps);
 		}
 		tmp = tmp->next;
 	}
-	tmp = base;
-	while (tmp)
-	{
-		if (!tmp->room->vu && tmp->room != from && !(init = find_path(tmp->room, infos, room, nb+1)))
-		{
-			ret += init;
-			printf("%s don't go anywhere\n", tmp->room->name);
-			tmp->room->steps = 0;
-		}
-		tmp = tmp->next;
-	}
-	tmp->room->vu = 1;
 	return (ret);
 }
