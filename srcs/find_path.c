@@ -22,22 +22,40 @@ int		find_path(t_tube *room, t_infos *infos, t_tube *from, int nb)
 	ret = 0;
 	init = 0;
 	base = NULL;
+	if (room == infos->start)
+		return (1);
+	printf("from = %s\troom = %s\tsteps = %d\tnb = %d\n", (from)?from->name:NULL, room->name, room->steps, nb);
 	tmp = (room) ? room->links : NULL;
 	base = tmp;
 	while (base && base->prev)
 		base = base->prev;
 	tmp = base;
-	if (room == infos->start)
-		return (1);
-	tmp = base;
-	printf("\t\t\t%s\n", room->name);
-	while (tmp && base->room->links->room != from)
+	while (tmp)
 	{
-		if (nb < tmp->room->steps)
-			tmp->room->steps = nb;
-		if (tmp->room != from && (init = find_path(tmp->room, infos, room, nb + 1)))
+		if (tmp->room == infos->start)
 		{
+			if (!room->steps || room->steps > nb)
+				room->steps = nb;
+			return (1);
+		}
+		tmp = tmp->next;
+	}
+	tmp = base;
+	while (tmp)
+	{
+		if (tmp->room->steps && tmp->room->steps < nb && tmp->room->vu)
+			return (1);
+		if (tmp->room != from && tmp->room != infos->start && tmp->room != from)
+		{
+			init = find_path(tmp->room, infos, room, nb + 1);
+			if (init)
+				printf("%s link to start\n", tmp->room->name);
 			ret += init;
+			if ((!tmp->room->steps || tmp->room->steps > nb) && init)
+				tmp->room->steps = nb;
+			else if (!ret)
+				tmp->room->steps = 0;
+			tmp->room->vu = 1;
 			printf("\t%s is %d steps from end.\n", tmp->room->name, tmp->room->steps);
 		}
 		tmp = tmp->next;
