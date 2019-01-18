@@ -12,6 +12,21 @@
 
 #include "lem_in.h"
 
+int		ft_tubelena(t_tube *room)
+{
+	int	len;
+
+	len = 0;
+	while (room && room->prev)
+		room = room->prev;
+	while (room)
+	{
+		len++;
+		room = room->next;
+	}
+	return (len);
+}
+
 int		find_path(t_tube *room, t_infos *infos, t_tube *from, int nb)
 {
 	t_paths	*tmp;
@@ -24,7 +39,7 @@ int		find_path(t_tube *room, t_infos *infos, t_tube *from, int nb)
 	base = NULL;
 	if (room == infos->start)
 		return (1);
-	printf("from = %s\troom = %s\tsteps = %d\tnb = %d\n", (from)?from->name:NULL, room->name, room->steps, nb);
+	//printf("from = %s\troom = %s %s\tsteps = %d\tnb = %d\n", (from)?from->name:NULL, room->name, (room->vu)?"(VU)":"", room->steps, nb);
 	tmp = (room) ? room->links : NULL;
 	base = tmp;
 	while (base && base->prev)
@@ -34,31 +49,34 @@ int		find_path(t_tube *room, t_infos *infos, t_tube *from, int nb)
 	{
 		if (tmp->room == infos->start)
 		{
+	//		printf("%s\n", tmp->room->name);
 			if (!room->steps || room->steps > nb)
 				room->steps = nb;
-			return (1);
+			return (nb);
 		}
 		tmp = tmp->next;
 	}
 	tmp = base;
 	while (tmp)
 	{
-		if (tmp->room->steps && tmp->room->steps < nb && tmp->room->vu)
-			return (1);
-		if (tmp->room != from && tmp->room != infos->start && tmp->room != from)
+		if (tmp->room != from && !tmp->room->vu)
 		{
-			init = find_path(tmp->room, infos, room, nb + 1);
-			if (init)
-				printf("%s link to start\n", tmp->room->name);
-			ret += init;
-			if ((!tmp->room->steps || tmp->room->steps > nb) && init)
+			init = 0;
+			if (tmp->room->steps > nb || !tmp->room->steps)
+			{
 				tmp->room->steps = nb;
-			else if (!ret)
-				tmp->room->steps = 0;
-			tmp->room->vu = 1;
-			printf("\t%s is %d steps from end.\n", tmp->room->name, tmp->room->steps);
+				init = find_path(tmp->room, infos, room, nb + 1);
+				ret += init;
+				if (!init)
+					tmp->room->steps = 0;
+				else if (init-nb == 1)
+					return (1);
+			}
+			/*if (init)
+				printf("%s link to start\n", tmp->room->name);*/
+			//printf("\t%s is %d steps from end.\n", tmp->room->name, tmp->room->steps);
 		}
 		tmp = tmp->next;
 	}
-	return (ret);
+	return ((ret) ? nb : 0);
 }
