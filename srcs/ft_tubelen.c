@@ -14,13 +14,15 @@
 
 int		ft_tubelen(t_tube *len)
 {
-	int i;
+	int	i;
+	t_paths	*tmp;
 
+	tmp = len->links;
 	i = 0;
-	while (len->links && len->links->next)
+	while (tmp)
 	{
-		len->links = len->links->next;
 		i++;
+		tmp = tmp->next;
 	}
 	return (i);
 }

@@ -22,6 +22,7 @@ void	set_tube(t_tube *tube)
 	tube->x = 0;
 	tube->y = 0;
 	tube->vu = 0;
+	tube->pass = 0;
 	tube->steps = -1;
 	tube->links = (t_paths *)malloc(sizeof(t_paths));
 	tube->links->next = NULL;

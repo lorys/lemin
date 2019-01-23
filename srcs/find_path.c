@@ -12,21 +12,6 @@
 
 #include "lem_in.h"
 
-int		ft_tubelena(t_tube *room)
-{
-	int	len;
-
-	len = 0;
-	while (room && room->prev)
-		room = room->prev;
-	while (room)
-	{
-		len++;
-		room = room->next;
-	}
-	return (len);
-}
-
 int		find_path(t_tube *room, t_infos *infos, t_tube *from, int nb)
 {
 	t_paths	*tmp;
@@ -39,7 +24,8 @@ int		find_path(t_tube *room, t_infos *infos, t_tube *from, int nb)
 	base = NULL;
 	if (room == infos->start)
 		return (1);
-	//printf("from = %s\troom = %s %s\tsteps = %d\tnb = %d\n", (from)?from->name:NULL, room->name, (room->vu)?"(VU)":"", room->steps, nb);
+		room->pass++;
+	//printf("from = %s\troom = %s %s\tsteps = %d\tnb = %d\t (%d pass)\n", (from)?from->name:NULL, room->name, (room->vu)?"(VU)":"", room->steps, nb, room->pass);
 	tmp = (room) ? room->links : NULL;
 	base = tmp;
 	while (base && base->prev)
@@ -47,16 +33,25 @@ int		find_path(t_tube *room, t_infos *infos, t_tube *from, int nb)
 	tmp = base;
 	while (tmp)
 	{
+		if (tmp->room->vu != -1)
+			ret = 1;
 		if (tmp->room == infos->start)
 		{
-	//		printf("%s\n", tmp->room->name);
+	//		printf("%s\n", room->name);
 			if (!room->steps || room->steps > nb)
 				room->steps = nb;
 			return (nb);
 		}
 		tmp = tmp->next;
 	}
+	if (!ret && room == infos->end)
+		printf("%s failed.\n", room->name);
+	if (!ret)
+		return (0);
+	ret = 0;
 	tmp = base;
+	room->vu = -1;
+	//printf("start recursive by %s\n", room->name);
 	while (tmp)
 	{
 		if (tmp->room != from && !tmp->room->vu)
@@ -68,15 +63,23 @@ int		find_path(t_tube *room, t_infos *infos, t_tube *from, int nb)
 				init = find_path(tmp->room, infos, room, nb + 1);
 				ret += init;
 				if (!init)
+				{
+					tmp->room->vu = 1;
 					tmp->room->steps = 0;
-				else if (init-nb == 1)
+				}
+				else if (init - nb == 1)
+				{
+					room->vu = 0;
 					return (1);
+				}
 			}
-			/*if (init)
-				printf("%s link to start\n", tmp->room->name);*/
+	//		if (init)
+	//			printf("%s link to start\n", tmp->room->name);
 			//printf("\t%s is %d steps from end.\n", tmp->room->name, tmp->room->steps);
 		}
 		tmp = tmp->next;
 	}
+	//printf("stop recursive by %s\n", room->name);
+	room->vu = 0;
 	return ((ret) ? nb : 0);
 }
