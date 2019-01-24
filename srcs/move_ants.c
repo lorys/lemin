@@ -47,8 +47,6 @@ static void		show_ant(int l, t_tube *room, t_infos *infos, char *buffer)
 
 	if (!room || !infos)
 		return ;
-	if (room == infos->end)
-		ft_printf("\033[41mL%d-%s\033[0m", l, room->name);
 	if (infos->select == l)
 		ft_printf("\033[41mL%d-%s\033[0m", l, room->name);
 	else if (infos->bonus)
@@ -109,7 +107,7 @@ static t_tube		*get_minus(t_tube *room, t_infos *infos)
 		if (tmp->room == infos->end)
 			return (infos->end);
 		if (!tmp->room->ants && tmp->room->steps > 0 && (tmp->room->steps <= room->steps || room == infos->start)\
-			 && (!minus || minus->steps > tmp->room->steps))
+			 && (!minus || minus->ants > tmp->room->ants))
 		{
 			minus = tmp->room;
 			//printf("%s can possibly be the next step.\n", minus->name);

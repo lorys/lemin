@@ -35,7 +35,7 @@ void	set_research(t_infos *infos, t_tube *tube)
 	char	*buffer;
 	t_paths	*tmp;
 
-	if (!find_path(infos->end, infos, NULL, 1))
+	if (!find_path(infos->end, infos, NULL, 0))
 		display_error(tube, infos);
 	else
 	{
@@ -48,7 +48,8 @@ void	set_research(t_infos *infos, t_tube *tube)
 		tmp = infos->end->links;
 		while (tmp)
 		{
-			printf("%s (%d steps)\n", tmp->room->name, tmp->room->steps);
+			if (tmp->room->steps)
+				printf("%s (%d steps)\n", tmp->room->name, tmp->room->steps);
 			tmp = tmp->next;
 		}
 		move_ants(infos, buffer);
