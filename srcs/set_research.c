@@ -20,7 +20,6 @@ int		count_room_linked(t_tube *tube)
 	count = 0;
 	tmp = tube;
 	while (tube->prev)
-
 	{
 		count = (tube->links) ? count + 1 : count;
 		tube = tube->prev;
@@ -34,8 +33,10 @@ void	set_research(t_infos *infos, t_tube *tube)
 {
 	char	*buffer;
 	t_paths	*tmp;
+	int	a;
 
-	if (!find_path(infos->end, infos, NULL, 0))
+	a = 0;
+	if (!find_path(infos))
 		display_error(tube, infos);
 	else
 	{
@@ -45,13 +46,16 @@ void	set_research(t_infos *infos, t_tube *tube)
 		infos->rounds = 0;
 		infos->start->ants = infos->fourmis;
 		buffer = malloc(sizeof(char) * BUFFER_SIZE);
-		tmp = infos->end->links;
+		tmp = infos->start->links;
 		while (tmp)
 		{
 			if (tmp->room->steps)
-				printf("%s (%d steps)\n", tmp->room->name, tmp->room->steps);
+				a++;
+			if (tmp->room->steps)
+				printf("%s\t\t(%d steps)\n", tmp->room->name, tmp->room->steps);
 			tmp = tmp->next;
 		}
+		printf("%d connexions at start\n", a);
 		move_ants(infos, buffer);
 		if (!infos->bonus)
 			fill_buffer(NULL, buffer, 1, infos);

@@ -14,7 +14,7 @@ NAME		= lem-in
 NAME_1		= visualizer
 
 CC			= gcc
-C_FLAGS		= -Wall -Wextra -Werror -fsanitize=address -g3
+C_FLAGS		= -Wall -Wextra -Werror -g3 -fsanitize=address
 LD_FLAGS	=
 
 SRCDIR		= srcs/

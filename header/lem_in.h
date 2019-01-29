@@ -36,6 +36,8 @@ typedef	struct	s_tube {
 	int				ants;
 	int				steps;
 	int				already_moved;
+	int				passages;
+	int				pass;
 	struct s_paths	*links;
 	struct s_tube	*next;
 	struct s_tube	*prev;
@@ -59,7 +61,7 @@ typedef	struct	s_next {
 
 t_tube			*found_next(t_tube *next, t_next *possible, t_next *shortest);
 void			realloc_paths(t_paths *tube, t_tube *add);
-int				find_path(t_tube *room, t_infos *infos, t_tube *from, int nb);
+int				find_path(t_infos *infos);
 t_tube			*find_room(char *room_name, t_tube *room_list);
 void			fill_buffer(const char *str, char *buffer, int print,\
 		t_infos *infos);

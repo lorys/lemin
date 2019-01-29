@@ -103,15 +103,11 @@ static t_tube		*get_minus(t_tube *room, t_infos *infos)
 		tmp = tmp->prev;
 	while (tmp)
 	{
-		//printf("\tchecking room %s (%d ants) (%d steps)\n", tmp->room->name, tmp->room->ants, tmp->room->steps);
 		if (tmp->room == infos->end)
 			return (infos->end);
-		if (!tmp->room->ants && tmp->room->steps > 0 && (tmp->room->steps <= room->steps || room == infos->start)\
+		if (!tmp->room->ants && tmp->room->steps > 0 && (tmp->room->steps < room->steps || room == infos->start)\
 			 && (!minus || minus->ants > tmp->room->ants))
-		{
 			minus = tmp->room;
-			//printf("%s can possibly be the next step.\n", minus->name);
-		}
 		tmp = tmp->next;
 	}
 	return (minus);
@@ -170,14 +166,11 @@ void			move_ants(t_infos *infos, char *buffer)
 		base = base->prev;
 	while (infos->end->ants < infos->fourmis)
 	{
-		//printf(".");
 		while ((tmp = choose_ants(base, infos)))
 		{
-		//	printf("easiest_ants = %d (room %s)\n", tmp->ants, tmp->name);
 			if (tmp->ants && !tmp->already_moved)
 			{
 				skip = get_minus(tmp, infos);
-				//printf("\tants %d - get_minus(%s) = %s\n", tmp->ants, tmp->name, (skip)?skip->name:NULL);
 				if (skip)
 				{
 					ret = change_room(infos, tmp, skip, buffer);
@@ -187,9 +180,7 @@ void			move_ants(t_infos *infos, char *buffer)
 				}
 			}
 			if (!get_minus(tmp, infos))
-			{
 				tmp = tmp->next;
-			}
 		}
 		tmp = base;
 		while (tmp)

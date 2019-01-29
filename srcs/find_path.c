@@ -12,32 +12,96 @@
 
 #include "lem_in.h"
 
-int		find_path(t_tube *room, t_infos *infos, t_tube *from, int nb)
+int		voyager(t_tube *room, t_tube *from, t_infos *infos, int nb)
 {
 	t_paths	*tmp;
 	int	ret;
 	int	total;
+	int	ret_minus;
+	t_tube	*minus_room;
 
-	if (room == infos->start)
-		return (1);
-	tmp = room->links;
-	ret = 0;
+	ret_minus = 0;
 	total = 0;
-	room->vu = 1;
-	printf("%s\n", room->name);
 	tmp = room->links;
 	while (tmp)
 	{
-		if (!tmp->room->vu && tmp->room != from && (ret = find_path(tmp->room, infos, room, nb + 1)))
+		if (tmp->room == infos->start || room == infos->start)
+			return (1);
+		tmp = tmp->next;
+	}
+	room->vu = 1;
+	tmp = room->links;
+	minus_room = NULL;
+	while (tmp)
+	{
+		if (tmp->room != infos->end && !tmp->room->vu && !tmp->room->steps && tmp->room != from && (ret = voyager(tmp->room, room, infos, nb + 1)))
 		{
 			total += ret;
-			if (room != infos->end)
+			if (!ret_minus || ret < ret_minus)
 			{
-				room->steps = (room->steps > nb || !room->steps) ? nb : room->steps;
-				return (1);
+				ret_minus = ret;
+				minus_room = tmp->room;	
 			}
 		}
 		tmp = tmp->next;
+	}
+	if (!minus_room)
+		return (0);
+	minus_room->pass = 1;
+	return (nb);
+}
+
+void		set_position(t_tube *room, t_tube *from, t_infos *infos, int nb)
+{
+	t_paths	*links;
+
+	links = room->links;
+	printf("%s (%d nb)\n", room->name, nb);
+	if (room == infos->start)
+		return ;
+	room->steps = (!room->steps || room->steps > nb) ? nb : room->steps;
+	room->vu = 2;
+	while (links)
+	{
+		if (links->room != from && links->room->pass && links->room->vu != 2)
+		{
+			links->room->pass = 0;
+			set_position(links->room, room, infos, nb + 1);
+		}
+		links = links->next;
+	}
+}
+
+void		reset_view(t_tube *room)
+{
+	while (room->prev)
+		room = room->prev;
+	while (room)
+	{
+		room->vu = 0;
+		room = room->next;
+	}
+}
+
+int		find_path(t_infos *infos)
+{
+	t_paths	*links;
+	int	total;
+	int	ret;
+
+	total = 0;
+	links = infos->end->links;
+	while (links)
+	{
+		if (links->room == infos->start)
+			total++;
+		if ((ret = voyager(links->room, infos->end, infos, 1)))
+		{
+			total++;
+			set_position(links->room, infos->end, infos, 1);
+		}
+		reset_view(infos->start);
+		links = links->next;
 	}
 	return (total);
 }
