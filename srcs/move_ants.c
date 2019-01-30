@@ -70,7 +70,10 @@ static int		change_room(t_infos *infos, t_tube *from, t_tube *to, char *buffer)
 		return (0);
 	init_ants = from->ants;
 	if (to == infos->end)
+	{
+		from->ants = 0;
 		infos->end->ants++;
+	}
 	if (from == infos->start)
 	{
 		infos->start->ants--;
@@ -78,7 +81,7 @@ static int		change_room(t_infos *infos, t_tube *from, t_tube *to, char *buffer)
 		to->ants = init_ants;
 		to->already_moved = 1;
 	}
-	else
+	else if (to != infos->end)
 	{
 		to->ants = from->ants;
 		from->ants = 0;
@@ -131,23 +134,18 @@ int			can_move(t_tube *room, t_infos *infos)
 
 t_tube			*choose_ants(t_tube *room, t_infos *infos)
 {
-	t_tube	*minus;
+	t_tube	*minus_room;
 
-	minus = NULL;
+	minus_room = NULL;
+	if (get_minus(infos->start, infos))
+		return (infos->start);
 	while (room)
 	{
-		if (!room->steps && room != infos->end && room != infos->start)
-		{
-			room = room->next;
-			continue;
-		}
-		if (!room->already_moved && room->ants && (!minus || minus->steps > room->steps) && can_move(room, infos))
-		{
-			minus = room;
-		}
+		if (room != infos->start && room != infos->end && !room->already_moved && room->ants && (!minus_room || room->steps < minus_room->steps))
+			minus_room = room;
 		room = room->next;
 	}
-	return (minus);
+	return (minus_room);
 }
 
 void			move_ants(t_infos *infos, char *buffer)
@@ -156,7 +154,6 @@ void			move_ants(t_infos *infos, char *buffer)
 	t_tube		*base;
 	t_tube		*skip;
 	int		moved;
-	int		ret;
 
 	moved = 0;
 	base = infos->start;
@@ -164,35 +161,33 @@ void			move_ants(t_infos *infos, char *buffer)
 	skip = NULL;
 	while (base->prev)
 		base = base->prev;
-	while (infos->end->ants < infos->fourmis)
+	while ((tmp = choose_ants(base, infos)))
 	{
-		while ((tmp = choose_ants(base, infos)))
+		if (tmp->ants && !tmp->already_moved)
 		{
-			if (tmp->ants && !tmp->already_moved)
+			skip = get_minus(tmp, infos);
+			if (skip)
 			{
-				skip = get_minus(tmp, infos);
-				if (skip)
-				{
-					ret = change_room(infos, tmp, skip, buffer);
-					moved += ret;
-					if (ret)
-						fill_buffer(" ", buffer, 0, infos);
-				}
+				if (moved)
+					fill_buffer(" ", buffer, 0, infos);
+				moved += change_room(infos, tmp, skip, buffer);
 			}
-			if (!get_minus(tmp, infos))
-				tmp = tmp->next;
 		}
-		tmp = base;
-		while (tmp)
-		{
-			tmp->already_moved = 0;
+		if (!get_minus(tmp, infos))
 			tmp = tmp->next;
-		}
-		if (moved)
-		{
-			infos->rounds++;
-			fill_buffer("\n", buffer, 0, infos);
-			moved = 0;
-		}
 	}
+	tmp = base;
+	while (tmp)
+	{
+		tmp->already_moved = 0;
+		tmp = tmp->next;
+	}
+	if (moved)
+	{
+		infos->rounds++;
+		fill_buffer("\n", buffer, 0, infos);
+		moved = 0;
+	}
+	if (infos->end->ants < infos->fourmis)
+		move_ants(infos, buffer);
 }

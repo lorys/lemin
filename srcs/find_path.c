@@ -26,7 +26,7 @@ int		voyager(t_tube *room, t_tube *from, t_infos *infos, int nb)
 	while (tmp)
 	{
 		if (tmp->room == infos->start || room == infos->start)
-			return (1);
+			return (nb);
 		tmp = tmp->next;
 	}
 	room->vu = 1;
@@ -34,7 +34,7 @@ int		voyager(t_tube *room, t_tube *from, t_infos *infos, int nb)
 	minus_room = NULL;
 	while (tmp)
 	{
-		if (tmp->room != infos->end && !tmp->room->vu && !tmp->room->steps && tmp->room != from && (ret = voyager(tmp->room, room, infos, nb + 1)))
+		if (tmp->room != infos->end && (!tmp->room->vu || tmp->room->pass > nb) && !tmp->room->steps && tmp->room != from && (ret = voyager(tmp->room, room, infos, nb + 1)))
 		{
 			total += ret;
 			if (!ret_minus || ret < ret_minus)
@@ -47,8 +47,8 @@ int		voyager(t_tube *room, t_tube *from, t_infos *infos, int nb)
 	}
 	if (!minus_room)
 		return (0);
-	minus_room->pass = 1;
-	return (nb);
+	minus_room->pass = nb;
+	return (ret_minus);
 }
 
 void		set_position(t_tube *room, t_tube *from, t_infos *infos, int nb)
@@ -56,7 +56,6 @@ void		set_position(t_tube *room, t_tube *from, t_infos *infos, int nb)
 	t_paths	*links;
 
 	links = room->links;
-	printf("%s (%d nb)\n", room->name, nb);
 	if (room == infos->start)
 		return ;
 	room->steps = (!room->steps || room->steps > nb) ? nb : room->steps;
@@ -97,6 +96,7 @@ int		find_path(t_infos *infos)
 			total++;
 		if ((ret = voyager(links->room, infos->end, infos, 1)))
 		{
+			printf("voyager = %d\n", ret);
 			total++;
 			set_position(links->room, infos->end, infos, 1);
 		}
