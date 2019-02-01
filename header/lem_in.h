@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 05:43:04 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/18 15:39:43 by llopez           ###   ########.fr       */
+/*   Updated: 2019/02/01 16:09:56 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef	struct	s_infos {
 	int				bonusants;
 	int				room_total;
 	int				rounds;
+	int				radius;
 }				t_infos;
 
 typedef	struct	s_next {

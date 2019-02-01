@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 22:12:07 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/19 17:22:31 by llopez           ###   ########.fr       */
+/*   Updated: 2019/02/01 18:12:27 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int		voyager(t_tube *room, t_tube *from, t_infos *infos, int nb)
 	ret_minus = 0;
 	total = 0;
 	tmp = room->links;
+	room->passages++;	
 	while (tmp)
 	{
 		if (tmp->room == infos->start || room == infos->start)
@@ -34,8 +35,13 @@ int		voyager(t_tube *room, t_tube *from, t_infos *infos, int nb)
 	minus_room = NULL;
 	while (tmp)
 	{
-		if (tmp->room != infos->end && (!tmp->room->vu || tmp->room->pass > nb) && !tmp->room->steps && tmp->room != from && (ret = voyager(tmp->room, room, infos, nb + 1)))
+		if ((infos->radius > nb || !infos->radius)\
+			&& tmp->room != infos->end && (!tmp->room->vu || tmp->room->pass > nb)\
+			&& !tmp->room->steps && tmp->room != from \
+			&& (ret = voyager(tmp->room, room, infos, nb + 1)))
 		{
+			if (ret == nb+1)
+				infos->radius = ret;
 			total += ret;
 			if (!ret_minus || ret < ret_minus)
 			{
@@ -47,28 +53,40 @@ int		voyager(t_tube *room, t_tube *from, t_infos *infos, int nb)
 	}
 	if (!minus_room)
 		return (0);
-	minus_room->pass = nb;
+	minus_room->pass = nb+1;
 	return (ret_minus);
 }
 
-void		set_position(t_tube *room, t_tube *from, t_infos *infos, int nb)
+int			set_position(t_tube *room, t_tube *from, t_infos *infos, int nb)
 {
 	t_paths	*links;
 
 	links = room->links;
-	if (room == infos->start)
-		return ;
-	room->steps = (!room->steps || room->steps > nb) ? nb : room->steps;
-	room->vu = 2;
 	while (links)
 	{
-		if (links->room != from && links->room->pass && links->room->vu != 2)
+		if (links->room == infos->start)
 		{
-			links->room->pass = 0;
-			set_position(links->room, room, infos, nb + 1);
+			room->steps = (!room->steps || room->steps > nb) ? nb : room->steps;
+			return (1);
 		}
 		links = links->next;
 	}
+	room->vu = 2;
+	links = room->links;
+	while (links)
+	{
+		if (links->room != from && links->room->pass == nb+1 && links->room->vu != 2)
+		{
+			printf("%s %d %d\n", links->room->name, links->room->pass, nb);
+			if (set_position(links->room, room, infos, nb + 1))
+			{
+				room->steps = (!room->steps || room->steps > nb) ? nb : room->steps;
+				return (1);
+			}
+		}
+		links = links->next;
+	}
+	return (0);
 }
 
 void		reset_view(t_tube *room)
@@ -92,6 +110,15 @@ int		find_path(t_infos *infos)
 	links = infos->end->links;
 	while (links)
 	{
+		total++;
+		links = links->next;
+	}
+	printf("%d links to end\n", total);
+	total = 0;
+	links = infos->end->links;
+	while (links)
+	{
+		infos->radius = 0;
 		if (links->room == infos->start)
 			total++;
 		if ((ret = voyager(links->room, infos->end, infos, 1)))
@@ -99,6 +126,10 @@ int		find_path(t_infos *infos)
 			printf("voyager = %d\n", ret);
 			total++;
 			set_position(links->room, infos->end, infos, 1);
+		}
+		else
+		{
+			printf("\tpaths not found by %s\n", links->room->name);
 		}
 		reset_view(infos->start);
 		links = links->next;

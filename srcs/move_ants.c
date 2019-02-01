@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:03:15 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/19 17:40:27 by llopez           ###   ########.fr       */
+/*   Updated: 2019/02/01 17:46:17 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ static t_tube		*get_minus(t_tube *room, t_infos *infos)
 	{
 		if (tmp->room == infos->end)
 			return (infos->end);
-		if (!tmp->room->ants && tmp->room->steps > 0 && (tmp->room->steps < room->steps || room == infos->start)\
-			 && (!minus || minus->ants > tmp->room->ants))
+		if (!tmp->room->ants && tmp->room != infos->start && tmp->room->steps > 0 && (tmp->room->steps < room->steps || room == infos->start)\
+			 && (!minus || minus->steps > tmp->room->steps))
 			minus = tmp->room;
 		tmp = tmp->next;
 	}
@@ -135,14 +135,22 @@ int			can_move(t_tube *room, t_infos *infos)
 t_tube			*choose_ants(t_tube *room, t_infos *infos)
 {
 	t_tube	*minus_room;
+	t_tube	*next;
+	int		i;
 
+	i = 0;
+	next = NULL;
 	minus_room = NULL;
 	if (get_minus(infos->start, infos))
 		return (infos->start);
 	while (room)
 	{
-		if (room != infos->start && room != infos->end && !room->already_moved && room->ants && (!minus_room || room->steps < minus_room->steps))
-			minus_room = room;
+		/*if (room->ants && room != infos->start && room != infos->end && !room->already_moved)
+				next = get_minus(room, infos);
+		if (room->ants && room != infos->start && room != infos->end && !room->already_moved && (!minus_room || (next && next->steps < minus_room->steps)))
+			minus_room = room;*/
+		if (get_minus(room, infos))
+			return (room);
 		room = room->next;
 	}
 	return (minus_room);
@@ -151,9 +159,9 @@ t_tube			*choose_ants(t_tube *room, t_infos *infos)
 void			move_ants(t_infos *infos, char *buffer)
 {
 	t_tube		*tmp;
-	t_tube		*base;
 	t_tube		*skip;
 	int		moved;
+	t_tube	*base;
 
 	moved = 0;
 	base = infos->start;
@@ -173,7 +181,7 @@ void			move_ants(t_infos *infos, char *buffer)
 				moved += change_room(infos, tmp, skip, buffer);
 			}
 		}
-		if (!get_minus(tmp, infos))
+		if (tmp != infos->start && !get_minus(tmp, infos))
 			tmp = tmp->next;
 	}
 	tmp = base;
@@ -186,7 +194,6 @@ void			move_ants(t_infos *infos, char *buffer)
 	{
 		infos->rounds++;
 		fill_buffer("\n", buffer, 0, infos);
-		moved = 0;
 	}
 	if (infos->end->ants < infos->fourmis)
 		move_ants(infos, buffer);
