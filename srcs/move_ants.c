@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:03:15 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/01 17:46:17 by llopez           ###   ########.fr       */
+/*   Updated: 2019/02/02 14:45:50 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,11 +145,7 @@ t_tube			*choose_ants(t_tube *room, t_infos *infos)
 		return (infos->start);
 	while (room)
 	{
-		/*if (room->ants && room != infos->start && room != infos->end && !room->already_moved)
-				next = get_minus(room, infos);
-		if (room->ants && room != infos->start && room != infos->end && !room->already_moved && (!minus_room || (next && next->steps < minus_room->steps)))
-			minus_room = room;*/
-		if (get_minus(room, infos))
+		if (room->ants && get_minus(room, infos))
 			return (room);
 		room = room->next;
 	}

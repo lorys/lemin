@@ -6,7 +6,7 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2018/12/19 17:14:49 by llopez           ###   ########.fr        #
+#    Updated: 2019/02/02 19:41:21 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME		= lem-in
 NAME_1		= visualizer
 
 CC			= gcc
-C_FLAGS		= -Wall -Wextra -Werror -g3 -fsanitize=address
+C_FLAGS		= -Wall -Wextra -Werror -Ofast
 LD_FLAGS	=
 
 SRCDIR		= srcs/

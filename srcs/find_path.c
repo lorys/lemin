@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 22:12:07 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/01 18:12:27 by llopez           ###   ########.fr       */
+/*   Updated: 2019/02/02 20:57:10 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		voyager(t_tube *room, t_tube *from, t_infos *infos, int nb)
 	ret_minus = 0;
 	total = 0;
 	tmp = room->links;
-	room->passages++;	
+	room->passages++;
 	while (tmp)
 	{
 		if (tmp->room == infos->start || room == infos->start)
@@ -35,7 +35,7 @@ int		voyager(t_tube *room, t_tube *from, t_infos *infos, int nb)
 	minus_room = NULL;
 	while (tmp)
 	{
-		if ((infos->radius > nb || !infos->radius)\
+		if (!tmp->room->useless && (infos->radius > nb || !infos->radius)\
 			&& tmp->room != infos->end && (!tmp->room->vu || tmp->room->pass > nb)\
 			&& !tmp->room->steps && tmp->room != from \
 			&& (ret = voyager(tmp->room, room, infos, nb + 1)))
@@ -52,7 +52,10 @@ int		voyager(t_tube *room, t_tube *from, t_infos *infos, int nb)
 		tmp = tmp->next;
 	}
 	if (!minus_room)
+	{
+		room->useless = 1;
 		return (0);
+	}
 	minus_room->pass = nb+1;
 	return (ret_minus);
 }
@@ -116,9 +119,12 @@ int		find_path(t_infos *infos)
 	printf("%d links to end\n", total);
 	total = 0;
 	links = infos->end->links;
+	ret = 0;
 	while (links)
 	{
 		infos->radius = 0;
+		if (total > ft_tubelen(infos->start))
+			break;
 		if (links->room == infos->start)
 			total++;
 		if ((ret = voyager(links->room, infos->end, infos, 1)))

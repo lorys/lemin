@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 05:43:04 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/01 16:09:56 by llopez           ###   ########.fr       */
+/*   Updated: 2019/02/02 20:56:34 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef	struct	s_tube {
 	int				vu;
 	int				ants;
 	int				steps;
+	int				useless;
 	int				already_moved;
 	int				passages;
 	int				pass;
@@ -53,6 +54,7 @@ typedef	struct	s_infos {
 	int				room_total;
 	int				rounds;
 	int				radius;
+	int				shortest_path;
 }				t_infos;
 
 typedef	struct	s_next {
