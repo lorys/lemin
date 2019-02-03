@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 12:51:27 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/03 19:03:11 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/03 20:34:09 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,25 +49,33 @@ static int	explore(t_tube *position, t_infos *infos, int depth, t_tube **buf)
 
 	found = 0;
 	buf[depth] = position;
-	// if (position == infos->end)
-	// {
-	// 	/* TODO: save path (save the buffer state) */
-	// 	print_path(buf, depth);
-	// 	infos->nb_paths++;
-	// 	return (1);
-	// }
+	if (position->ants == 0 || position->ants >= depth)
+		position->ants = depth;
+	else
+	{
+		printf("mabite\n");
+		return (0);
+	}
+	
+	if (position == infos->start)
+	{
+		/* TODO: save path (save the buffer state) */
+		print_path(buf, depth);
+		infos->nb_paths++;
+		return (1);
+	}
 	edges = position->links;
 	position->vu = STATUS_VISITED;
 	//check_dead_end(edges, position);
 	while (edges)
 	{
 		tmp = edges->room;
-		if (tmp == infos->end)
-		{
-			print_path(buf, depth);
-			infos->nb_paths++;
-			return (1);
-		}
+		// if (tmp == infos->start)
+		// {
+		// 	print_path(buf, depth);
+		// 	infos->nb_paths++;
+		// 	return (1);
+		// }
 		if (tmp->vu != STATUS_OK || tmp == position)
 		{
 			edges = edges->next;
@@ -88,6 +96,6 @@ void		find_paths(t_infos *infos)
 
 	if (!(res = (t_tube**)malloc(sizeof(res) * infos->room_total)))
 		return ;
-	explore(infos->start, infos, 0, res);
+	explore(infos->end, infos, 0, res);
 	free(res);
 }
