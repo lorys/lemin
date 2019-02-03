@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 22:12:07 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/03 23:25:42 by llopez           ###   ########.fr       */
+/*   Updated: 2019/02/03 23:49:33 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,28 @@
 t_tube		*hubble(t_tube *room, t_tube *from, t_infos *infos, int nb)
 {
 	int		ret;
-	int		total;
 	int		ret_minus;
 	t_tube	*minus_room;
 	t_paths *tmp;
 
 	tmp = room->links;
-	total = 0;
+	infos->ret_minus = 0;
+	minus_room = NULL;
+	ret_minus = 0;
 	while (tmp)
 	{
 		if (tmp->room != from && (ret = visitable(tmp, room, infos, nb)))
 		{
-			if (ret == nb + 1)
-				infos->radius = ret;
-			total += ret;
+			infos->radius = (ret == nb + 1) ? ret : infos->radius;
 			if (!ret_minus || ret < ret_minus)
 			{
 				ret_minus = ret;
-				infos->ret_minus = ret_minus;
 				minus_room = tmp->room;
 			}
 		}
 		tmp = tmp->next;
 	}
+	infos->ret_minus = ret_minus;
 	return (minus_room);
 }
 
@@ -45,6 +44,9 @@ int			voyager(t_tube *room, t_tube *from, t_infos *infos, int nb)
 {
 	t_tube	*minus_room;
 
+	minus_room = NULL;
+	if (room->passages > 15000)
+		return (0);
 	room->passages++;
 	if (check_start(room->links, infos))
 		return (nb);

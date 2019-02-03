@@ -6,7 +6,7 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2019/02/03 23:18:54 by llopez           ###   ########.fr        #
+#    Updated: 2019/02/03 23:31:03 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ H_FILES_1	= lem_in.h \
 
 C_FILES		= main.c \
 			find_path.c \
+			print.c \
 			find_room.c \
 			realloc_links.c \
 			save_room.c \

@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 05:43:04 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/03 23:19:13 by llopez           ###   ########.fr       */
+/*   Updated: 2019/02/03 23:30:07 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,9 @@ typedef	struct	s_next {
 	int				steps;
 }				t_next;
 
+void			show_ant(int l, t_tube *room, t_infos *infos, char *buffer);
+void			fill_buffer(const char *str, char *buffer, int print,\
+		t_infos *infos);
 int				check_start(t_paths *tmp, t_infos *infos);
 int				visitable(t_paths *tmp, t_tube *room, t_infos *infos, int nb);
 int				voyager(t_tube *room, t_tube *from, t_infos *infos, int nb);
