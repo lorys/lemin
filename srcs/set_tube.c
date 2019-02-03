@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 07:07:06 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/19 17:38:56 by llopez           ###   ########.fr       */
+/*   Updated: 2019/02/03 23:14:00 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	set_tube(t_tube *tube)
 void	set_infos(t_infos *infos)
 {
 	infos->fourmis = 0;
+	infos->ret_minus = 0;
+	infos->round_bonus = 0;
 	infos->bonusants = 0;
 	infos->bonus = 0;
 	infos->select = 0;

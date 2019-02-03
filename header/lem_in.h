@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 05:43:04 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/01 16:09:56 by llopez           ###   ########.fr       */
+/*   Updated: 2019/02/03 23:19:13 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ typedef	struct	s_infos {
 	int				bonusants;
 	int				room_total;
 	int				rounds;
+	int				round_bonus;
 	int				radius;
+	int				ret_minus;
 }				t_infos;
 
 typedef	struct	s_next {
@@ -60,6 +62,9 @@ typedef	struct	s_next {
 	int				steps;
 }				t_next;
 
+int				check_start(t_paths *tmp, t_infos *infos);
+int				visitable(t_paths *tmp, t_tube *room, t_infos *infos, int nb);
+int				voyager(t_tube *room, t_tube *from, t_infos *infos, int nb);
 t_tube			*found_next(t_tube *next, t_next *possible, t_next *shortest);
 void			realloc_paths(t_paths *tube, t_tube *add);
 int				find_path(t_infos *infos);
@@ -73,7 +78,6 @@ int				read_stdin(t_tube **room_listp, t_infos *infos);
 t_tube			*toend(t_tube *tube);
 int				ft_tubelen(t_tube *len);
 int				ft_strisdigit(char *str);
-int				ft_tubelen(t_tube *len);
 void			move_ants(t_infos *infos, char *buffer);
 void			free_char_tab(char **str);
 void			free_everything(t_tube *tube, t_infos *infos);
