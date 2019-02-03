@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:03:15 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/04 00:09:29 by llopez           ###   ########.fr       */
+/*   Updated: 2019/02/04 00:33:54 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,24 +100,18 @@ void				move_ants(t_infos *infos, char *buffer)
 	t_tube		*base;
 
 	moved = 0;
-	base = infos->start;
+	base = to_base(infos->start);
 	tmp = NULL;
 	skip = NULL;
-	while (base->prev)
-		base = base->prev;
 	while ((tmp = choose_ants(base, infos)))
 	{
-		if (tmp->ants && !tmp->already_moved)
+		if (tmp->ants && !tmp->already_moved && (skip = get_minus(tmp, infos)))
 		{
-			if ((skip = get_minus(tmp, infos)))
-			{
-				if (moved)
-					fill_buffer(" ", buffer, 0, infos);
-				moved += change_room(infos, tmp, skip, buffer);
-			}
+			if (moved)
+				fill_buffer(" ", buffer, 0, infos);
+			moved += change_room(infos, tmp, skip, buffer);
 		}
-		if (tmp != infos->start && !get_minus(tmp, infos))
-			tmp = tmp->next;
+		tmp = (!get_minus(tmp, infos)) ? tmp->next : tmp;
 	}
 	reset_infos(base);
 	if (moved && ++infos->rounds)
