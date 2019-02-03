@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_ants.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:03:15 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/01 17:46:17 by llopez           ###   ########.fr       */
+/*   Updated: 2019/02/03 23:22:18 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,14 +94,12 @@ static int		change_room(t_infos *infos, t_tube *from, t_tube *to, char *buffer)
 static t_tube		*get_minus(t_tube *room, t_infos *infos)
 {
 	t_tube	*minus;
-	t_tube	*minus_possible;
 	t_paths	*tmp;
 
 	if (!room || !room->ants || room->already_moved)
 		return (NULL);
 	tmp = room->links;
 	minus = NULL;
-	minus_possible = NULL;
 	while (tmp->prev)
 		tmp = tmp->prev;
 	while (tmp)
@@ -135,11 +133,7 @@ int			can_move(t_tube *room, t_infos *infos)
 t_tube			*choose_ants(t_tube *room, t_infos *infos)
 {
 	t_tube	*minus_room;
-	t_tube	*next;
-	int		i;
 
-	i = 0;
-	next = NULL;
 	minus_room = NULL;
 	if (get_minus(infos->start, infos))
 		return (infos->start);
