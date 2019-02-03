@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcarles <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:35:58 by pcarles           #+#    #+#             */
-/*   Updated: 2018/11/30 05:36:01 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/03 23:53:46 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int				is_tube_valid(char *line, t_tube *room_list, int nline);
 int				save_room_if_valid(char *line, t_tube **rooms, int nline);
 int				save_tube_if_valid(char *line, t_tube *rooms, int nline);
 t_tube			*create_room(char *name, int x, int y);
-t_tube		    *append_room(t_tube **room_listp, t_tube *room);
+t_tube			*append_room(t_tube **room_listp, t_tube *room);
 long			ft_atoi_long(char const *s);
 int				check_overflow(char *str);
 void			warn_parsing(char *str, int nline);

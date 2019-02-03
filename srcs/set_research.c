@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_research.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 06:51:28 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/03 23:01:19 by llopez           ###   ########.fr       */
+/*   Updated: 2019/02/03 23:30:55 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ int		count_room_linked(t_tube *tube)
 void	set_research(t_infos *infos, t_tube *tube)
 {
 	char	*buffer;
-	t_paths	*tmp;
-	int		a;
 
-	a = 0;
 	if (!find_path(infos))
 		display_error(tube, infos);
 	else
@@ -46,7 +43,6 @@ void	set_research(t_infos *infos, t_tube *tube)
 		infos->rounds = 0;
 		infos->start->ants = infos->fourmis;
 		buffer = malloc(sizeof(char) * BUFFER_SIZE);
-		tmp = infos->start->links;
 		move_ants(infos, buffer);
 		if (!infos->bonus)
 			fill_buffer(NULL, buffer, 1, infos);

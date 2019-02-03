@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2019/02/03 23:18:54 by llopez           ###   ########.fr        #
+#    Updated: 2019/02/03 23:52:15 by pcarles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME		= lem-in
 NAME_1		= visualizer
 
 CC			= gcc
-C_FLAGS		= -Wall -Wextra -Werror -g3 -fsanitize=address
+C_FLAGS		= -Wall -Wextra -Werror -Ofast
 LD_FLAGS	=
 
 SRCDIR		= srcs/
@@ -55,6 +55,7 @@ C_FILES		= main.c \
 
 C_FILES_1	= vizualizer/main_vizu.c \
 			vizualizer/parser.c \
+			visualizer/init_vizu.c \
 			parser/read_stdin.c \
 			parser/errors.c \
 			parser/links.c \
@@ -88,11 +89,11 @@ export CC C_FLAGS LD_FLAGS
 all: $(NAME) $(NAME_1)
 
 $(NAME): $(OBJ) $(LIBFT)
-	@$(CC) -o $@ -L$(LIBDIR) -lft $(OBJ) $(C_FLAGS) $(LD_FLAGS)
+	@$(CC) -o $@ $(OBJ) -L$(LIBDIR) -lft $(LD_FLAGS)
 	@printf "\033[32m BINARY FILE $@ CREATED \033[0m\n"
 
 $(NAME_1): $(OBJ_1) $(LIBFT)
-	@$(CC) -o $@ -L$(LIBDIR) -lft -lncurses $(OBJ_1) $(C_FLAGS) $(LD_FLAGS)
+	@$(CC) -o $@ $(OBJ_1) -L$(LIBDIR) -lft -lncurses $(LD_FLAGS)
 	@printf "\n\033[32m BINARY FILE $@ CREATED \033[0m\n"
 
 $(LIBFT):

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_functions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcarles <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 07:49:24 by pcarles           #+#    #+#             */
-/*   Updated: 2018/12/04 22:04:06 by llopez           ###   ########.fr       */
+/*   Updated: 2019/02/03 23:57:05 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int			save_tube_if_valid(char *line, t_tube *rooms, int nline)
 
 int			save_room_if_valid(char *line, t_tube **room_listp, int nline)
 {
-	t_tube 	*tmp;
+	t_tube	*tmp;
 
 	if ((tmp = is_room_valid(line, *room_listp, nline)))
 	{
@@ -74,16 +74,6 @@ int			save_room_if_valid(char *line, t_tube **room_listp, int nline)
 		return (1);
 	}
 	return (0);
-}
-
-int			check_overflow(char *str)
-{
-	long	tmp;
-
-	tmp = ft_atoi_long(str);
-	if (tmp < INT_MIN || tmp > INT_MAX || ft_strlen(str) > 10)
-		return (0);
-	return (1);
 }
 
 long		ft_atoi_long(char const *s)

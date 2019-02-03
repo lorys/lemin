@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcarles <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:36:22 by pcarles           #+#    #+#             */
-/*   Updated: 2018/11/30 05:36:24 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/03 23:56:36 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,14 @@ void	error_parsing(char *str, int nline)
 		ft_putstr_fd(str, 2);
 		ft_putchar_fd('\n', 2);
 	}
+}
+
+int			check_overflow(char *str)
+{
+	long	tmp;
+
+	tmp = ft_atoi_long(str);
+	if (tmp < INT_MIN || tmp > INT_MAX || ft_strlen(str) > 10)
+		return (0);
+	return (1);
 }

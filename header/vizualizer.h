@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vizualizer.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcarles <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:36:06 by pcarles           #+#    #+#             */
-/*   Updated: 2018/11/30 05:36:07 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/03 23:48:21 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,7 @@ typedef struct	s_ant
 
 int				parse(t_tube **room_listp, t_infos *infos);
 void			plot_line(int x0, int y0, int x1, int y1);
+void			init_anthill(t_anthill *anthill, t_tube *rooms);
+void			init_colors(void);
 
 #endif

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   links.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/02/03 23:55:07 by pcarles           #+#    #+#             */
+/*   Updated: 2019/02/03 23:55:25 by pcarles          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem_in.h"
 #include "parser.h"
 
@@ -13,7 +25,7 @@ static t_paths	*create_link(t_tube *room)
 	return (new);
 }
 
-static void	append_links(t_paths **links, t_paths *to_add)
+static void		append_links(t_paths **links, t_paths *to_add)
 {
 	t_paths	*tmp;
 
@@ -31,7 +43,7 @@ static void	append_links(t_paths **links, t_paths *to_add)
 	to_add->prev = tmp;
 }
 
-void		make_tube(char *line, t_tube *room_list)
+void			make_tube(char *line, t_tube *room_list)
 {
 	char	**split_tmp;
 	t_tube	*room_first;
