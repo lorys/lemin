@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:40:31 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/03 23:51:02 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/04 00:40:03 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int				main(void)
 	initscr();
 	init_colors();
 	launch(room_list, &infos);
+	curs_set(0);
 	refresh();
 	free_everything(room_list, NULL);
 	sleep(1000);
