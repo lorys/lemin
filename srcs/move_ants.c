@@ -6,13 +6,13 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:03:15 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/03 23:53:42 by llopez           ###   ########.fr       */
+/*   Updated: 2019/02/04 00:09:29 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int		change_room(t_infos *infos, t_tube *from, t_tube *to, \
+static int			change_room(t_infos *infos, t_tube *from, t_tube *to, \
 		char *buffer)
 {
 	int	init_ants;
@@ -67,7 +67,7 @@ static t_tube		*get_minus(t_tube *room, t_infos *infos)
 	return (minus);
 }
 
-t_tube			*choose_ants(t_tube *room, t_infos *infos)
+t_tube				*choose_ants(t_tube *room, t_infos *infos)
 {
 	t_tube	*minus_room;
 
@@ -83,12 +83,21 @@ t_tube			*choose_ants(t_tube *room, t_infos *infos)
 	return (minus_room);
 }
 
-void			move_ants(t_infos *infos, char *buffer)
+static void			reset_infos(t_tube *base)
+{
+	while (base)
+	{
+		base->already_moved = 0;
+		base = base->next;
+	}
+}
+
+void				move_ants(t_infos *infos, char *buffer)
 {
 	t_tube		*tmp;
 	t_tube		*skip;
-	int		moved;
-	t_tube	*base;
+	int			moved;
+	t_tube		*base;
 
 	moved = 0;
 	base = infos->start;
@@ -100,8 +109,7 @@ void			move_ants(t_infos *infos, char *buffer)
 	{
 		if (tmp->ants && !tmp->already_moved)
 		{
-			skip = get_minus(tmp, infos);
-			if (skip)
+			if ((skip = get_minus(tmp, infos)))
 			{
 				if (moved)
 					fill_buffer(" ", buffer, 0, infos);
@@ -111,17 +119,9 @@ void			move_ants(t_infos *infos, char *buffer)
 		if (tmp != infos->start && !get_minus(tmp, infos))
 			tmp = tmp->next;
 	}
-	tmp = base;
-	while (tmp)
-	{
-		tmp->already_moved = 0;
-		tmp = tmp->next;
-	}
-	if (moved)
-	{
-		infos->rounds++;
+	reset_infos(base);
+	if (moved && ++infos->rounds)
 		fill_buffer("\n", buffer, 0, infos);
-	}
 	if (infos->end->ants < infos->fourmis)
 		move_ants(infos, buffer);
 }
