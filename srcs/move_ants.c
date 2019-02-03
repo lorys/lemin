@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 16:03:15 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/02 14:45:50 by llopez           ###   ########.fr       */
+/*   Updated: 2019/02/03 11:49:33 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ static int		change_room(t_infos *infos, t_tube *from, t_tube *to, char *buffer)
 	init_ants = from->ants;
 	if (to == infos->end)
 	{
-		from->ants = 0;
+		if (from != infos->start)
+			from->ants = 0;
 		infos->end->ants++;
 	}
 	if (from == infos->start)
@@ -116,22 +117,6 @@ static t_tube		*get_minus(t_tube *room, t_infos *infos)
 	return (minus);
 }
 
-int			can_move(t_tube *room, t_infos *infos)
-{
-	t_paths *tmp;
-
-	tmp = room->links;
-	while (tmp)
-	{
-		if (tmp->room == infos->end)
-			return (1);
-		if (!tmp->room->ants && (tmp->room->steps < room->steps || room == infos->start) && tmp->room->steps > 0)
-			return (1);
-		tmp = tmp->next;
-	}
-	return (0);
-}
-
 t_tube			*choose_ants(t_tube *room, t_infos *infos)
 {
 	t_tube	*minus_room;
@@ -142,14 +127,20 @@ t_tube			*choose_ants(t_tube *room, t_infos *infos)
 	next = NULL;
 	minus_room = NULL;
 	if (get_minus(infos->start, infos))
+	{
+		printf("%s\n", get_minus(infos->start));
+		usleep(100000);
 		return (infos->start);
+	}
 	while (room)
 	{
-		if (room->ants && get_minus(room, infos))
-			return (room);
+		if (room->ants && (minus_room = get_minus(room, infos))\
+				&& (!next || minus_room->steps < next->steps))
+			next = minus_room;
 		room = room->next;
 	}
-	return (minus_room);
+	printf("----->>>>>> %s\n", (next)?next->name:NULL);
+	return (next);
 }
 
 void			move_ants(t_infos *infos, char *buffer)
@@ -191,6 +182,6 @@ void			move_ants(t_infos *infos, char *buffer)
 		infos->rounds++;
 		fill_buffer("\n", buffer, 0, infos);
 	}
-	if (infos->end->ants < infos->fourmis)
+	if (infos->end->ants != infos->fourmis)
 		move_ants(infos, buffer);
 }
