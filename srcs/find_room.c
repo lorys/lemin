@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   find_room.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 22:22:35 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/03 23:17:16 by llopez           ###   ########.fr       */
+/*   Updated: 2019/02/04 00:02:37 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_tube*	find_room(char *room_name, t_tube *room_list)
+t_tube	*find_room(char *room_name, t_tube *room_list)
 {
 	t_tube	*tmp;
 

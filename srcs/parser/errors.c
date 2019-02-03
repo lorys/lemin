@@ -6,14 +6,14 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:36:22 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/03 23:56:36 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/04 00:02:58 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 #include "parser.h"
 
-void	warn_parsing(char *str, int nline)
+void		warn_parsing(char *str, int nline)
 {
 	if (str && DEBUG && nline > 0)
 	{
@@ -25,7 +25,7 @@ void	warn_parsing(char *str, int nline)
 	}
 }
 
-void	error_parsing(char *str, int nline)
+void		error_parsing(char *str, int nline)
 {
 	if (str && DEBUG && nline > 0)
 	{
