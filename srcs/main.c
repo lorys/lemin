@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2019/01/07 22:36:15 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/03 15:41:27 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int				main(int argc, char **argv)
 {
 	t_infos		infos;
 	t_tube		*room_list;
-	t_tube		*tmp;
-	t_paths		*paths_tmp;
+	//t_tube		*tmp;
+	//t_paths		*paths_tmp;
 
 	init_infos(&infos);
 	room_list = NULL;
@@ -50,24 +50,25 @@ int				main(int argc, char **argv)
 	else
 	{
 		find_paths(&infos);
+		print_debug(&infos);
 		
 		// Debug informations
-		tmp = room_list;
-		while (tmp)
-		{
-			// Theses rooms should have only one other room connected
-			if (tmp->vu == 2)
-			{
-				paths_tmp = tmp->links;
-				while (paths_tmp)
-				{
-					ft_printf("Edge name: %s\n", paths_tmp->room->name);
-					paths_tmp = paths_tmp->next;
-				}
-			}
-			ft_printf("Name: %7.5s | nb: %d\n", tmp->name, tmp->vu);
-			tmp = tmp->next;
-		}
+		// tmp = room_list;
+		// while (tmp)
+		// {
+		// 	// Theses rooms should have only one other room connected
+		// 	if (tmp->vu == 2)
+		// 	{
+		// 		paths_tmp = tmp->links;
+		// 		while (paths_tmp)
+		// 		{
+		// 			ft_printf("Edge name: %s\n", paths_tmp->room->name);
+		// 			paths_tmp = paths_tmp->next;
+		// 		}
+		// 	}
+		// 	ft_printf("Name: %7.5s | nb: %d\n", tmp->name, tmp->vu);
+		// 	tmp = tmp->next;
+		// }
 		// End debug infos
 	}
 	free_everything(room_list);

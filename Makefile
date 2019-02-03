@@ -6,7 +6,7 @@
 #    By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2019/01/05 18:43:29 by pcarles          ###   ########.fr        #
+#    Updated: 2019/02/03 18:42:51 by pcarles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME		= lem-in
 NAME_1		= visualizer
 
 CC			= gcc
-C_FLAGS		= -Wall -Wextra -Werror
-LD_FLAGS	=
+C_FLAGS		= -Wall -Wextra -Werror -Ofast -fsanitize=address -g3
+LD_FLAGS	= -fsanitize=address
 
 SRCDIR		= srcs/
 INCLDIR		= header/
@@ -43,7 +43,8 @@ C_FILES		= main.c \
 			parser/read_stdin.c \
 			parser/save_room.c \
 			parser/utils_parser.c \
-			algo/find_paths.c
+			algo/find_paths.c \
+			algo/select_paths.c
 
 C_FILES_1	= free.c \
 			init.c \

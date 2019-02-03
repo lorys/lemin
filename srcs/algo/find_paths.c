@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 12:51:27 by pcarles           #+#    #+#             */
-/*   Updated: 2019/01/07 20:47:35 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/03 19:03:11 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	print_path(t_tube **path, int size)
 	int		i;
 
 	i = 0;
-	ft_putstr("Path: ");
+	ft_putstr("Path    : ");
 	while (i <= size)
 	{
 		ft_printf("%s ", path[i]->name);
@@ -30,11 +30,13 @@ static void	print_path(t_tube **path, int size)
 
 static void	check_dead_end(t_paths *edges, t_tube *position)
 {
-	static int	test = 0;
-	if (!edges->next || (((edges->room == position && edges->next->room->vu == 2) || (edges->room->vu == 2 && edges->next->room == position)) && !edges->next->next))
+	if (!edges->next || (((edges->next->room->vu == STATUS_DEAD_END) || (edges->room->vu == STATUS_DEAD_END)) && !edges->next->next))
 	{
-		position->vu = 2;
-		ft_printf("lol: %d\n", ++test);
+		if (!edges->next)
+			ft_printf("Dead end: \033[31;1m%s\033[0m\n", position->name);
+		else
+			ft_printf("Dead end: \033[36;1m%s\033[0m\n", position->name);
+		position->vu = STATUS_DEAD_END;
 	}
 }
 
@@ -47,19 +49,26 @@ static int	explore(t_tube *position, t_infos *infos, int depth, t_tube **buf)
 
 	found = 0;
 	buf[depth] = position;
-	if (position == infos->end)
-	{
-		/* TODO: save path (save the buffer state) */
-		print_path(buf, depth);
-		return (1);
-	}
+	// if (position == infos->end)
+	// {
+	// 	/* TODO: save path (save the buffer state) */
+	// 	print_path(buf, depth);
+	// 	infos->nb_paths++;
+	// 	return (1);
+	// }
 	edges = position->links;
-	position->vu = 1;
-	check_dead_end(edges, position);
+	position->vu = STATUS_VISITED;
+	//check_dead_end(edges, position);
 	while (edges)
 	{
 		tmp = edges->room;
-		if (tmp->vu || tmp == position)
+		if (tmp == infos->end)
+		{
+			print_path(buf, depth);
+			infos->nb_paths++;
+			return (1);
+		}
+		if (tmp->vu != STATUS_OK || tmp == position)
 		{
 			edges = edges->next;
 			continue ;
@@ -67,8 +76,9 @@ static int	explore(t_tube *position, t_infos *infos, int depth, t_tube **buf)
 		found += explore(tmp, infos, depth + 1, buf);
 		edges = edges->next;
 	}
-	if (position->vu == 1 && found > 0)
-		position->vu = 0;
+	check_dead_end(position->links, position);
+	if (position->vu == STATUS_VISITED && found > 0)
+		position->vu = STATUS_OK;
 	return (found);
 }
 

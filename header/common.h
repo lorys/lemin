@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:59:42 by pcarles           #+#    #+#             */
-/*   Updated: 2019/01/07 19:57:39 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/03 16:24:09 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,7 @@ int				ft_strisnumber(char *str);
 void			free_everything(t_tube *tube);
 void			free_char_tab(char **str);
 void			display_error(t_tube *tube);
+int				count_edges(t_tube	*room);
+void			print_debug(t_infos *infos);
 
 #endif
