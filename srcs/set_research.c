@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 06:51:28 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/04 16:46:37 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/04 18:26:18 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	set_research(t_infos *infos, t_tube *tube)
 	char	*buffer;
 
 	if (!find_path(infos))
-		display_error(tube, infos);
+		display_error(tube, NULL);
 	else
 	{
 		if (infos->bonusants > 0)

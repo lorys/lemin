@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/04 17:17:50 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/04 18:25:44 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int				main(int argc, char **argv)
 	bonus_manager(argc, argv, &infos);
 	read_stdin(&room_list, &infos);
 	if (!room_list || !infos.start || !infos.end || infos.fourmis <= 0)
-		display_error(room_list, &infos);
+		display_error(room_list, NULL);
 	else
 		set_research(&infos, room_list);
 	free_everything(room_list, NULL);
