@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 06:51:28 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/03 23:30:55 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/04 16:46:37 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	set_research(t_infos *infos, t_tube *tube)
 		if (!infos->bonus)
 			fill_buffer(NULL, buffer, 1, infos);
 		free(buffer);
-		if (!infos->round_bonus)
+		if (infos->round_bonus)
 			ft_printf("\n\033[41m%d rounds\033[0m\n", infos->rounds);
 	}
 }

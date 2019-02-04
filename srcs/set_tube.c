@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_room.c                                         :+:      :+:    :+:   */
+/*   set_tube.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 07:07:06 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/03 23:14:00 by llopez           ###   ########.fr       */
+/*   Updated: 2019/02/04 17:17:46 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	set_infos(t_infos *infos)
 	infos->round_bonus = 0;
 	infos->bonusants = 0;
 	infos->bonus = 0;
-	infos->select = 0;
+	infos->select = -1;
 	infos->start = NULL;
 	infos->end = NULL;
 }

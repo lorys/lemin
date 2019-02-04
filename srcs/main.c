@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2018/12/18 15:52:52 by llopez           ###   ########.fr       */
+/*   Updated: 2019/02/04 17:17:50 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,35 +17,42 @@ static	void	bonus_manager(int argc, char **argv, t_infos *infos)
 	int	i;
 
 	i = 0;
-	infos->select = -1;
-	infos->bonus = 0;
-	while (argc > i)
+	while (++i < argc)
 	{
-		if (!ft_strcmp(argv[i], "-colors"))
+		if (!ft_strcmp(argv[i], "--colors") || !ft_strcmp(argv[i], "-c"))
 			infos->bonus = 1;
-		if (!ft_strcmp(argv[i], "-select") && argv[i + 1])
-			infos->select = ft_atoi(argv[i + 1]);
-		if (!ft_strcmp(argv[i], "-ants") && argv[i + 1])
-			infos->bonusants = ft_atoi(argv[i + 1]);
-		i++;
+		else if (!ft_strcmp(argv[i], "--rounds") || !ft_strcmp(argv[i], "-r"))
+			infos->round_bonus = 1;
+		else if ((!ft_strcmp(argv[i], "--select") || \
+			!ft_strcmp(argv[i], "-s")) && i + 1 < argc)
+			infos->select = ft_atoi(argv[++i]);
+		else if ((!ft_strcmp(argv[i], "--ants") || !ft_strcmp(argv[i], "-a")) \
+			&& i + 1 < argc)
+			infos->bonusants = ft_atoi(argv[++i]);
+		else
+		{
+			ft_putstr_fd("usage: lem-in [-c] [-r] [-s ant] [-a ant]\n\n    \
+--colors, -c: colored output\n    --rounds, -r: display number of rounds\n    \
+--select, -s: highlight only one ant in output\n      \
+--ants, -a: set number of ants directly in command line\n", 2);
+			exit(EXIT_FAILURE);
+		}
 	}
 }
 
 int				main(int argc, char **argv)
 {
 	t_tube		*room_list;
-	t_infos		*infos;
+	t_infos		infos;
 
-	if (!(infos = (t_infos *)malloc(sizeof(t_infos))))
-		return (EXIT_FAILURE);
 	room_list = NULL;
-	set_infos(infos);
-	bonus_manager(argc, argv, infos);
-	read_stdin(&room_list, infos);
-	if (!room_list || !infos->start || !infos->end || infos->fourmis <= 0)
-		display_error(room_list, infos);
+	set_infos(&infos);
+	bonus_manager(argc, argv, &infos);
+	read_stdin(&room_list, &infos);
+	if (!room_list || !infos.start || !infos.end || infos.fourmis <= 0)
+		display_error(room_list, &infos);
 	else
-		set_research(infos, room_list);
-	free_everything(room_list, infos);
+		set_research(&infos, room_list);
+	free_everything(room_list, NULL);
 	return (EXIT_SUCCESS);
 }
