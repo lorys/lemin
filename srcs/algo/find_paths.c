@@ -13,89 +13,41 @@
 #include "ft_printf.h"
 #include "lem_in.h"
 
-/* Temporary function */
-static void	print_path(t_tube **path, int size)
+int	voyager(t_tube *room, t_tube *from, int nb, t_infos *infos)
 {
-	int		i;
+	t_paths *links;
+	int	total;
 
-	i = 0;
-	ft_putstr("Path    : ");
-	while (i <= size)
-	{
-		ft_printf("%s ", path[i]->name);
-		i++;
-	}
-	ft_putchar('\n');
-}
-
-static void	check_dead_end(t_paths *edges, t_tube *position)
-{
-	if (!edges->next || (((edges->next->room->vu == STATUS_DEAD_END) || (edges->room->vu == STATUS_DEAD_END)) && !edges->next->next))
-	{
-		if (!edges->next)
-			ft_printf("Dead end: \033[31;1m%s\033[0m\n", position->name);
-		else
-			ft_printf("Dead end: \033[36;1m%s\033[0m\n", position->name);
-		position->vu = STATUS_DEAD_END;
-	}
-}
-
-/* This function find ALL the possible paths (too slow) */
-static int	explore(t_tube *position, t_infos *infos, int depth, t_tube **buf)
-{
-	t_paths	*edges;
-	t_tube	*tmp;
-	int		found;
-
-	found = 0;
-	buf[depth] = position;
-	if (position->ants == 0 || position->ants >= depth)
-		position->ants = depth;
-	else
-	{
-		printf("mabite\n");
-		return (0);
-	}
-	
-	if (position == infos->start)
-	{
-		/* TODO: save path (save the buffer state) */
-		print_path(buf, depth);
-		infos->nb_paths++;
+	if (room == infos->start && ++infos->bfs)
 		return (1);
-	}
-	edges = position->links;
-	position->vu = STATUS_VISITED;
-	//check_dead_end(edges, position);
-	while (edges)
+	total = 0;
+	links = room->links;
+	room->vu = 1;
+	while (links)
 	{
-		tmp = edges->room;
-		// if (tmp == infos->start)
-		// {
-		// 	print_path(buf, depth);
-		// 	infos->nb_paths++;
-		// 	return (1);
-		// }
-		if (tmp->vu != STATUS_OK || tmp == position)
-		{
-			edges = edges->next;
-			continue ;
-		}
-		found += explore(tmp, infos, depth + 1, buf);
-		edges = edges->next;
+		if (links->room != from && links->room->steps > 0\
+			 && links->room->steps < nb)
+			return (1);
+		if (links->room != infos->end && links->room != infos->start\
+			 && (!links->room->steps || links->room->steps > nb))
+			links->room->steps = nb;
+		links = links->next;
 	}
-	check_dead_end(position->links, position);
-	if (position->vu == STATUS_VISITED && found > 0)
-		position->vu = STATUS_OK;
-	return (found);
+	links = room->links;
+	while (links)
+	{
+		if (links->room != from && (links->room->steps\
+			 || links->room == infos->start))
+			total += voyager(links->room, room, nb + 1, infos);
+		links = links->next;
+	}
+	if (!total)
+		room->steps = 0;
+	return (total);
 }
 
-void		find_paths(t_infos *infos)
+int	find_paths(t_infos *infos)
 {
-	t_tube		**res;
-
-	if (!(res = (t_tube**)malloc(sizeof(res) * infos->room_total)))
-		return ;
-	explore(infos->end, infos, 0, res);
-	free(res);
+	voyager(infos->end, NULL, 1, infos);
+	return (infos->bfs);
 }

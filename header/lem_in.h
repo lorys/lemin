@@ -28,7 +28,8 @@ typedef enum	e_status
 
 t_tube			*find_room(char *room_name, t_tube *room_list);
 void			init_infos(t_infos *infos);
-int				make_line(t_paths *path_list, t_infos *infos, int ant);
-void			find_paths(t_infos *infos);
+int				make_line(t_paths *path_list, t_infos *infos,\
+			int ant);
+int			find_paths(t_infos *infos);
 
 #endif

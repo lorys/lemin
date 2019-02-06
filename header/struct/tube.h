@@ -21,6 +21,7 @@ typedef	struct		s_tube {
 	int				y;
 	int				vu;
 	int				ants;
+	int				steps;
 	struct s_paths	*links;
 	struct s_tube	*next;
 	struct s_tube	*prev;

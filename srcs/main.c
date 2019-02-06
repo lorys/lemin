@@ -50,7 +50,13 @@ int				main(int argc, char **argv)
 	else
 	{
 		find_paths(&infos);
-		print_debug(&infos);
+		/*while (room_list)
+		{
+			printf("%s\t(%d steps)\n", room_list->name, room_list->steps);
+			room_list = room_list->next;
+		}
+		exit(1);*/
+		//print_debug(&infos);
 		
 		// Debug informations
 		// tmp = room_list;

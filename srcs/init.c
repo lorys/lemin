@@ -18,6 +18,7 @@ void	init_infos(t_infos *infos)
 	infos->start = NULL;
 	infos->end = NULL;
 	infos->fourmis = 0;
+	infos->bfs = 0;
 	infos->nb_paths = 0;
 	infos->bonus = 0;
 	infos->select = 0;

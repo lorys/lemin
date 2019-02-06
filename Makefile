@@ -1,4 +1,4 @@
-# **************************************************************************** #
+
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
@@ -15,7 +15,7 @@ NAME_1		= visualizer
 
 CC			= gcc
 C_FLAGS		= -Wall -Wextra -Werror -Ofast -fsanitize=address -g3
-LD_FLAGS	= -fsanitize=address
+LD_FLAGS	= 
 
 SRCDIR		= srcs/
 INCLDIR		= header/
