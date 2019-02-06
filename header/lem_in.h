@@ -17,7 +17,7 @@
 #include "struct/tube.h"
 #include "struct/path.h"
 
-# define BUFFER_SIZE 5000
+# define BUFFER_SIZE 4096
 
 typedef enum	e_status
 {
@@ -28,8 +28,14 @@ typedef enum	e_status
 
 t_tube			*find_room(char *room_name, t_tube *room_list);
 void			init_infos(t_infos *infos);
-int				make_line(t_paths *path_list, t_infos *infos,\
-			int ant);
+int			make_line(t_paths *path_list, t_infos *infos,\
+				int ant);
 int			find_paths(t_infos *infos);
-
+t_tube			*get_minus(t_tube *room, t_infos *infos);
+int			flow_count(t_tube *room, int *capacity, int *flow, t_infos *infos);
+void			fill_buffer(const char *str, char *buffer, int print,\
+				t_infos *infos);
+void			show_ant(int l, t_tube *room, t_infos *infos, char *buffer);
+int			change_room(t_infos *infos, t_tube *from, t_tube *to, \
+				char *buffer);
 #endif

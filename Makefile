@@ -37,6 +37,7 @@ C_FILES		= main.c \
 			free.c \
 			init.c \
 			utils.c \
+			print.c \
 			pasrer/errors.c \
 			parser/links.c \
 			parser/parsing_functions.c \
