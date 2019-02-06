@@ -6,18 +6,18 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 22:11:45 by llopez            #+#    #+#             */
-/*   Updated: 2019/01/05 19:07:10 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/05 18:09:01 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "parser.h"
 
-t_tube		*create_room(char *name, int x, int y)
+t_vertice		*create_room(char *name, int x, int y)
 {
-	t_tube	*new;
+	t_vertice	*new;
 
-	if (!(new = (t_tube *)ft_memalloc(sizeof(*new))))
+	if (!(new = (t_vertice *)ft_memalloc(sizeof(*new))))
 		return (NULL);
 	if (!(new->name = ft_strdup(name)))
 	{
@@ -34,9 +34,9 @@ t_tube		*create_room(char *name, int x, int y)
 	return (new);
 }
 
-void		append_room(t_tube **room_listp, t_tube *room)
+void		append_room(t_vertice **room_listp, t_vertice *room)
 {
-	t_tube	*tmp;
+	t_vertice	*tmp;
 
 	if (!room_listp || !room)
 		return ;

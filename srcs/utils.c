@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 15:17:38 by llopez            #+#    #+#             */
-/*   Updated: 2019/01/07 19:58:26 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/05 18:09:01 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,16 @@ int		ft_strisnumber(char *str)
 	return (ft_stris(str, &ft_isdigit));
 }
 
-void	display_error(t_tube *tube)
+void	display_error(t_vertice *tube)
 {
 	free_everything(tube);
 	write(2, "ERROR\n", 6);
 	exit(EXIT_FAILURE);
 }
 
-t_tube	*find_room(char *room_name, t_tube *room_list)
+t_vertice	*find_room(char *room_name, t_vertice *room_list)
 {
-	t_tube	*tmp;
+	t_vertice	*tmp;
 
 	if (!room_name || !room_list)
 		return (NULL);

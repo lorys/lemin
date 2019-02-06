@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:27:40 by pcarles           #+#    #+#             */
-/*   Updated: 2019/01/07 19:58:53 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/05 19:22:18 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "lem_in.h"
 #include "parser.h"
 
-static t_paths	*create_link(t_tube *room)
+static t_paths	*create_link(t_vertice *room)
 {
 	t_paths		*new;
 
@@ -46,19 +46,21 @@ static void	append_links(t_paths **links, t_paths *to_add)
 	to_add->prev = tmp;
 }
 
-void		make_tube(char *line, t_tube *room_list)
+void		make_tube(char *line, t_vertice *room_list)
 {
-	char	**split_tmp;
-	t_tube	*room_first;
-	t_tube	*room_second;
+	char		*dash_position;
+	t_vertice	*first_room;
+	t_vertice	*second_room;
 
-	split_tmp = ft_strsplit(line, '-');
-	room_first = find_room(split_tmp[0], room_list);
-	room_second = find_room(split_tmp[1], room_list);
-	if (room_first && room_second)
+	if ((dash_position = ft_strchr(line, '-')) == NULL)
+		return ;
+	*dash_position = '\0';
+	first_room = find_room(line, room_list);
+	*dash_position++ = '-';
+	second_room = find_room(dash_position, room_list);
+	if (first_room && second_room)
 	{
-		append_links(&room_first->links, create_link(room_second));
-		append_links(&room_second->links, create_link(room_first));
+		append_links(&first_room->links, create_link(second_room));
+		append_links(&second_room->links, create_link(first_room));
 	}
-	free_char_tab(split_tmp);
 }

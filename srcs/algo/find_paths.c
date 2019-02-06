@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 12:51:27 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/03 20:34:09 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/05 18:09:01 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "lem_in.h"
 
 /* Temporary function */
-static void	print_path(t_tube **path, int size)
+static void	print_path(t_vertice **path, int size)
 {
 	int		i;
 
@@ -28,7 +28,7 @@ static void	print_path(t_tube **path, int size)
 	ft_putchar('\n');
 }
 
-static void	check_dead_end(t_paths *edges, t_tube *position)
+static void	check_dead_end(t_paths *edges, t_vertice *position)
 {
 	if (!edges->next || (((edges->next->room->vu == STATUS_DEAD_END) || (edges->room->vu == STATUS_DEAD_END)) && !edges->next->next))
 	{
@@ -41,10 +41,10 @@ static void	check_dead_end(t_paths *edges, t_tube *position)
 }
 
 /* This function find ALL the possible paths (too slow) */
-static int	explore(t_tube *position, t_infos *infos, int depth, t_tube **buf)
+static int	explore(t_vertice *position, t_infos *infos, int depth, t_vertice **buf)
 {
 	t_paths	*edges;
-	t_tube	*tmp;
+	t_vertice	*tmp;
 	int		found;
 
 	found = 0;
@@ -92,9 +92,9 @@ static int	explore(t_tube *position, t_infos *infos, int depth, t_tube **buf)
 
 void		find_paths(t_infos *infos)
 {
-	t_tube		**res;
+	t_vertice		**res;
 
-	if (!(res = (t_tube**)malloc(sizeof(res) * infos->room_total)))
+	if (!(res = (t_vertice**)malloc(sizeof(res) * infos->room_total)))
 		return ;
 	explore(infos->end, infos, 0, res);
 	free(res);

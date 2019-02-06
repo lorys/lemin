@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 07:49:24 by pcarles           #+#    #+#             */
-/*   Updated: 2019/01/05 19:10:48 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/05 21:16:31 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "lem_in.h"
 #include "parser.h"
 
-int			is_tube_valid(char *line, t_tube *room_list, int nline)
+int			is_tube_valid(char *line, t_vertice *room_list, int nline)
 {
 	int		ret;
 	char	**tmp;
@@ -33,11 +33,11 @@ int			is_tube_valid(char *line, t_tube *room_list, int nline)
 	return (ret);
 }
 
-t_tube		*is_room_valid(char *line, t_tube *room_list, int nline)
+t_vertice		*is_room_valid(char *line, t_vertice *room_list, int nline)
 {
 	int		i;
 	char	**tmp;
-	t_tube	*new;
+	t_vertice	*new;
 
 	i = 0;
 	tmp = ft_strsplit(line, ' ');
@@ -57,7 +57,7 @@ t_tube		*is_room_valid(char *line, t_tube *room_list, int nline)
 	return (new);
 }
 
-int			save_tube_if_valid(char *line, t_tube *rooms, int nline)
+int			save_tube_if_valid(char *line, t_vertice *rooms, int nline)
 {
 	if (is_tube_valid(line, rooms, nline))
 	{
@@ -67,9 +67,9 @@ int			save_tube_if_valid(char *line, t_tube *rooms, int nline)
 	return (0);
 }
 
-int			save_room_if_valid(char *line, t_tube **room_listp, t_infos *infos, int nline)
+int			save_room_if_valid(char *line, t_vertice **room_listp, t_infos *infos, int nline)
 {
-	t_tube 	*tmp;
+	t_vertice 	*tmp;
 
 	if ((tmp = is_room_valid(line, *room_listp, nline)))
 	{
@@ -92,8 +92,8 @@ int			check_overflow(char *str)
 
 long		ft_atoi_long(char const *s)
 {
-	int		flag;
-	long	res;
+	unsigned int	flag;
+	long			res;
 
 	flag = 0;
 	res = 0;
@@ -105,13 +105,10 @@ long		ft_atoi_long(char const *s)
 			flag = 1;
 		s++;
 	}
-	while (*s <= '9' && *s >= '0')
+	while (ft_isdigit(*s))
 	{
-		res *= 10;
-		res += *s - '0';
+		res = (res * 10) + (*s - '0');
 		s++;
 	}
-	if (flag)
-		res = -res;
-	return (res);
+	return (flag ? -res : res);
 }

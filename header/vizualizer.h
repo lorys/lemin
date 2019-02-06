@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vizualizer.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcarles <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:36:06 by pcarles           #+#    #+#             */
-/*   Updated: 2018/11/30 05:36:07 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/05 21:18:10 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,26 @@
 
 # include "lem_in.h"
 
-typedef struct	s_anthill
+typedef struct			s_anthill
 {
-	int			min_y;
-	int			max_y;
-	int			min_x;
-	int			max_x;
-	int			height;
-	int			width;
-}				t_anthill;
+	int					min_y;
+	int					max_y;
+	int					min_x;
+	int					max_x;
+	int					height;
+	int					width;
+}						t_anthill;
 
-typedef struct	s_ant
+typedef struct			s_ant
 {
-	int				name;
-	int				color;
-	int				in_anthill;
-	t_tube			*current_room;
-	struct s_ant	*next;
-}				t_ant;
+	int					name;
+	int					color;
+	int					in_anthill;
+	struct s_vertice	*current_room;
+	struct s_ant		*next;
+}						t_ant;
 
-int				parse(t_tube **room_listp, t_infos *infos);
-void			plot_line(int x0, int y0, int x1, int y1);
+int						parse(t_vertice **room_listp, t_infos *infos);
+void					plot_line(int x0, int y0, int x1, int y1);
 
 #endif

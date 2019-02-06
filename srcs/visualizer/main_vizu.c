@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:40:31 by pcarles           #+#    #+#             */
-/*   Updated: 2019/01/07 19:59:13 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/05 18:09:01 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "common.h"
 #include "vizualizer.h"
 
-static void		init_anthill(t_anthill *anthill, t_tube *rooms)
+static void		init_anthill(t_anthill *anthill, t_vertice *rooms)
 {
 	anthill->min_x = rooms->x;
 	anthill->max_y = rooms->y;
@@ -39,7 +39,7 @@ static void		init_anthill(t_anthill *anthill, t_tube *rooms)
 	anthill->width = anthill->max_x - anthill->min_x;
 }
 
-static void		set_real_position(t_tube *room_list, t_anthill *anthill, \
+static void		set_real_position(t_vertice *room_list, t_anthill *anthill, \
 				int *height, int *width)
 {
 	*height -= *height * 0.1;
@@ -52,7 +52,7 @@ static void		set_real_position(t_tube *room_list, t_anthill *anthill, \
 	}
 }
 
-static void		display_room_name(t_tube *room, int color)
+static void		display_room_name(t_vertice *room, int color)
 {
 	attron(A_BOLD);
 	attron(COLOR_PAIR(color));
@@ -62,7 +62,7 @@ static void		display_room_name(t_tube *room, int color)
 	attroff(A_BOLD);
 }
 
-static void		display_map(t_tube *room, t_infos *infos)
+static void		display_map(t_vertice *room, t_infos *infos)
 {
 	t_paths		*link;
 
@@ -79,7 +79,7 @@ static void		display_map(t_tube *room, t_infos *infos)
 	}
 }
 
-static t_ant	*create_ant(int name, char *room, t_tube *room_list)
+static t_ant	*create_ant(int name, char *room, t_vertice *room_list)
 {
 	t_ant		*new;
 
@@ -93,7 +93,7 @@ static t_ant	*create_ant(int name, char *room, t_tube *room_list)
 	return (new);
 }
 
-static void		move_ant(int name, char *destination, t_ant **ant_list, t_tube *room_list, int *nb_ants)
+static void		move_ant(int name, char *destination, t_ant **ant_list, t_vertice *room_list, int *nb_ants)
 {
 	t_ant		*ant;
 
@@ -142,7 +142,7 @@ static void		reset_ants(t_ant *ant_list)
 
 static void		display_ants(t_ant *ant_list)
 {
-	t_tube		*room;
+	t_vertice		*room;
 
 	while (ant_list)
 	{
@@ -156,7 +156,7 @@ static void		display_ants(t_ant *ant_list)
 	}
 }
 
-static void		parse_line_ants(char *line, t_ant **ant_list, t_tube *room_list, t_infos *infos)
+static void		parse_line_ants(char *line, t_ant **ant_list, t_vertice *room_list, t_infos *infos)
 {
 	char		*tmp;
 	char		*room_name;
@@ -182,7 +182,7 @@ static void		parse_line_ants(char *line, t_ant **ant_list, t_tube *room_list, t_
 	}
 }
 
-static void		parse_ants(t_tube *room_list, t_infos *infos)
+static void		parse_ants(t_vertice *room_list, t_infos *infos)
 {
 	char		*line;
 	int			nline;
@@ -205,7 +205,7 @@ static void		parse_ants(t_tube *room_list, t_infos *infos)
 	ft_strdel(&line);
 }
 
-static void		launch(t_tube *room_list, t_infos *infos)
+static void		launch(t_vertice *room_list, t_infos *infos)
 {
 	int			screen_height;
 	int			screen_width;
@@ -220,7 +220,7 @@ static void		launch(t_tube *room_list, t_infos *infos)
 int				main(void)
 {
 	t_infos		infos;
-	t_tube		*room_list;
+	t_vertice		*room_list;
 
 	room_list = NULL;
 	init_infos(&infos);

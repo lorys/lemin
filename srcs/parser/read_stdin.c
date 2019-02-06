@@ -6,11 +6,13 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 10:48:59 by llopez            #+#    #+#             */
-/*   Updated: 2019/01/05 19:05:52 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/06 03:55:13 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include <errno.h>
+#include <fcntl.h>
+#include <unistd.h>
 #include "ft_printf.h"
 #include "common.h"
 #include "lem_in.h"
@@ -47,10 +49,10 @@ static int		check_command_comment(char *line, int *state, int nline)
 	return (1);
 }
 
-static int		add_start_or_end_room(char *line, t_tube **to_change, \
-				t_tube **room_listp, int nline)
+static int		add_start_or_end_room(char *line, t_vertice **to_change, \
+				t_vertice **room_listp, int nline)
 {
-	t_tube		*tmp;
+	t_vertice		*tmp;
 
 	if ((tmp = is_room_valid(line, *room_listp, nline)))
 	{
@@ -61,7 +63,7 @@ static int		add_start_or_end_room(char *line, t_tube **to_change, \
 	return (0);
 }
 
-int				line_is_valid(t_tube **room_listp, t_infos *infos, \
+int				line_is_valid(t_vertice **room_listp, t_infos *infos, \
 				char *line, int nline)
 {
 	static int	state = STATE_ROOMS;
@@ -89,23 +91,170 @@ int				line_is_valid(t_tube **room_listp, t_infos *infos, \
 	return (ret);
 }
 
-void				read_stdin(t_tube **room_listp, t_infos *infos)
+int					read_block(int fd, t_map **map_p)
 {
-	char		*line;
-	int			nline;
+	ssize_t		ret;
+	t_map		*new;
+	t_map		*tmp;
 
-	line = NULL;
-	nline = 0;
-	while (get_next_line(0, &line) > 0 && ++nline)
+	if (!map_p || !(new = ft_memalloc(sizeof(*new))))
+		return (-2);
+	errno = 0;
+	if ((ret = read(fd, new->buffer, BUFFER_SIZE)) <= 0)
 	{
-		if (*line != '\0' && line_is_valid(room_listp, infos, line, nline))
-			ft_printf("%s\n", line);
-		else
-			break ;
-		ft_strdel(&line);
+		free(new);
+		return (ret);
 	}
-	ft_strdel(&line);
-	ft_putchar('\n');
-	if (infos->start && infos->end)
-		infos->room_total += 2;
+	new->buffer[ret] = '\0';
+	if (!(*map_p))
+	{
+		*map_p = new;
+		return (1);
+	}
+	tmp = *map_p;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
+	return (1);
 }
+
+int		read_file(char *file_path, t_map **map)
+{
+	int		fd;
+	int		ret;
+
+	fd = 0;
+	ret = 0;
+	if (file_path != NULL)
+	{
+		errno = 0;
+		if ((fd = open(file_path, O_RDONLY)) < 0)
+		{
+			perror("lem-in:");
+			return (-1);
+		}
+	}
+	while ((ret = read_block(fd, map)) > 0)
+		;
+	return (ret);
+}
+
+// int				count_block(t_map *map)
+// {
+// 	int			ret;
+
+// 	ret = 0;
+// 	while (map)
+// 	{
+// 		ret++;
+// 		map = map->next;
+// 	}
+// 	return (ret);
+// }
+
+// void			copy_blocks(char *line, t_map *map)
+// {
+// 	int			count;
+// 	t_map		*tmp;
+
+// 	count = 0;
+// 	tmp = map;
+// 	while (tmp->next)
+// 		tmp = tmp->next;
+// 	while (tmp->prev)
+// 	{
+// 		ft_strcpy(line + (count * BUFFER_SIZE), tmp->buffer);
+// 		count++;
+// 		tmp = tmp->prev;
+// 	}
+// }
+
+// void			free_blocks(t_map *map)
+// {
+// 	if (map)
+// 	{
+// 		free_blocks(map->next);
+// 		free(map);
+// 	}
+// }
+
+// int				get_line(int fd, char **line)
+// {
+// 	static t_map	buffer_map = {{'\0'}, NULL, NULL};
+// 	static char		*back_pointer;
+// 	char			*forward_pointer;
+// 	int				ret;
+
+// 	if (*buffer_map.buffer == '\0')
+// 	{
+// 		if ((ret = read(fd, buffer_map.buffer, BUFFER_SIZE)) <= 0)
+// 			return (ret);
+// 		back_pointer = buffer_map.buffer;
+// 	}
+// 	if ((forward_pointer = ft_strchr(back_pointer, '\n')))
+// 	{
+// 		back_pointer = forward_pointer;
+// 		*line = ft_strndup(back_pointer, forward_pointer - back_pointer);
+// 		return (line == NULL ? -2 : 1);
+// 	}
+// 	else
+// 	{
+// 		while ((ret = read_block(fd, &buffer_map.next)) == 1
+// 			&& (forward_pointer = ft_strchr(buffer_map.next->buffer, '\n')) == NULL)
+// 			;
+// 		if (ret <= 0)
+// 		{
+// 			free_blocks(buffer_map.next);
+// 			return (ret);
+// 		}
+// 		*line = ft_strnew((ret = ft_strlen(back_pointer)) + ((count_block(buffer_map.next) - 1) * BUFFER_SIZE) + (forward_pointer - buffer_map.next));
+// 		ft_strcpy(*line, back_pointer);
+// 		if (count_block(buffer_map.next) > 1)
+// 			copy_blocks(*(line + ret), buffer_map.next);
+// 		ft_strcpy(buffer_map.buffer, buffer_map.next->buffer);
+// 		back_pointer = forward_pointer;
+// 		free_blocks(buffer_map.next);
+// 		return (1);
+// 	}
+// }
+
+
+
+// void				read_stdin(t_vertice **room_listp, t_infos *infos)
+// {
+// 	char		*line;
+// 	char		buffer[4096];
+// 	char		*forward_pointer;
+// 	char		*back_pointer;
+// 	int			nline;
+// 	int			ret;
+
+// 	line = NULL;
+// 	nline = 0;
+// 	ret = read(0, buffer, 4096 / 2);
+// 	buffer[ret] = '\0';
+// 	back_pointer = buffer;
+// 	while (forward_pointer = ft_strchr(back_pointer, '\n'))
+// 	{
+// 		*forward_pointer = '\0';
+// 		if (line_is_valid(room_listp, infos, back_pointer, nline) && *forward_pointer = '\n')
+// 		{
+// 			write(1, back_pointer, forward_pointer - back_pointer);
+// 		}
+// 		else
+// 			break ;
+// 		back_pointer = forward_pointer;
+// 	}
+// 	while (get_next_line(0, &line) > 0 && ++nline)
+// 	{
+// 		if (*line != '\0' && line_is_valid(room_listp, infos, line, nline))
+// 			ft_printf("%s\n", line);
+// 		else
+// 			break ;
+// 		ft_strdel(&line);
+// 	}
+// 	ft_strdel(&line);
+// 	ft_putchar('\n');
+// 	if (infos->start && infos->end)
+// 		infos->room_total += 2;
+// }

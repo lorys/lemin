@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 15:32:02 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/03 17:26:02 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/05 18:09:01 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "lem_in.h"
 #include "common.h"
 
-int		count_edges(t_tube	*room)
+int		count_edges(t_vertice	*room)
 {
 	int		res;
 	t_paths	*tmp;

@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 07:06:44 by llopez            #+#    #+#             */
-/*   Updated: 2019/01/07 19:54:04 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/05 18:09:01 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	free_paths(t_paths *path_list)
 	free(path_list);
 }
 
-static void	free_rooms(t_tube *room_list)
+static void	free_rooms(t_vertice *room_list)
 {
 	if (!room_list)
 		return ;
@@ -31,7 +31,7 @@ static void	free_rooms(t_tube *room_list)
 	free(room_list);
 }
 
-void		free_everything(t_tube *room_list)
+void		free_everything(t_vertice *room_list)
 {
 	while (room_list && room_list->prev)
 		room_list = room_list->prev;
