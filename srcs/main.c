@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/07 01:52:32 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/07 02:05:45 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int				main(int argc, char **argv)
 	// 	display_error(room_list);
 	// else
 	// {
+	// 	ft_putchar('\n');
 	// 	find_paths(&infos);
 	// 	print_debug(&infos);
 	// }
