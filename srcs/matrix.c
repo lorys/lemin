@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 14:06:07 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/07 16:33:47 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/07 16:41:51 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int				create_matrix(t_infos *infos)
 	{
 		if ((matrix[index] = (uint32_t*)malloc(length)) == NULL)
 		{
+			// malloc error free everything
 			while (--index)
 				free(matrix[index]); // Leak sur le premier maillon (matrix[0])
 			free(matrix);

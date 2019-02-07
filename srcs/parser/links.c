@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:27:40 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/07 15:25:39 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/07 17:24:57 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ void		make_tube(char *line, t_vertice *room_list, t_infos *infos)
 	{
 		if (write_matrix(infos, first_room->id, second_room->id) == -1)
 		{
-			ft_printf("merd\n");
+			ft_printf("merd\n");//whooo
 			exit(1);
 		}
 		if (write_matrix(infos, second_room->id, first_room->id) == -1)
 		{
-			ft_printf("merd\n");
+			ft_printf("merd\n");//whooooooooooo
 			exit(1);
 		}
 		append_links(&first_room->links, create_link(second_room));
