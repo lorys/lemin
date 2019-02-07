@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 14:06:07 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/07 15:17:35 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/07 16:30:16 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int				create_matrix(t_infos *infos)
 		if ((matrix[index] = (uint32_t*)malloc(length)) == NULL)
 		{
 			while (--index)
-				free(matrix[index]);
+				free(matrix[index]); // Leak sur le premier maillon (matrix[0])
 			free(matrix);
 			return (-1);
 		}
@@ -42,11 +42,25 @@ int				create_matrix(t_infos *infos)
 	return (1);
 }
 
+void			free_matrix(t_infos *infos)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (i < infos->room_total)
+	{
+		free(infos->adjacency_matrix[i]);
+		i++;
+	}
+	free(infos->adjacency_matrix);
+}
+
 int				write_matrix(t_infos *infos, unsigned int x, unsigned int y)
 {
 	if (x >= infos->room_total || y >= infos->room_total)
 		return (-1);
-	infos->adjacency_matrix[y][x / 32] = (0x8000 >> (x % 32));
+	ft_printf("\033[31m%d, %d\033[0m\n", x, y);
+	infos->adjacency_matrix[y][x / 32] |= (0x8000 >> (x % 32));
 	return (1);
 }
 

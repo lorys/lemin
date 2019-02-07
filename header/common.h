@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:59:42 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/07 14:08:57 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/07 16:17:59 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int				count_edges(t_vertice	*room);
 void			print_debug(t_infos *infos);
 
 int				create_matrix(t_infos *infos);
+void			free_matrix(t_infos *infos);
 int				write_matrix(t_infos *infos, unsigned int x, unsigned int y);
 int				read_matrix(t_infos *infos, unsigned int x, unsigned int y);
 void			print_matrix(t_infos *infos);

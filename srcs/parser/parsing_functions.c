@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 07:49:24 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/07 14:40:31 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/07 15:34:35 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int			save_room_if_valid(char *line, t_vertice **room_listp, t_infos *infos, int
 
 	if ((tmp = is_room_valid(line, *room_listp, nline)))
 	{
-		tmp->id = infos->room_total;
 		append_room(room_listp, tmp);
 		infos->room_total++;
 		return (1);
