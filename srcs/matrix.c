@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 14:06:07 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/07 16:30:16 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/07 16:33:47 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int				write_matrix(t_infos *infos, unsigned int x, unsigned int y)
 	if (x >= infos->room_total || y >= infos->room_total)
 		return (-1);
 	ft_printf("\033[31m%d, %d\033[0m\n", x, y);
-	infos->adjacency_matrix[y][x / 32] |= (0x8000 >> (x % 32));
+	infos->adjacency_matrix[y][x / 32] |= (0x80000000 >> (x % 32));
 	return (1);
 }
 
@@ -68,7 +68,7 @@ int				read_matrix(t_infos *infos, unsigned int x, unsigned int y)
 {
 	if (x >= infos->room_total || y >= infos->room_total)
 		return (-1);
-	return (infos->adjacency_matrix[y][x / 32] & (0x8000 >> (x % 32)));
+	return (infos->adjacency_matrix[y][x / 32] & (0x80000000 >> (x % 32)));
 }
 
 void			print_matrix(t_infos *infos)
