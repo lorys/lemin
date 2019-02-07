@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:35:58 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/07 01:41:57 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/07 14:11:49 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int					line_is_valid(t_vertice **room_listp, t_infos *infos, \
 t_vertice			*is_room_valid(char *line, t_vertice *room_list, int nline);
 int					is_tube_valid(char *line, t_vertice *room_list, int nline);
 int					save_room_if_valid(char *line, t_vertice **rooms, t_infos *infos, int nline);
-int					save_tube_if_valid(char *line, t_vertice *rooms, int nline);
+int					save_tube_if_valid(char *line, t_vertice *rooms, t_infos *infos, int nline);
 t_vertice			*create_room(char *name, int x, int y);
 void				append_room(t_vertice **room_listp, t_vertice *room);
-void				make_tube(char *line, t_vertice *room_list);
+void				make_tube(char *line, t_vertice *room_list, t_infos *infos);
 long				ft_atoi_long(char const *s);
 int					check_overflow(char *str);
 void				warn_parsing(char *str, int nline);

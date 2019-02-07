@@ -6,7 +6,7 @@
 #    By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2019/02/07 00:17:04 by pcarles          ###   ########.fr        #
+#    Updated: 2019/02/07 15:07:10 by pcarles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ C_FILES		= main.c \
 			free.c \
 			init.c \
 			utils.c \
+			matrix.c \
 			pasrer/errors.c \
 			parser/links.c \
 			parser/parsing_functions.c \
@@ -50,6 +51,7 @@ C_FILES		= main.c \
 C_FILES_1	= free.c \
 			init.c \
 			utils.c \
+			matrix.c \
 			parser/errors.c \
 			parser/links.c \
 			parser/parsing_functions.c \

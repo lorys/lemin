@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 22:11:45 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/05 18:09:01 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/07 14:58:46 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 t_vertice		*create_room(char *name, int x, int y)
 {
 	t_vertice	*new;
+	static unsigned int	id = 0;
 
 	if (!(new = (t_vertice *)ft_memalloc(sizeof(*new))))
 		return (NULL);
@@ -26,6 +27,7 @@ t_vertice		*create_room(char *name, int x, int y)
 	}
 	new->x = x;
 	new->y = y;
+	new->id = id++;
 	new->prev = NULL;
 	new->next = NULL;
 	new->links = NULL;

@@ -6,12 +6,13 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:27:40 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/05 19:22:18 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/07 15:25:39 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "libft.h"
+#include "ft_printf.h"
 #include "common.h"
 #include "lem_in.h"
 #include "parser.h"
@@ -46,7 +47,7 @@ static void	append_links(t_paths **links, t_paths *to_add)
 	to_add->prev = tmp;
 }
 
-void		make_tube(char *line, t_vertice *room_list)
+void		make_tube(char *line, t_vertice *room_list, t_infos *infos)
 {
 	char		*dash_position;
 	t_vertice	*first_room;
@@ -60,6 +61,16 @@ void		make_tube(char *line, t_vertice *room_list)
 	second_room = find_room(dash_position, room_list);
 	if (first_room && second_room)
 	{
+		if (write_matrix(infos, first_room->id, second_room->id) == -1)
+		{
+			ft_printf("merd\n");
+			exit(1);
+		}
+		if (write_matrix(infos, second_room->id, first_room->id) == -1)
+		{
+			ft_printf("merd\n");
+			exit(1);
+		}
 		append_links(&first_room->links, create_link(second_room));
 		append_links(&second_room->links, create_link(first_room));
 	}

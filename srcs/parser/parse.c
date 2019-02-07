@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 10:48:59 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/07 01:54:29 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/07 14:59:25 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,16 @@ static int		add_start_or_end_room(char *line, t_vertice **to_change, \
 	return (0);
 }
 
+static unsigned int	count_room(t_vertice *room_list)
+{
+	unsigned int	count;
+
+	count = 0;
+	while (room_list && ++count)
+		room_list = room_list->next;
+	return (count);
+}
+
 int				line_is_valid(t_vertice **room_listp, t_infos *infos, \
 				char *line, int nline)
 {
@@ -81,10 +91,14 @@ int				line_is_valid(t_vertice **room_listp, t_infos *infos, \
 	else if (*line == '#')
 		ret = check_command_comment(line, &state, nline);
 	else if (state == STATE_ROOMS && is_tube_valid(line, *room_listp, 0))
+	{
+		infos->room_total = count_room(*room_listp);
+		create_matrix(infos);
 		state = STATE_TUBES;
+	}
 	else if (state == STATE_ROOMS)
 		ret = save_room_if_valid(line, room_listp, infos, nline);
 	if (state == STATE_TUBES && !ret)
-		ret = save_tube_if_valid(line, *room_listp, nline);
+		ret = save_tube_if_valid(line, *room_listp, infos, nline);
 	return (ret);
 }

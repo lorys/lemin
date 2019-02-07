@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 07:49:24 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/07 02:02:38 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/07 14:40:31 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ t_vertice		*is_room_valid(char *line, t_vertice *room_list, int nline)
 	return (new);
 }
 
-int			save_tube_if_valid(char *line, t_vertice *rooms, int nline)
+int			save_tube_if_valid(char *line, t_vertice *rooms, t_infos *infos, int nline)
 {
 	if (is_tube_valid(line, rooms, nline))
 	{
-		make_tube(line, rooms);
+		make_tube(line, rooms, infos);
 		return (1);
 	}
 	return (0);
