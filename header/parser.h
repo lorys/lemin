@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:35:58 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/06 04:00:49 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/07 01:41:57 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,13 @@
 
 # include "struct/vertice.h"
 # include "struct/infos.h"
+# include "struct/map.h"
 
 # define STATE_ROOMS 1
 # define STATE_TUBES 2
 # define STATE_START_ROOM 3
 # define STATE_END_ROOM 4
 
-# define BUFFER_SIZE 8192
-
-typedef struct		s_map
-{
-	char			buffer[BUFFER_SIZE];
-	struct s_map	*next;
-	struct s_map	*prev;
-}					t_map;
-
-
-int					read_stdin(int fd, t_map **map_p);
 int					line_is_valid(t_vertice **room_listp, t_infos *infos, \
 					char *line, int nline);
 t_vertice			*is_room_valid(char *line, t_vertice *room_list, int nline);
@@ -47,6 +37,6 @@ void				warn_parsing(char *str, int nline);
 void				error_parsing(char *str, int nline);
 int					count_char(char *str, char c);
 
-int					read_file(char *file_path, t_map **map);
+int					read_file(t_vertice **room_listp, t_infos *infos);
 
 #endif

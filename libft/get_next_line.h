@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 15:18:10 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/05 18:09:43 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/06 23:52:01 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 # include <sys/uio.h>
 # include <unistd.h>
 # include <limits.h>
+
+# ifndef OPEN_MAX
+#  define OPEN_MAX 1000
+# endif
 
 int		get_next_line(const int fd, char **line);
 

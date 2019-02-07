@@ -6,7 +6,7 @@
 #    By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2019/02/03 18:42:51 by pcarles          ###   ########.fr        #
+#    Updated: 2019/02/07 00:17:04 by pcarles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME		= lem-in
 NAME_1		= visualizer
 
 CC			= gcc
-C_FLAGS		= -Wall -Wextra -Werror -Ofast -fsanitize=address -g3
-LD_FLAGS	= -fsanitize=address
+C_FLAGS		= -Wall -Wextra -Werror -Ofast -g3
+LD_FLAGS	=
 
 SRCDIR		= srcs/
 INCLDIR		= header/
@@ -40,7 +40,8 @@ C_FILES		= main.c \
 			pasrer/errors.c \
 			parser/links.c \
 			parser/parsing_functions.c \
-			parser/read_stdin.c \
+			parser/read_file.c \
+			parser/parse.c \
 			parser/save_room.c \
 			parser/utils_parser.c \
 			algo/find_paths.c \
@@ -52,7 +53,7 @@ C_FILES_1	= free.c \
 			parser/errors.c \
 			parser/links.c \
 			parser/parsing_functions.c \
-			parser/read_stdin.c \
+			parser/parse.c \
 			parser/save_room.c \
 			parser/utils_parser.c \
 			visualizer/main_vizu.c \
@@ -78,11 +79,11 @@ export CC C_FLAGS LD_FLAGS
 all: $(NAME) $(NAME_1)
 
 $(NAME): $(OBJ) $(LIBFT)
-	@$(CC) -o $@ -L$(LIBDIR) -lft $(OBJ) $(C_FLAGS) $(LD_FLAGS)
+	@$(CC) -o $@ $(OBJ) -L$(LIBDIR) -lft $(C_FLAGS) $(LD_FLAGS)
 	@printf "\033[32m BINARY FILE $@ CREATED \033[0m\n"
 
 $(NAME_1): $(OBJ_1) $(LIBFT)
-	@$(CC) -o $@ -L$(LIBDIR) -lft -lncurses $(OBJ_1) $(C_FLAGS) $(LD_FLAGS)
+	@$(CC) -o $@ $(OBJ_1) -L$(LIBDIR) -lft -lncurses $(C_FLAGS) $(LD_FLAGS)
 	@printf "\n\033[32m BINARY FILE $@ CREATED \033[0m\n"
 
 $(LIBFT):

@@ -6,11 +6,12 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 07:06:44 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/05 18:09:01 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/06 22:42:34 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include "parser.h"
 #include "common.h"
 
 static void	free_paths(t_paths *path_list)
@@ -29,6 +30,15 @@ static void	free_rooms(t_vertice *room_list)
 	free_paths(room_list->links);
 	free_rooms(room_list->next);
 	free(room_list);
+}
+
+void		free_map(t_map *map)
+{
+	if (map)
+	{
+		free_map(map->next);
+		free(map);
+	}
 }
 
 void		free_everything(t_vertice *room_list)

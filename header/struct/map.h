@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   infos.h                                            :+:      :+:    :+:   */
+/*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/05 18:52:24 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/06 22:19:57 by pcarles          ###   ########.fr       */
+/*   Created: 2019/02/06 22:44:24 by pcarles           #+#    #+#             */
+/*   Updated: 2019/02/06 22:45:17 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INFOS_H
-# define INFOS_H
+#ifndef MAP_H
+# define MAP_H
 
-typedef	struct		s_infos {
-	struct s_vertice	*end;
-	struct s_vertice	*start;
-	int					fourmis;
-	int					nb_paths;
-	int					bonus;
-	int					select;
-	int					bonusants;
-	int					round_bonus;
-	char				*file_path;
-	int					room_total;
-	int					rounds;
-}					t_infos;
+# define BUFFER_SIZE 4096
+
+typedef struct		s_map
+{
+	char			buffer[BUFFER_SIZE];
+	struct s_map	*next;
+	struct s_map	*prev;
+}					t_map;
 
 #endif

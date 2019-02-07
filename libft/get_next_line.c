@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 15:34:07 by pcarles           #+#    #+#             */
-/*   Updated: 2019/01/07 18:23:11 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/07 01:34:37 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,12 @@ int			get_next_line(const int fd, char **line)
 	static char	*lst[OPEN_MAX] = {NULL};
 	int			count;
 
-	if (fd < 0 || !line || BUFF_SIZE < 1 || fd > OPEN_MAX)
+	if (fd < 0 || !line || BUFF_SIZE < 1 || fd > OPEN_MAX || (*line = ft_strnew(0)) == NULL)
+	{
+		if (!line && fd > 0 && fd < OPEN_MAX)
+			free(lst[fd]);
 		return (-1);
-	*line = ft_strnew(0);
+	}
 	if (put_rest(&lst[fd], line))
 		return (1);
 	while ((count = read(fd, buff, BUFF_SIZE)))

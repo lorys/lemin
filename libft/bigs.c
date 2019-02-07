@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 23:36:01 by llopez            #+#    #+#             */
-/*   Updated: 2019/01/07 18:22:46 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/06 23:50:48 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int		ft_printf_bigs(const char *format, va_list ap, int *skip, t_arg *fg)
 {
 	wchar_t	*str;
 	int		len_str;
-	int		width;
 	wchar_t	*str_char;
 
 	len_str = 0;
@@ -52,7 +51,6 @@ int		ft_printf_bigs(const char *format, va_list ap, int *skip, t_arg *fg)
 	{
 		str_char = NULL;
 		str_char = ft_fill_null(str_char);
-		width = fg->width;
 		*skip += 2;
 		str = va_arg(ap, wchar_t *);
 		fg->precision = ((int)ft_wstrlen(str) > fg->precision &&\

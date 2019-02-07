@@ -1,17 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_stdin.c                                       :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 10:48:59 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/06 03:55:13 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/07 01:42:15 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <errno.h>
-#include <fcntl.h>
 #include <unistd.h>
 #include "ft_printf.h"
 #include "common.h"
@@ -91,53 +89,28 @@ int				line_is_valid(t_vertice **room_listp, t_infos *infos, \
 	return (ret);
 }
 
-int					read_block(int fd, t_map **map_p)
-{
-	ssize_t		ret;
-	t_map		*new;
-	t_map		*tmp;
+// int			parse(t_map *map, t_vertice **room_listp, t_infos *infos)
+// {
+// 	char			*back_pointer;
+// 	char			*forward_pointer;
+// 	t_map			*backup;
+// 	unsigned int	nline;
 
-	if (!map_p || !(new = ft_memalloc(sizeof(*new))))
-		return (-2);
-	errno = 0;
-	if ((ret = read(fd, new->buffer, BUFFER_SIZE)) <= 0)
-	{
-		free(new);
-		return (ret);
-	}
-	new->buffer[ret] = '\0';
-	if (!(*map_p))
-	{
-		*map_p = new;
-		return (1);
-	}
-	tmp = *map_p;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = new;
-	return (1);
-}
-
-int		read_file(char *file_path, t_map **map)
-{
-	int		fd;
-	int		ret;
-
-	fd = 0;
-	ret = 0;
-	if (file_path != NULL)
-	{
-		errno = 0;
-		if ((fd = open(file_path, O_RDONLY)) < 0)
-		{
-			perror("lem-in:");
-			return (-1);
-		}
-	}
-	while ((ret = read_block(fd, map)) > 0)
-		;
-	return (ret);
-}
+// 	back_pointer = map->buffer;
+// 	nline = 0;
+// 	while ((forward_pointer = ft_strchr(back_pointer, '\n')) != NULL)
+// 	{
+// 		*forward_pointer = '\0';
+// 		line_is_valid(room_listp, infos, back_pointer, ++nline);
+// 		*forward_pointer = '\n';
+// 		back_pointer = ++forward_pointer;
+// 	}
+// 	backup = map;
+// 	if ((map = map->next) == NULL)
+// 		return (0);
+// 	while ((forward_pointer = ft_strchr(map->buffer, '\n')) == NULL)
+// 		map = map->next;
+// }
 
 // int				count_block(t_map *map)
 // {
