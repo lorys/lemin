@@ -19,20 +19,24 @@ int	change_room(t_infos *infos, t_tube *from, t_tube *to, \
 {
 	int	init_ants;
 
-	if (!to || !from)
+	if (!to || !from || from->already_moved || (to->ants && to != infos->end))
 		return (0);
 	init_ants = from->ants;
 	if (to == infos->end)
 	{
-		from->ants = 0;
 		infos->end->ants++;
+		if (from != infos->start)
+			from->ants = 0;
 	}
 	if (from == infos->start)
 	{
 		infos->start->ants--;
 		init_ants = infos->fourmis - infos->start->ants;
-		to->ants = init_ants;
-		to->already_moved = 1;
+		if (to != infos->end)
+		{
+			to->ants = init_ants;
+			to->already_moved = 1;
+		}
 	}
 	else if (to != infos->end)
 	{

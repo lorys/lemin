@@ -19,16 +19,18 @@ int	flow_count(t_tube *room, int *capacity, int *flow, t_infos *infos)
 
 	if (room == infos->end)
 		return (1);
-	links = room->links;
 	(*capacity)++;
 	if (room->ants)
 		(*flow)++;
+	links = room->links;
+	room->vu = 3;
 	while (links)
 	{
-		if (links->room->steps && links->room->steps < room->steps)
+		if (links->room->vu != 3 && links->room->steps && links->room->steps < room->steps)
 			flow_count(links->room, capacity, flow, infos);
 		links = links->next;
 	}
+	room->vu = 0;
 	return (0);
 }
 
@@ -45,16 +47,19 @@ t_tube	*get_minus(t_tube *room, t_infos *infos)
 	links = room->links;
 	while (links)
 	{
+		if (links->room == infos->end)
+			return (infos->end);
+		links = links->next;
+	}
+	links = room->links;
+	while (links)
+	{
 		capacity = 0;
 		flow = 0;
-		if (links->room->steps && !links->room->already_moved)
+		if (links->room->steps && !links->room->ants)
 		{
 			flow_count(links->room, &capacity, &flow, infos);
-			/*printf("link = %s (%d)\tcapacity = %d\tflow = %d\n", \
-				links->room->name, \
-				links->room->steps, \
-				capacity, flow);
-			*/if (!cf || cf > capacity - flow)
+			if (!cf || (cf > capacity - flow && capacity - flow > 0))
 			{
 				cf = capacity - flow;
 				next = links->room;
@@ -62,8 +67,6 @@ t_tube	*get_minus(t_tube *room, t_infos *infos)
 		}
 		links = links->next;
 	}
-	if (next)
-		printf("next = %s\n", next->name);
 	return (next);
 }
 
