@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 14:06:07 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/09 17:40:33 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/10 00:09:21 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@
 #include "ft_printf.h"
 #include "common.h"
 
-int				create_matrix(t_infos *infos)
+int				create_matrix(uint32_t ***matrixp, size_t size)
 {
 	unsigned int	index;
 	size_t			length;
 	uint32_t		**matrix;
 
 	index = 0;
-	if ((matrix = (uint32_t**)malloc(sizeof(*matrix) * infos->room_total)) == NULL)
+	if (matrixp == NULL || (matrix = (uint32_t**)malloc(sizeof(*matrix) * size)) == NULL)
 		return (-1);
-	length = ((sizeof(**matrix) * infos->room_total) / 32) + sizeof(**matrix);
-	while (index < infos->room_total)
+	length = ((sizeof(**matrix) * size) / 32) + sizeof(**matrix);
+	while (index < size)
 	{
 		if ((matrix[index] = (uint32_t*)malloc(length)) == NULL)
 		{
@@ -39,51 +39,44 @@ int				create_matrix(t_infos *infos)
 		ft_bzero(matrix[index], length);
 		index++;
 	}
-	infos->adjacency_matrix = matrix;
+	*matrixp = matrix;
 	return (1);
 }
 
-void			free_matrix(uint32_t **adjacency_matrix, unsigned int size)
+void			free_matrix(uint32_t **matrix, size_t size)
 {
-	if (adjacency_matrix == NULL)
+	if (matrix == NULL)
 		return ;
 	while (--size > 0)
-		free(adjacency_matrix[size]);
-	free(*adjacency_matrix);
-	free(adjacency_matrix);
+		free(matrix[size]);
+	free(*matrix);
+	free(matrix);
 }
 
-int				write_matrix(t_infos *infos, unsigned int x, unsigned int y)
+int				write_matrix(uint32_t **matrix, unsigned int x, unsigned int y)
 {
-	if (x >= infos->room_total || y >= infos->room_total)
-		return (-1);
-	// if (value != 0)
-	// 	infos->adjacency_matrix[y][x / 32] |= (0x80000000 >> (x % 32));
-	// else
-	// 	infos->adjacency_matrix[y][x / 32] &= ~(0x80000000 >> (x % 32));
-	infos->adjacency_matrix[y][x / 32] ^= (0x80000000 >> (x % 32));
+	matrix[y][x / 32] ^= (0x80000000 >> (x % 32));
 	return (1);
 }
 
-int				read_matrix(t_infos *infos, unsigned int x, unsigned int y)
+int				read_matrix(uint32_t **matrix, unsigned int x, unsigned int y)
 {
-	if (x >= infos->room_total || y >= infos->room_total)
-		return (-1);
-	return (infos->adjacency_matrix[y][x / 32] & (0x80000000 >> (x % 32)));
+	ft_printf("x: %d, y: %d\n", x, y);
+	return (matrix[y][x / 32] & (0x80000000 >> (x % 32)));
 }
 
-void			print_matrix(t_infos *infos)
+void			print_matrix(uint32_t **matrix, size_t size)
 {
-	unsigned int	i;
-	unsigned int	j;
+	size_t		i;
+	size_t		j;
 
 	i = 0;
 	j = 0;
-	while (i < infos->room_total)
+	while (i < size)
 	{
-		while (j < infos->room_total)
+		while (j < size)
 		{
-			ft_putchar(read_matrix(infos, j, i) ? '1' : '0');
+			ft_putchar(read_matrix(matrix, j, i) ? '1' : '0');
 			ft_putchar(' ');
 			j++;
 		}

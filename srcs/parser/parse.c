@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 10:48:59 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/07 15:57:11 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/09 23:55:59 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,10 @@ int				line_is_valid(t_vertice **room_listp, t_infos *infos, \
 	{
 		infos->room_total = count_room(*room_listp);
 		list_room(*room_listp);
-		create_matrix(infos);
+		create_matrix(&infos->adjacency_matrix, infos->room_total);
+		ft_printf("%p\n", infos->adjacency_matrix);
+		infos->edges = (unsigned int**)malloc(sizeof(unsigned int *) * infos->room_total);
+		ft_bzero(infos->edges, sizeof(unsigned int *) * infos->room_total);
 		state = STATE_TUBES;
 	}
 	else if (state == STATE_ROOMS)

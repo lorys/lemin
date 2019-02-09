@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/09 17:41:20 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/10 00:01:48 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static	void	bonus_manager(int argc, char **argv, t_infos *infos)
 			ft_putstr_fd("usage: lem-in [-c] [-r] [-s ant] [-a ant] [-f map_file]\n\n    \
 --colors, -c: colored output\n    --rounds, -r: display number of rounds\n    \
 --select, -s: highlight only one ant in output\n      \
---ants, -a: set number of ants directly in command line\n    \
+--ants, -a: set number of ants directly in command line\n      \
 --file, -f: open file `map_file' instead of reading stdin\n", 2);
 			exit(EXIT_FAILURE);
 		}
@@ -76,12 +76,11 @@ static	void	bonus_manager(int argc, char **argv, t_infos *infos)
 int				main(int argc, char **argv)
 {
 	t_infos		infos;
-	t_vertice	*room_list;
 
 	init_infos(&infos);
-	room_list = NULL;
 	bonus_manager(argc, argv, &infos);
-	read_file(&room_list, &infos);
+	read_file(&infos.room_list, &infos);
+	edmonds_karp(&infos);
 	// if (!room_list || !infos.start || !infos.end || infos.fourmis <= 0)
 	// 	display_error(room_list);
 	// else
@@ -91,6 +90,6 @@ int				main(int argc, char **argv)
 	// 	print_debug(&infos);
 	// }
 	free_matrix(infos.adjacency_matrix, infos.room_total);
-	free_everything(room_list);
+	free_everything(infos.room_list);
 	return (EXIT_SUCCESS);
 }

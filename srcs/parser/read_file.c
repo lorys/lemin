@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 00:14:16 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/09 17:35:35 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/09 23:57:30 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int			read_file(t_vertice **room_listp, t_infos *infos)
 	}
 	read_line(fd, room_listp, infos);
 	if (infos->adjacency_matrix)
-		print_matrix(infos);
+		print_matrix(infos->adjacency_matrix, infos->room_total);
 	errno = 0;
 	if (close(fd) == -1)
 		perror("lem-in");
