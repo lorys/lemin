@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 07:07:06 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/06 22:21:07 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/09 17:36:34 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	init_infos(t_infos *infos)
 	infos->bonusants = 0;
 	infos->round_bonus = 0;
 	infos->file_path = NULL;
+	infos->adjacency_matrix = NULL;
 	infos->room_total = 0;
 	infos->rounds = 0;
 }

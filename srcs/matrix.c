@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 14:06:07 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/07 16:41:51 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/09 17:40:33 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,25 +43,25 @@ int				create_matrix(t_infos *infos)
 	return (1);
 }
 
-void			free_matrix(t_infos *infos)
+void			free_matrix(uint32_t **adjacency_matrix, unsigned int size)
 {
-	unsigned int	i;
-
-	i = 0;
-	while (i < infos->room_total)
-	{
-		free(infos->adjacency_matrix[i]);
-		i++;
-	}
-	free(infos->adjacency_matrix);
+	if (adjacency_matrix == NULL)
+		return ;
+	while (--size > 0)
+		free(adjacency_matrix[size]);
+	free(*adjacency_matrix);
+	free(adjacency_matrix);
 }
 
 int				write_matrix(t_infos *infos, unsigned int x, unsigned int y)
 {
 	if (x >= infos->room_total || y >= infos->room_total)
 		return (-1);
-	ft_printf("\033[31m%d, %d\033[0m\n", x, y);
-	infos->adjacency_matrix[y][x / 32] |= (0x80000000 >> (x % 32));
+	// if (value != 0)
+	// 	infos->adjacency_matrix[y][x / 32] |= (0x80000000 >> (x % 32));
+	// else
+	// 	infos->adjacency_matrix[y][x / 32] &= ~(0x80000000 >> (x % 32));
+	infos->adjacency_matrix[y][x / 32] ^= (0x80000000 >> (x % 32));
 	return (1);
 }
 

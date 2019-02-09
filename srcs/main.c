@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/07 16:17:43 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/09 17:41:20 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int				main(int argc, char **argv)
 	// 	find_paths(&infos);
 	// 	print_debug(&infos);
 	// }
-	free_matrix(&infos);
+	free_matrix(infos.adjacency_matrix, infos.room_total);
 	free_everything(room_list);
 	return (EXIT_SUCCESS);
 }
