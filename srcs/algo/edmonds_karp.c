@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 17:08:59 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/12 20:29:56 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/12 20:31:11 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ int			edmonds_karp(t_infos *infos)
 			v = u;
 		}
 		// We must check (at each iteration of the infinite loop) if that flow is sufficient for the number of ants we have to move accross the map
+		// If that's the case, we can break the loop and use the current flow.
 		//print_matrix(residual_graph, infos->room_total);
 	}
 	// If we don't break the loop until the end of edmonds_karp, the maximum flow is returned
