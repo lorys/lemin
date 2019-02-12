@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 14:06:07 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/10 00:09:21 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/12 20:26:30 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int				create_matrix(uint32_t ***matrixp, size_t size)
 	index = 0;
 	if (matrixp == NULL || (matrix = (uint32_t**)malloc(sizeof(*matrix) * size)) == NULL)
 		return (-1);
-	length = ((sizeof(**matrix) * size) / 32) + sizeof(**matrix);
+	length = ((sizeof(**matrix) * size) / (sizeof(**matrix) * 4)) + sizeof(**matrix);
 	while (index < size)
 	{
 		if ((matrix[index] = (uint32_t*)malloc(length)) == NULL)
@@ -43,6 +43,13 @@ int				create_matrix(uint32_t ***matrixp, size_t size)
 	return (1);
 }
 
+void			copy_matrix(uint32_t **dst, uint32_t **src, size_t size)
+{
+	size = ((sizeof(**src) * size) / (sizeof(**src) * 4)) + sizeof(**src);
+	while (size--)
+		ft_memcpy(dst[size], src[size], size);
+}
+
 void			free_matrix(uint32_t **matrix, size_t size)
 {
 	if (matrix == NULL)
@@ -53,16 +60,37 @@ void			free_matrix(uint32_t **matrix, size_t size)
 	free(matrix);
 }
 
-int				write_matrix(uint32_t **matrix, unsigned int x, unsigned int y)
+int				write_matrix(uint32_t **matrix, int op, unsigned int x, unsigned int y)
 {
-	matrix[y][x / 32] ^= (0x80000000 >> (x % 32));
+	size_t		offset;
+	size_t		index;
+
+	index = x / 16;
+	offset = (x % 16) * 2;
+	if (op != 1 || (matrix[y][index] & (0x80000000 >> offset)))
+		matrix[y][index] ^= 0x80000000 >> offset;
+	matrix[y][index] ^= 0x40000000 >> offset;
 	return (1);
 }
 
+/**
+** We use 2 bit to store one matrix member, the first bit is for the sign of the member
+** 00 -> 0
+** 01 -> 1
+** 11 -> -1
+**
+** 10 -> -0? (unused)
+**/
 int				read_matrix(uint32_t **matrix, unsigned int x, unsigned int y)
 {
-	ft_printf("x: %d, y: %d\n", x, y);
-	return (matrix[y][x / 32] & (0x80000000 >> (x % 32)));
+	int			ret;
+
+	ret = 0;
+	if (matrix[y][x / 16] & 0x40000000 >> ((x % 16) * 2))
+		ret = 1;
+	if (matrix[y][x / 16] & 0x80000000 >> ((x % 16) * 2))
+		ret = -ret;
+	return (ret);
 }
 
 void			print_matrix(uint32_t **matrix, size_t size)
@@ -76,8 +104,10 @@ void			print_matrix(uint32_t **matrix, size_t size)
 	{
 		while (j < size)
 		{
-			ft_putchar(read_matrix(matrix, j, i) ? '1' : '0');
-			ft_putchar(' ');
+			if (j == size - 1)
+				ft_printf("%d", read_matrix(matrix, j, i));
+			else
+				ft_printf("%-2d ", read_matrix(matrix, j, i));
 			j++;
 		}
 		j = 0;
