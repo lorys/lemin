@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 17:08:59 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/12 20:31:11 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/12 20:37:55 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,12 @@ static t_vertice	*find_room_by_id(t_vertice *room_list, unsigned int id)
 	return (NULL);
 }
 
-void		print_path(int *parent_array, t_infos *infos)
+void		print_parent_array(int *parent_array, t_infos *infos)
 {
 	t_vertice		*cur_room;
 	unsigned int	tmp;
 
-	ft_printf("Path: %s ", infos->end->name);
+	ft_printf("Parent array: %s ", infos->end->name);
 	tmp = parent_array[infos->end->id];
 	while (tmp != infos->start->id)
 	{
@@ -132,7 +132,7 @@ int			edmonds_karp(t_infos *infos)
 		if (!bfs(infos, residual_graph, parent))
 			break ;
 		else
-			print_path(parent, infos);
+			print_parent_array(parent, infos);
 		v = infos->end->id;
 		while (v != infos->start->id)
 		{
