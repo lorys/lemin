@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 17:08:59 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/12 20:37:55 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/12 20:42:30 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ int			edmonds_karp(t_infos *infos)
 	}
 	// If we don't break the loop until the end of edmonds_karp, the maximum flow is returned
 	ft_printf("\n\nFlot maximum: \n");
-	print_matrix(residual_graph, infos->room_total);
+	//print_matrix(residual_graph, infos->room_total);
 	free(parent);
 	return (1);
 }

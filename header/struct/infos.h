@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:52:24 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/09 23:37:51 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/12 20:44:28 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ typedef	struct		s_infos {
 	int					round_bonus;
 	char				*file_path;
 	uint32_t			**adjacency_matrix;
-	unsigned int		**edges;
 	unsigned int		room_total;
 	int					rounds;
 }					t_infos;

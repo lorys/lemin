@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 14:06:07 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/12 20:26:30 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/12 20:41:53 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ void			free_matrix(uint32_t **matrix, size_t size)
 	free(matrix);
 }
 
+/**
+ * op represent the operation to do on the matrix it can be +1 or -1
+ */
 int				write_matrix(uint32_t **matrix, int op, unsigned int x, unsigned int y)
 {
 	size_t		offset;
@@ -74,13 +77,13 @@ int				write_matrix(uint32_t **matrix, int op, unsigned int x, unsigned int y)
 }
 
 /**
-** We use 2 bit to store one matrix member, the first bit is for the sign of the member
-** 00 -> 0
-** 01 -> 1
-** 11 -> -1
-**
-** 10 -> -0? (unused)
-**/
+ * We use 2 bit to store one matrix member, the first bit is for the sign of the member
+ * 00 -> 0
+ * 01 -> 1
+ * 11 -> -1
+ *
+ * 10 -> -0? (unused)
+ */
 int				read_matrix(uint32_t **matrix, unsigned int x, unsigned int y)
 {
 	int			ret;
