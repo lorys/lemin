@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 12:51:27 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/13 12:43:51 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/13 14:59:12 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,11 @@ t_path		*get_path(uint32_t **matrix, unsigned int start, t_infos *infos)
 	x = 0;
 	while (x < infos->room_total)
 	{
-		if (u == infos->end->id)
-			break ;
+		if (u == infos->start->id)
+			continue ;
 		if (read_matrix(matrix, u, x) == 1)
 		{
+			write_matrix(matrix, -1, u, x);
 			new_path(&res, x, infos);
 			u = x;
 			if (x == infos->end->id)
@@ -93,6 +94,7 @@ t_solution		*get_paths(uint32_t **matrix, t_infos *infos)
 			paths_counter++;
 		x++;
 	}
+	ft_printf("PATH_COUNTER: %d\n", paths_counter);
 	if ((res->paths = (t_path**)malloc(sizeof(t_path*) * paths_counter)) == NULL)
 	{
 		free(res);

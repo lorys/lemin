@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 17:08:59 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/13 12:40:40 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/13 14:59:36 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,47 @@ static int	bfs(t_infos *infos, uint32_t **residual_matrix, int *parent)
 	return (0);
 }
 
+void		test_matrix(uint32_t **matrix, t_infos *infos)
+{
+	unsigned int	x;
+	unsigned int	y;
+	int				one;
+	int				minus_one;
+
+	x = 0;
+	y = 0;
+	one = 0;
+	minus_one = 0;
+	while (x < infos->room_total)
+	{
+		if (x == infos->end->id || x == infos->start->id)
+			{
+				x++;
+				continue ;
+			}
+		while (y < infos->room_total)
+		{
+			if (read_matrix(matrix, x, y) == 1)
+			{
+				if (one)
+					ft_printf("WHOO 1| x: %d y: %d\n", x, y);
+				one = 1;
+			}
+			if (read_matrix(matrix, x, y) == -1)
+			{
+				if (minus_one)
+					ft_printf("WHO -1| x: %d y: %d\n", x, y);
+				minus_one = 1;
+			}
+			y++;
+		}
+		y = 0;
+		one = 0;
+		minus_one = 0;
+		x++;
+	}
+}
+
 int			edmonds_karp(t_infos *infos)
 {
 	unsigned int	v;
@@ -149,6 +190,7 @@ int			edmonds_karp(t_infos *infos)
 	ft_printf("\n\nedmonds karp done\n\n");
 	get_paths(residual_graph, infos);
 	//print_matrix(residual_graph, infos->room_total);
+	//test_matrix(residual_graph, infos);
 	free(parent);
 	return (1);
 }
