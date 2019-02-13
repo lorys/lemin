@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   select_paths.c                                     :+:      :+:    :+:   */
+/*   select_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -17,7 +17,7 @@
 int		count_edges(t_vertice	*room)
 {
 	int		res;
-	t_paths	*tmp;
+	t_path	*tmp;
 
 	res = 0;
 	tmp = room->links;

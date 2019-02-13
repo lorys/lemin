@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 17:08:59 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/12 20:45:57 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/13 12:40:40 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static unsigned int	pop(t_queue **queue)
 	return (ret);
 }
 
-static t_vertice	*find_room_by_id(t_vertice *room_list, unsigned int id)
+t_vertice	*find_room_by_id(t_vertice *room_list, unsigned int id)
 {
 	while (room_list)
 	{
@@ -86,7 +86,7 @@ static int	bfs(t_infos *infos, uint32_t **residual_matrix, int *parent)
 	unsigned int	i;
 	unsigned int	u;
 	unsigned int	v;
-	t_paths			*tmp;
+	t_path			*tmp;
 	t_queue			*queue;
 
 	i = infos->room_total;
@@ -131,8 +131,8 @@ int			edmonds_karp(t_infos *infos)
 	{
 		if (!bfs(infos, residual_graph, parent))
 			break ;
-		else
-			print_parent_array(parent, infos);
+		// else
+		// 	print_parent_array(parent, infos);
 		v = infos->end->id;
 		while (v != infos->start->id)
 		{
@@ -146,8 +146,9 @@ int			edmonds_karp(t_infos *infos)
 		//print_matrix(residual_graph, infos->room_total);
 	}
 	// If we don't break the loop until the end of edmonds_karp, the maximum flow is returned
-	ft_printf("\n\nFlot maximum: \n");
-	print_matrix(residual_graph, infos->room_total);
+	ft_printf("\n\nedmonds karp done\n\n");
+	get_paths(residual_graph, infos);
+	//print_matrix(residual_graph, infos->room_total);
 	free(parent);
 	return (1);
 }

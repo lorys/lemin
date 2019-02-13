@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 07:06:44 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/06 22:42:34 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/13 11:47:44 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "parser.h"
 #include "common.h"
 
-static void	free_paths(t_paths *path_list)
+static void	free_paths(t_path *path_list)
 {
 	if (!path_list)
 		return ;

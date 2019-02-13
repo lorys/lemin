@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 05:43:04 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/10 00:02:20 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/13 11:47:44 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef enum	e_status
 
 t_vertice			*find_room(char *room_name, t_vertice *room_list);
 void				init_infos(t_infos *infos);
-int					make_line(t_paths *path_list, t_infos *infos, int ant);
+int					make_line(t_path *path_list, t_infos *infos, int ant);
 void				find_paths(t_infos *infos);
 
 int					edmonds_karp(t_infos *infos);

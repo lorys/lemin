@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:40:31 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/05 18:09:01 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/13 11:47:44 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void		display_room_name(t_vertice *room, int color)
 
 static void		display_map(t_vertice *room, t_infos *infos)
 {
-	t_paths		*link;
+	t_path		*link;
 
 	if (room)
 	{

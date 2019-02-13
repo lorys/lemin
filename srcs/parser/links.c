@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:27:40 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/12 19:15:10 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/13 11:47:44 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,20 @@
 #include "lem_in.h"
 #include "parser.h"
 
-static t_paths	*create_link(t_vertice *room)
+static t_path	*create_link(t_vertice *room)
 {
-	t_paths		*new;
+	t_path		*new;
 
-	if (!(new = (t_paths *)ft_memalloc(sizeof(*new))) || !room)
+	if (!(new = (t_path *)ft_memalloc(sizeof(*new))) || !room)
 		return (NULL);
-	new->next = NULL;
-	new->prev = NULL;
 	new->room = room;
+	new->next = NULL;
 	return (new);
 }
 
-static void	append_links(t_paths **links, t_paths *to_add)
+static void	append_links(t_path **links, t_path *to_add)
 {
-	t_paths	*tmp;
+	t_path	*tmp;
 
 	if (!links || !to_add)
 		return ;
@@ -44,7 +43,6 @@ static void	append_links(t_paths **links, t_paths *to_add)
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = to_add;
-	to_add->prev = tmp;
 }
 
 void		make_tube(char *line, t_vertice *room_list, t_infos *infos)
