@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:40:31 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/13 11:47:44 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/15 20:24:53 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,14 +170,14 @@ static void		parse_line_ants(char *line, t_ant **ant_list, t_vertice *room_list,
 		*tmp = '\0';
 		room_name = ft_strdup(ft_strchr(line, '-') + 1);
 		*tmp = '\n';
-		move_ant(ft_atoi(line), room_name, ant_list, room_list, &infos->fourmis);
+		move_ant(ft_atoi(line), room_name, ant_list, room_list, &infos->nb_ants);
 		ft_strdel(&room_name);
 		line = tmp + 1;
 	}
 	if (*line)
 	{
 		room_name = ft_strdup(ft_strchr(line, '-') + 1);
-		move_ant(ft_atoi(line), room_name, ant_list, room_list, &infos->fourmis);
+		move_ant(ft_atoi(line), room_name, ant_list, room_list, &infos->nb_ants);
 		ft_strdel(&room_name);
 	}
 }
@@ -198,7 +198,7 @@ static void		parse_ants(t_vertice *room_list, t_infos *infos)
 		ft_strdel(&line);
 		display_ants(ant_list);
 		mvprintw(0, 0, "ligne:%d", nline);
-		mvprintw(infos->start->y - 1, infos->start->x - 2, "[%d]", infos->fourmis);
+		mvprintw(infos->start->y - 1, infos->start->x - 2, "[%d]", infos->nb_ants);
 		refresh();
 		sleep(2);
 	}

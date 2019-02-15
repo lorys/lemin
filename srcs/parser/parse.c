@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 10:48:59 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/12 20:44:12 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/15 20:33:19 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static int		check_number_of_ants(char *line, t_infos *infos)
 			error_parsing("int overflow", 1);
 		else
 		{
-			infos->fourmis = ft_atoi(line);
+			if (infos->nb_ants == 0)
+				infos->nb_ants = ft_atoi(line);
 			return (1);
 		}
 	}

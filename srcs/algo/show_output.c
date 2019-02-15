@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 16:01:01 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/15 20:07:51 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/15 20:39:54 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,14 @@ static int		push_ants(t_path *path, unsigned int new_ant)
 	return (ret);
 }
 
-void			show_output(t_solution *solution, size_t nb_ants)
+void			show_output(t_solution *solution, size_t nb_ants, int display_rounds)
 {
+	unsigned int	rounds;
 	unsigned int	status;
 	unsigned int	next_ant;
 	t_path			*next_path;
 
+	rounds = 0;
 	status = 0;
 	next_ant = 1;
 	next_path = get_next_path(solution);
@@ -62,11 +64,16 @@ void			show_output(t_solution *solution, size_t nb_ants)
 			ft_printf("\n");
 			if (status == 0)
 				break ;
+			rounds++;
 			status = 0;
 		}
-		if (next_ant != 0 && next_ant < nb_ants)
+		if (next_ant == 0)
+			continue ;
+		if (next_ant < nb_ants)
 			next_ant++;
 		else
 			next_ant = 0;
 	}
+	if (display_rounds == 1)
+		ft_printf("%d rounds\n", rounds - 1);
 }

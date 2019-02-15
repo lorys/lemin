@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:52:24 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/12 20:44:28 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/15 20:28:40 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,15 @@
 #include <stdint.h>
 
 typedef	struct		s_infos {
-	struct s_vertice	*room_list;
+	char				*file_path;
 	struct s_vertice	*end;
 	struct s_vertice	*start;
-	int					fourmis;
-	int					nb_paths;
-	int					bonus;
-	int					select;
-	int					bonusants;
-	int					round_bonus;
-	char				*file_path;
-	uint32_t			**adjacency_matrix;
+	struct s_vertice	*room_list;
 	unsigned int		room_total;
+	uint32_t			**adjacency_matrix;
+	int					nb_ants;
+	int					colors;
+	int					selected_ant;
 	int					rounds;
 }					t_infos;
 

@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 07:07:06 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/09 23:38:04 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/15 20:29:33 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,9 @@ void	init_infos(t_infos *infos)
 	infos->start = NULL;
 	infos->end = NULL;
 	infos->room_list = NULL;
-	infos->fourmis = 0;
-	infos->nb_paths = 0;
-	infos->bonus = 0;
-	infos->select = 0;
-	infos->bonusants = 0;
-	infos->round_bonus = 0;
+	infos->nb_ants = 0;
+	infos->colors = 0;
+	infos->selected_ant = 0;
 	infos->file_path = NULL;
 	infos->adjacency_matrix = NULL;
 	infos->room_total = 0;

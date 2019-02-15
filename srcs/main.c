@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/10 00:01:48 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/15 20:29:00 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ static	void	bonus_manager(int argc, char **argv, t_infos *infos)
 	while (++i < argc)
 	{
 		if (!ft_strcmp(argv[i], "--colors") || !ft_strcmp(argv[i], "-c"))
-			infos->bonus = 1;
+			infos->colors = 1;
 		else if (!ft_strcmp(argv[i], "--rounds") || !ft_strcmp(argv[i], "-r"))
-			infos->round_bonus = 1;
+			infos->rounds = 1;
 		else if ((!ft_strcmp(argv[i], "--select") || \
 			!ft_strcmp(argv[i], "-s")) && i + 1 < argc)
-			infos->select = ft_atoi(argv[++i]);
+			infos->selected_ant = ft_atoi(argv[++i]);
 		else if ((!ft_strcmp(argv[i], "--ants") || !ft_strcmp(argv[i], "-a")) \
 			&& i + 1 < argc)
-			infos->bonusants = ft_atoi(argv[++i]);
+			infos->nb_ants = ft_atoi(argv[++i]);
 		else if ((!ft_strcmp(argv[i], "--file") || !ft_strcmp(argv[i], "-f")) \
 			&& i + 1 < argc)
 			infos->file_path = argv[++i];
@@ -81,7 +81,7 @@ int				main(int argc, char **argv)
 	bonus_manager(argc, argv, &infos);
 	read_file(&infos.room_list, &infos);
 	edmonds_karp(&infos);
-	// if (!room_list || !infos.start || !infos.end || infos.fourmis <= 0)
+	// if (!room_list || !infos.start || !infos.end || infos.nb_ants <= 0)
 	// 	display_error(room_list);
 	// else
 	// {
