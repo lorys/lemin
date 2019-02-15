@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:59:42 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/13 12:03:06 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/15 16:33:29 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 typedef struct	s_solution
 {
 	struct s_path	**paths;
+	size_t			nb_paths;
 }				t_solution;
 
 int				ft_stris(char *str, int (*f)(int c));
@@ -44,5 +45,6 @@ void			print_matrix(uint32_t **matrix, size_t size);
 t_vertice		*find_room_by_id(t_vertice *room_list, unsigned int id);
 
 t_solution		*get_paths(uint32_t **matrix, t_infos *infos);
+void			show_output(t_solution *solution, size_t nb_ants);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2019/02/13 11:47:52 by pcarles          ###   ########.fr        #
+#    Updated: 2019/02/15 16:34:41 by pcarles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,8 +46,8 @@ C_FILES		= main.c \
 			parser/save_room.c \
 			parser/utils_parser.c \
 			algo/find_paths.c \
-			algo/select_paths.c \
-			algo/edmonds_karp.c
+			algo/edmonds_karp.c \
+			algo/show_output.c
 
 C_FILES_1	= free.c \
 			init.c \

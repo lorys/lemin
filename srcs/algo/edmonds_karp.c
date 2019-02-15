@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 17:08:59 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/13 14:59:36 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/15 16:34:23 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ int			edmonds_karp(t_infos *infos)
 	}
 	// If we don't break the loop until the end of edmonds_karp, the maximum flow is returned
 	ft_printf("\n\nedmonds karp done\n\n");
-	get_paths(residual_graph, infos);
+	show_output(get_paths(residual_graph, infos), infos->fourmis);
 	//print_matrix(residual_graph, infos->room_total);
 	//test_matrix(residual_graph, infos);
 	free(parent);

@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 12:51:27 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/13 14:59:12 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/15 16:51:08 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int			new_path(t_path **path, unsigned int id, t_infos *infos)
 	|| (new = (t_path*)malloc(sizeof(*new))) == NULL)
 		return (-1);
 	new->room = tmp;
+	new->ant = 0;
 	new->next = NULL;
 	if ((*path) == NULL)
 	{
@@ -38,6 +39,18 @@ int			new_path(t_path **path, unsigned int id, t_infos *infos)
 	return (1);
 }
 
+//debug
+static void	print_path(t_path *path)
+{
+	ft_printf("Path :");
+	while (path)
+	{
+		ft_printf("%s ", path->room->name);
+		path = path->next;
+	}
+	ft_printf("\n");
+}
+
 t_path		*get_path(uint32_t **matrix, unsigned int start, t_infos *infos)
 {
 	t_path			*res;
@@ -46,7 +59,6 @@ t_path		*get_path(uint32_t **matrix, unsigned int start, t_infos *infos)
 
 	res = NULL;
 	u = start;
-	new_path(&res, infos->start->id, infos);
 	new_path(&res, u, infos);
 	x = 0;
 	while (x < infos->room_total)
@@ -65,14 +77,7 @@ t_path		*get_path(uint32_t **matrix, unsigned int start, t_infos *infos)
 		}
 		x++;
 	}
-	//debug
-	ft_printf("Path: ");
-	while (res)
-	{
-		ft_printf("%s ", res->room->name);
-		res = res->next;
-	}
-	ft_printf("\n");
+	print_path(res);
 	return (res);
 }
 
@@ -94,6 +99,7 @@ t_solution		*get_paths(uint32_t **matrix, t_infos *infos)
 			paths_counter++;
 		x++;
 	}
+	res->nb_paths = paths_counter;
 	ft_printf("PATH_COUNTER: %d\n", paths_counter);
 	if ((res->paths = (t_path**)malloc(sizeof(t_path*) * paths_counter)) == NULL)
 	{
@@ -108,6 +114,6 @@ t_solution		*get_paths(uint32_t **matrix, t_infos *infos)
 			res->paths[paths_counter++] = get_path(matrix, x, infos);
 		x++;
 	}
-	ft_printf("lol\n");
+	ft_printf("\n");
 	return (res);
 }
