@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:27:40 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/13 11:47:44 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/15 18:12:40 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,8 @@ void		make_tube(char *line, t_vertice *room_list, t_infos *infos)
 	second_room = find_room(dash_position, room_list);
 	if (first_room && second_room)
 	{
-		if (write_matrix(infos->adjacency_matrix, 1, first_room->id, second_room->id) == -1)
-		{
-			ft_printf("merd\n");//whooo
-			exit(1);
-		}
-		if (write_matrix(infos->adjacency_matrix, 1, second_room->id, first_room->id) == -1)
-		{
-			ft_printf("merd\n");//whooooooooooo
-			exit(1);
-		}
+		write_matrix(infos->adjacency_matrix, 1, first_room->id, second_room->id);
+		write_matrix(infos->adjacency_matrix, 1, second_room->id, first_room->id);
 		append_links(&first_room->links, create_link(second_room));
 		append_links(&second_room->links, create_link(first_room));
 	}

@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 15:17:38 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/05 18:09:01 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/15 18:11:01 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "common.h"
 
-int		ft_stris(char *str, int (*f)(int c))
+int			ft_stris(char *str, int (*f)(int c))
 {
 	while (*str)
 	{
@@ -25,14 +25,14 @@ int		ft_stris(char *str, int (*f)(int c))
 	return (1);
 }
 
-int		ft_strisnumber(char *str)
+int			ft_strisnumber(char *str)
 {
 	if (*str == '-' || *str == '+')
 		str++;
 	return (ft_stris(str, &ft_isdigit));
 }
 
-void	display_error(t_vertice *tube)
+void		display_error(t_vertice *tube)
 {
 	free_everything(tube);
 	write(2, "ERROR\n", 6);

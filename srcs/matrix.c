@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 14:06:07 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/13 13:54:28 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/15 18:10:07 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,6 @@ int				create_matrix(uint32_t ***matrixp, size_t size)
 	}
 	*matrixp = matrix;
 	return (1);
-}
-
-void			copy_matrix(uint32_t **dst, uint32_t **src, size_t size)
-{
-	size = ((sizeof(**src) * size) / (sizeof(**src) * 4)) + sizeof(**src);
-	while (size--)
-		ft_memcpy(dst[size], src[size], size);
 }
 
 void			free_matrix(uint32_t **matrix, size_t size)
@@ -86,16 +79,21 @@ int				write_matrix(uint32_t **matrix, int op, unsigned int x, unsigned int y)
  */
 int				read_matrix(uint32_t **matrix, unsigned int x, unsigned int y)
 {
+	size_t		index;
+	size_t		offset;
 	int			ret;
 
+	index = x / 16;
+	offset = (x % 16) * 2;
 	ret = 0;
-	if (matrix[y][x / 16] & 0x40000000 >> ((x % 16) * 2))
+	if (matrix[y][index] & 0x40000000 >> offset)
 		ret = 1;
-	if (matrix[y][x / 16] & 0x80000000 >> ((x % 16) * 2))
+	if (matrix[y][index] & 0x80000000 >> offset)
 		ret = -ret;
 	return (ret);
 }
 
+//debug
 void			print_matrix(uint32_t **matrix, size_t size)
 {
 	size_t		i;
