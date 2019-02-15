@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 16:01:01 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/15 20:39:54 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/15 20:51:07 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,5 @@ void			show_output(t_solution *solution, size_t nb_ants, int display_rounds)
 			next_ant = 0;
 	}
 	if (display_rounds == 1)
-		ft_printf("%d rounds\n", rounds - 1);
+		ft_printf("%d rounds\n", rounds);
 }

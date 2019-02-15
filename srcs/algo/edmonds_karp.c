@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 17:08:59 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/15 20:37:03 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/15 20:47:49 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ t_vertice	*find_room_by_id(t_vertice *room_list, unsigned int id)
 	return (NULL);
 }
 
+//debug
 void		print_parent_array(int *parent_array, t_infos *infos)
 {
 	t_vertice		*cur_room;
@@ -117,6 +118,7 @@ static int	bfs(t_infos *infos, uint32_t **residual_matrix, int *parent)
 	return (0);
 }
 
+//debug
 void		test_matrix(uint32_t **matrix, t_infos *infos)
 {
 	unsigned int	x;
