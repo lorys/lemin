@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 17:08:59 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/15 20:47:49 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/16 19:54:02 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,18 +164,19 @@ int			edmonds_karp(t_infos *infos)
 {
 	unsigned int	v;
 	unsigned int	u;
+	unsigned int		flow;
 	int				*parent;
 	uint32_t		**residual_graph;
 
 	if ((parent = (int *)malloc(sizeof(*parent) * infos->room_total)) == NULL)
 		return (-1);
 	create_matrix(&residual_graph, infos->room_total);
+	flow = 0;
 	while (42)
 	{
 		if (!bfs(infos, residual_graph, parent))
 			break ;
-		// else
-		// 	print_parent_array(parent, infos);
+		flow++;
 		v = infos->end->id;
 		while (v != infos->start->id)
 		{
@@ -190,7 +191,7 @@ int			edmonds_karp(t_infos *infos)
 	}
 	// If we don't break the loop until the end of edmonds_karp, the maximum flow is returned
 	ft_printf("\n\nedmonds karp done\n\n");
-	show_output(get_paths(residual_graph, infos), infos->nb_ants, infos->rounds);
+	show_output(get_paths(residual_graph, flow, infos), infos->nb_ants, infos->rounds);
 	//print_matrix(residual_graph, infos->room_total);
 	//test_matrix(residual_graph, infos);
 	free(parent);
