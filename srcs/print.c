@@ -19,7 +19,8 @@ int	change_room(t_infos *infos, t_tube *from, t_tube *to, \
 {
 	int	init_ants;
 
-	if (!to || !from || from->already_moved || (to->ants && to != infos->end))
+	if (!to || !from || from->already_moved\
+		 || (to->ants && to != infos->end))
 		return (0);
 	init_ants = from->ants;
 	if (to == infos->end)

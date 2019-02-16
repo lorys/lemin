@@ -18,6 +18,7 @@
 typedef	struct		s_infos {
 	struct s_tube	*end;
 	struct s_tube	*start;
+	int				paths_nb;
 	int				bfs;
 	int				fourmis;
 	int				nb_paths;

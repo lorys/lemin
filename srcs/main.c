@@ -36,19 +36,14 @@ static	void	bonus_manager(int argc, char **argv, t_infos *infos)
 
 t_tube		*choose_ants(t_tube *room, t_infos *infos)
 {
-	t_tube	*minus_room;
-
-	minus_room = NULL;
-	if (infos->start->ants && get_minus(infos->start, infos))
-		return (infos->start);
 	while (room)
 	{
 		if (room != infos->end && room->ants && !room->already_moved\
-			&& get_minus(room, infos))
+			 && get_minus(room, infos))
 			return (room);
 		room = room->next;
 	}
-	return (minus_room);
+	return (NULL);
 }
 
 t_tube	*to_base(t_tube *base)
@@ -117,20 +112,13 @@ int		main(int argc, char **argv)
 	{
 		buffer = malloc(sizeof(char) * BUFFER_SIZE);
 		infos.start->ants = infos.fourmis;
-		find_paths(&infos);
-		while (room_list)
+		if (find_paths(&infos))
 		{
-			if (room_list->steps)
-			{
-				i++;
-	printf("%s\t(%d steps)\n", room_list->name, room_list->steps);
-			}
-			room_list = room_list->next;
+			move_ants(&infos, buffer);
+			fill_buffer(NULL, buffer, 1, &infos);
+			printf("\n\t\t\033[41m%d ROUNDS\033[0m\n", infos.rounds);
+			printf("\n%d/%d\n", infos.end->ants, infos.fourmis);
 		}
-		printf("%d rooms used\n", i);
-		move_ants(&infos, buffer);
-		fill_buffer(NULL, buffer, 1, &infos);
-		printf("\n\t\t\033[41m%d ROUNDS\033[0m\n", infos.rounds);
 	}
 	free_everything(room_list);
 	return (EXIT_SUCCESS);

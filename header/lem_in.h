@@ -26,6 +26,8 @@ typedef enum	e_status
 	STATUS_VISITED
 }				t_status;
 
+int			ft_linkslen(t_tube *room);
+int			bury_path(t_tube *room, t_infos *infos, int nb);
 t_tube			*find_room(char *room_name, t_tube *room_list);
 void			init_infos(t_infos *infos);
 int			make_line(t_paths *path_list, t_infos *infos,\

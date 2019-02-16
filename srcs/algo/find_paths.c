@@ -13,37 +13,89 @@
 #include "ft_printf.h"
 #include "lem_in.h"
 
-int	flow_count(t_tube *room, int *capacity, int *flow, t_infos *infos)
+int	ft_linkslen(t_tube *room)
 {
-	t_paths	*links;
+	t_paths *links;
+	int	count;
 
-	if (room == infos->end)
-		return (1);
-	(*capacity)++;
-	if (room->ants)
-		(*flow)++;
+	count = 0;
 	links = room->links;
-	room->vu = 3;
 	while (links)
 	{
-		if (links->room->vu != 3 && links->room->steps && links->room->steps < room->steps)
-			flow_count(links->room, capacity, flow, infos);
+		count++;
 		links = links->next;
 	}
+	return (count);
+}
+
+t_tube	*minus_available(t_tube *room, t_infos *infos)
+{
+	t_paths	*links;
+	t_tube	*minus;
+
+	minus = NULL;
+	links = room->links;
+	while (links)
+	{
+		if (links->room == infos->end)
+			return (infos->end);
+		if ((!minus || minus->steps > links->room->steps)\
+			 && links->room->steps && (!links->room->hidden\
+			 || room == infos->start) && !links->room->ants)
+			minus = links->room;
+		links = links->next;
+	}
+	return (minus);
+}
+
+t_tube	*set_minus_path(t_infos *infos)
+{
+	t_paths	*links;
+	t_tube	*minus;
+
+	minus = NULL;
+	links = infos->start->links;
+	while (links)
+	{
+		if (links->room == infos->end)
+			return (infos->end);
+		if ((!minus || minus->steps > links->room->steps)\
+			 && links->room->steps && !links->room->ants\
+			 && bury_path(links->room, infos, 1))
+		{
+			printf("\n");
+			minus = links->room;
+		}
+		links = links->next;
+	}
+	return (minus);
+}
+
+int	bury_path(t_tube *room, t_infos *infos, int nb)
+{
+	t_tube	*next;
+	int	ret;
+
+	ret = 0;
+	room->vu = 3;
+	if ((next = minus_available(room, infos)) == infos->end && ++ret)
+		room->hidden = infos->paths_nb + nb;
+	else if (next && next->vu != 3 && !next->hidden\
+		 && (ret = bury_path(next, infos, nb + 1)))
+	{
+		printf("%s (%d steps)", room->name, room->steps);
+		room->hidden = infos->paths_nb + nb;
+	}
 	room->vu = 0;
-	return (0);
+	return (ret);
 }
 
 t_tube	*get_minus(t_tube *room, t_infos *infos)
 {
 	t_paths	*links;
-	int	capacity;
-	int	flow;
-	int	cf;
-	t_tube	*next;
+	t_tube	*minus;
 
-	next = NULL;
-	cf = 0;
+	minus = NULL;
 	links = room->links;
 	while (links)
 	{
@@ -51,23 +103,31 @@ t_tube	*get_minus(t_tube *room, t_infos *infos)
 			return (infos->end);
 		links = links->next;
 	}
-	links = room->links;
-	while (links)
+	if (room->hidden && room != infos->start)
 	{
-		capacity = 0;
-		flow = 0;
-		if (links->room->steps && !links->room->ants)
+		links = room->links;
+		while (links)
 		{
-			flow_count(links->room, &capacity, &flow, infos);
-			if (!cf || (cf > capacity - flow && capacity - flow > 0))
-			{
-				cf = capacity - flow;
-				next = links->room;
-			}
+			if (!links->room->ants && links->room->steps\
+			 && links->room->hidden == room->hidden + 1)
+				return (links->room);
+			links = links->next;
 		}
-		links = links->next;
 	}
-	return (next);
+	if (room == infos->start)
+	{
+		if ((minus = set_minus_path(infos)))
+			return (minus);
+		links = room->links;
+		while (links)
+		{
+			if ((!minus || minus->steps < links->room->steps)\
+			 && links->room->steps && links->room->hidden && !links->room->ants)
+				minus = links->room;
+			links = links->next;
+		}
+	}
+	return (minus);
 }
 
 int	bfs(t_tube *room, t_tube *from, int nb, t_infos *infos)
