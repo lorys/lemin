@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 12:51:27 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/16 20:03:39 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/16 20:11:36 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static void		show_solution(t_solution *solution)
 		print_path(solution->paths[x]);
 		x++;
 	}
-	ft_printf("Total size: %d\n", solution->total_size);
+	ft_printf("Total size: %d\n\n", solution->total_size);
 }
 
 t_solution		*get_paths(uint32_t **matrix, size_t path_counter, t_infos *infos)
