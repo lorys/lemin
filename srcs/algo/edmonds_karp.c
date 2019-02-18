@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 17:08:59 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/16 19:54:02 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/18 20:51:49 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,23 +63,6 @@ t_vertice	*find_room_by_id(t_vertice *room_list, unsigned int id)
 		room_list = room_list->next;
 	}
 	return (NULL);
-}
-
-//debug
-void		print_parent_array(int *parent_array, t_infos *infos)
-{
-	t_vertice		*cur_room;
-	unsigned int	tmp;
-
-	ft_printf("Parent array: %s ", infos->end->name);
-	tmp = parent_array[infos->end->id];
-	while (tmp != infos->start->id)
-	{
-		cur_room = find_room_by_id(infos->room_list, tmp);
-		ft_printf("%s ", cur_room->name);
-		tmp = parent_array[tmp];
-	}
-	ft_printf("%s\n", infos->start->name);
 }
 
 static int	bfs(t_infos *infos, uint32_t **residual_matrix, int *parent)
@@ -167,7 +150,9 @@ int			edmonds_karp(t_infos *infos)
 	unsigned int		flow;
 	int				*parent;
 	uint32_t		**residual_graph;
+	t_solution		*solution;
 
+	solution = NULL;
 	if ((parent = (int *)malloc(sizeof(*parent) * infos->room_total)) == NULL)
 		return (-1);
 	create_matrix(&residual_graph, infos->room_total);
@@ -185,15 +170,15 @@ int			edmonds_karp(t_infos *infos)
 			write_matrix(residual_graph, -1, v, u);
 			v = u;
 		}
-		// We must check (at each iteration of the infinite loop) if that flow is sufficient for the number of ants we have to move accross the map
+		// We check (at each iteration of the infinite loop) if that flow is sufficient for the number of ants we have to move accross the map
 		// If that's the case, we can break the loop and use the current flow.
-		//print_matrix(residual_graph, infos->room_total);
+		solution = get_paths(residual_graph, flow, infos);
+		if (solution->total_size > (size_t)infos->nb_ants)
+			break;
 	}
 	// If we don't break the loop until the end of edmonds_karp, the maximum flow is returned
 	ft_printf("\n\nedmonds karp done\n\n");
-	show_output(get_paths(residual_graph, flow, infos), infos->nb_ants, infos->rounds);
-	//print_matrix(residual_graph, infos->room_total);
-	//test_matrix(residual_graph, infos);
+	show_output(solution, infos->nb_ants, infos->rounds);
 	free(parent);
 	return (1);
 }

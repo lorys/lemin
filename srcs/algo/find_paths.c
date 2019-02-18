@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 12:51:27 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/16 20:11:36 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/18 20:48:28 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ size_t		get_path(uint32_t **matrix, unsigned int start, t_infos *infos, t_path *
 			continue ;
 		if (read_matrix(matrix, u, x) == 1)
 		{
-			write_matrix(matrix, -1, u, x);
+			//write_matrix(matrix, -1, u, x);
 			new_path(&path, x, infos);
 			path_size++;
 			u = x;
@@ -133,7 +133,6 @@ t_solution		*get_paths(uint32_t **matrix, size_t path_counter, t_infos *infos)
 		}
 		x++;
 	}
-	ft_printf("\n");
 	show_solution(res);
 	return (res);
 }
