@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:35:58 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/19 15:41:32 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/19 16:32:58 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 
 # include "struct/vertice.h"
 # include "struct/infos.h"
-# include "struct/map.h"
 
 # define STATE_ROOMS 1
 # define STATE_TUBES 2
 # define STATE_START_ROOM 3
 # define STATE_END_ROOM 4
+
+# define DEBUG 1
 
 int					line_is_valid(t_vertice **room_listp, t_infos *infos, \
 					char *line, int nline);

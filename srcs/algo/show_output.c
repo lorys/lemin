@@ -6,13 +6,14 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 16:01:01 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/15 20:51:07 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/19 16:21:18 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include "ft_printf.h"
 #include "common.h"
+#include "algo.h"
 
 static t_path	*get_next_path(t_solution *solution)
 {

@@ -6,14 +6,12 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 10:48:59 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/19 15:22:55 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/19 16:25:03 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "ft_printf.h"
+#include "libft.h"
 #include "common.h"
-#include "lem_in.h"
 #include "parser.h"
 
 static int		check_number_of_ants(char *line, t_infos *infos)

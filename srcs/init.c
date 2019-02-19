@@ -6,12 +6,12 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 07:07:06 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/19 15:32:08 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/19 16:30:18 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
-#include "lem_in.h"
+#include "common.h"
 
 void	init_infos(t_infos *infos)
 {

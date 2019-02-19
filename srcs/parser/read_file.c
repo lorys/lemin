@@ -6,19 +6,16 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 00:14:16 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/19 15:42:21 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/19 16:36:26 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/types.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include <fcntl.h>
+#include <stdio.h>
 #include <errno.h>
 #include "libft.h"
 #include "get_next_line.h"
 #include "parser.h"
-#include "common.h"
 
 static void		read_line(int fd, t_vertice **room_listp, t_infos *infos)
 {

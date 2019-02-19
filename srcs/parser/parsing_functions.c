@@ -6,14 +6,13 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 07:49:24 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/07 15:34:35 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/19 16:25:24 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <limits.h>
 #include "libft.h"
 #include "common.h"
-#include "lem_in.h"
 #include "parser.h"
 
 int			is_tube_valid(char *line, t_vertice *room_list, int nline)

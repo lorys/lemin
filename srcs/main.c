@@ -6,14 +6,14 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/19 15:57:59 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/19 16:40:06 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "common.h"
 #include "parser.h"
-#include "lem_in.h"
+#include "algo.h"
 
 static	void	bonus_manager(int argc, char **argv, t_infos *infos)
 {

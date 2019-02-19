@@ -6,7 +6,7 @@
 #    By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2019/02/19 15:36:02 by pcarles          ###   ########.fr        #
+#    Updated: 2019/02/19 16:39:42 by pcarles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,13 +22,11 @@ INCLDIR		= header/
 LIBDIR		= libft/
 OBJDIR		= obj/
 
-H_FILES		= lem_in.h \
-			libft.h \
+H_FILES		= libft.h \
 			ft_printf.h \
 			get_next_line.h
 
-H_FILES_1	= lem_in.h \
-			parser.h \
+H_FILES_1	= parser.h \
 			libft.h \
 			ft_printf.h \
 			vizualizer.h
@@ -47,7 +45,8 @@ C_FILES		= main.c \
 			parser/utils_parser.c \
 			algo/find_paths.c \
 			algo/edmonds_karp.c \
-			algo/show_output.c
+			algo/show_output.c \
+			algo/bfs.c
 
 C_FILES_1	= free.c \
 			init.c \

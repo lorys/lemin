@@ -6,15 +6,12 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:27:40 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/15 18:12:40 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/19 16:24:17 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
-#include "ft_printf.h"
 #include "common.h"
-#include "lem_in.h"
 #include "parser.h"
 
 static t_path	*create_link(t_vertice *room)
