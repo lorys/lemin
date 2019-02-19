@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 07:06:44 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/13 11:47:44 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/19 15:48:34 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,22 @@ static void	free_rooms(t_vertice *room_list)
 	free(room_list);
 }
 
-void		free_map(t_map *map)
+static void	free_matrix(uint32_t **matrix, size_t size)
 {
-	if (map)
-	{
-		free_map(map->next);
-		free(map);
-	}
+	if (matrix == NULL)
+		return ;
+	while (size-- > 0)
+		free(matrix[size]);
+	free(matrix);
 }
 
-void		free_everything(t_vertice *room_list)
+void		free_everything(t_infos *infos)
 {
-	while (room_list && room_list->prev)
-		room_list = room_list->prev;
-	free_rooms(room_list);
+	free_rooms(infos->room_list);
+	free_matrix(infos->adjacency_matrix, infos->room_total);
+	free_matrix(infos->residual_matrix, infos->room_total);
+	free(infos->file_path);
+	free(infos->parent_array);
 }
 
 void		free_char_tab(char **str)

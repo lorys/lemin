@@ -6,7 +6,7 @@
 #    By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2019/02/16 20:09:26 by pcarles          ###   ########.fr        #
+#    Updated: 2019/02/19 15:36:02 by pcarles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME		= lem-in
 NAME_1		= visualizer
 
 CC			= gcc
-C_FLAGS		= -Wall -Wextra -Werror -Ofast -fsanitize=address -g3
+C_FLAGS		= -Wall -Wextra -Werror -Ofast -g3 -fsanitize=address
 LD_FLAGS	= -fsanitize=address
 
 SRCDIR		= srcs/
@@ -79,7 +79,7 @@ export CC C_FLAGS LD_FLAGS
 
 .PHONY: all clean fclean re norm
 
-all: $(NAME) $(NAME_1)
+all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
 	@$(CC) -o $@ $(OBJ) -L$(LIBDIR) -lft $(C_FLAGS) $(LD_FLAGS)

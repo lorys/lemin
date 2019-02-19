@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:48:49 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/13 11:48:51 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/19 15:50:13 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ typedef	struct			s_vertice {
 	int					ants;
 	struct s_path		*links;
 	struct s_vertice	*next;
-	struct s_vertice	*prev;
 }						t_vertice;
 
 #endif

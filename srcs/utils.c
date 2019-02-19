@@ -6,11 +6,11 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 15:17:38 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/15 18:11:01 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/19 15:52:51 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+//#include <stdlib.h>
 #include "libft.h"
 #include "common.h"
 
@@ -32,31 +32,33 @@ int			ft_strisnumber(char *str)
 	return (ft_stris(str, &ft_isdigit));
 }
 
-void		display_error(t_vertice *tube)
+void		display_error(t_infos *infos)
 {
-	free_everything(tube);
+	free_everything(infos);
 	write(2, "ERROR\n", 6);
 	exit(EXIT_FAILURE);
 }
 
 t_vertice	*find_room(char *room_name, t_vertice *room_list)
 {
-	t_vertice	*tmp;
-
-	if (!room_name || !room_list)
+	if (!room_name)
 		return (NULL);
-	tmp = room_list->next;
 	while (room_list)
 	{
 		if (!ft_strcmp(room_list->name, room_name))
 			return (room_list);
-		room_list = room_list->prev;
-	}	
-	while (tmp)
+		room_list = room_list->next;
+	}
+	return (NULL);
+}
+
+t_vertice	*find_room_by_id(unsigned int id, t_vertice *room_list)
+{
+	while (room_list)
 	{
-		if (!ft_strcmp(tmp->name, room_name))
-			return (tmp);
-		tmp = tmp->next;
+		if (room_list->id == id)
+			return (room_list);
+		room_list = room_list->next;
 	}
 	return (NULL);
 }

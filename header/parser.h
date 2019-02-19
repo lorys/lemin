@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:35:58 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/07 14:11:49 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/19 15:41:32 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ void				warn_parsing(char *str, int nline);
 void				error_parsing(char *str, int nline);
 int					count_char(char *str, char c);
 
-int					read_file(t_vertice **room_listp, t_infos *infos);
+int					read_file(t_infos *infos);
 
 #endif

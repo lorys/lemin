@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 22:11:45 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/07 14:58:46 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/19 15:56:38 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_vertice		*create_room(char *name, int x, int y)
 	new->x = x;
 	new->y = y;
 	new->id = id++;
-	new->prev = NULL;
 	new->next = NULL;
 	new->links = NULL;
 	new->ants = 0;
@@ -51,5 +50,4 @@ void		append_room(t_vertice **room_listp, t_vertice *room)
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = room;
-	room->prev = tmp;
 }

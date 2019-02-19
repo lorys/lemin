@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/15 20:29:00 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/19 15:57:59 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,23 @@ int				main(int argc, char **argv)
 
 	init_infos(&infos);
 	bonus_manager(argc, argv, &infos);
-	read_file(&infos.room_list, &infos);
-	edmonds_karp(&infos);
-	// if (!room_list || !infos.start || !infos.end || infos.nb_ants <= 0)
-	// 	display_error(room_list);
-	// else
-	// {
-	// 	ft_putchar('\n');
-	// 	find_paths(&infos);
-	// 	print_debug(&infos);
-	// }
-	free_matrix(infos.adjacency_matrix, infos.room_total);
-	free_everything(infos.room_list);
+	if (read_file(&infos) < 0)
+	{
+		free_everything(&infos);
+		return (EXIT_FAILURE);
+	}
+	if (create_matrix(&infos.residual_matrix, infos.room_total) == -1)
+	{
+		ft_putstr_fd("memory allocation failure\n", 2);
+		free_everything(&infos);
+		return (EXIT_FAILURE);
+	}
+	if ((infos.parent_array = (int *)malloc(sizeof(*infos.parent_array) * infos.room_total)) == NULL)
+		return (-1);
+	if (!infos.room_list || !infos.start || !infos.end || infos.nb_ants <= 0)
+		display_error(&infos);
+	else
+		edmonds_karp(&infos);
+	free_everything(&infos);
 	return (EXIT_SUCCESS);
 }

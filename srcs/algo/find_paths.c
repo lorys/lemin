@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 12:51:27 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/18 20:48:28 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/19 15:56:09 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int			new_path(t_path **path, unsigned int id, t_infos *infos)
 	t_path		*new;
 
 	if (path == NULL \
-	|| (tmp = find_room_by_id(infos->room_list, id)) == NULL \
+	|| (tmp = find_room_by_id(id, infos->room_list)) == NULL \
 	|| (new = (t_path*)malloc(sizeof(*new))) == NULL)
 		return (-1);
 	new->room = tmp;
@@ -69,7 +69,6 @@ size_t		get_path(uint32_t **matrix, unsigned int start, t_infos *infos, t_path *
 			continue ;
 		if (read_matrix(matrix, u, x) == 1)
 		{
-			//write_matrix(matrix, -1, u, x);
 			new_path(&path, x, infos);
 			path_size++;
 			u = x;

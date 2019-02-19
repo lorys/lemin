@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 17:08:59 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/18 20:51:49 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/19 16:02:19 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,40 +54,52 @@ static unsigned int	pop(t_queue **queue)
 	return (ret);
 }
 
-t_vertice	*find_room_by_id(t_vertice *room_list, unsigned int id)
+static void	fill_parent_array(int *parent_array, uint32_t **matrix, t_infos *infos)
 {
-	while (room_list)
+	unsigned int	index;
+	unsigned int	tmp;
+	unsigned int	status;
+
+	index = infos->room_total;
+	tmp = 0;
+	status = 0;
+	while (index--)
 	{
-		if (room_list->id == id)
-			return (room_list);
-		room_list = room_list->next;
+		while (tmp < infos->room_total)
+		{
+			if (read_matrix(matrix, index, tmp) == 1)
+			{
+				status = 1;
+				break ;
+			}
+			tmp++;
+		}
+		tmp = 0;
+		parent_array[index] = status == 1 ? -2 : -1;
+		status = 0;
 	}
-	return (NULL);
 }
 
 static int	bfs(t_infos *infos, uint32_t **residual_matrix, int *parent)
 {
-	unsigned int	i;
 	unsigned int	u;
 	unsigned int	v;
 	t_path			*tmp;
 	t_queue			*queue;
 
-	i = infos->room_total;
-	while (--i > 0)
-		parent[i] = -1;
-	*parent = -1;
-	parent[infos->start->id] = -2;
+	fill_parent_array(parent, residual_matrix, infos);
+	parent[infos->start->id] = -3;
 	queue = NULL;
 	push(&queue, infos->start->id);
 	while (queue != NULL)
 	{
 		u = pop(&queue);
-		tmp = find_room_by_id(infos->room_list, u)->links;
+		tmp = find_room_by_id(u, infos->room_list)->links;
 		while (tmp)
 		{
 			v = tmp->room->id;
-			if (parent[v] == -1 && (read_matrix(infos->adjacency_matrix, u, v) - read_matrix(residual_matrix, u, v)) > 0)
+			if ((parent[v] == -1 && (read_matrix(infos->adjacency_matrix, u, v) - read_matrix(residual_matrix, u, v)) > 0) \
+			|| (parent[v] == -2 && read_matrix(residual_matrix, u, v) == -1))
 			{
 				parent[v] = u;
 				if (v != infos->end->id)
@@ -101,84 +113,37 @@ static int	bfs(t_infos *infos, uint32_t **residual_matrix, int *parent)
 	return (0);
 }
 
-//debug
-void		test_matrix(uint32_t **matrix, t_infos *infos)
-{
-	unsigned int	x;
-	unsigned int	y;
-	int				one;
-	int				minus_one;
-
-	x = 0;
-	y = 0;
-	one = 0;
-	minus_one = 0;
-	while (x < infos->room_total)
-	{
-		if (x == infos->end->id || x == infos->start->id)
-			{
-				x++;
-				continue ;
-			}
-		while (y < infos->room_total)
-		{
-			if (read_matrix(matrix, x, y) == 1)
-			{
-				if (one)
-					ft_printf("WHOO 1| x: %d y: %d\n", x, y);
-				one = 1;
-			}
-			if (read_matrix(matrix, x, y) == -1)
-			{
-				if (minus_one)
-					ft_printf("WHO -1| x: %d y: %d\n", x, y);
-				minus_one = 1;
-			}
-			y++;
-		}
-		y = 0;
-		one = 0;
-		minus_one = 0;
-		x++;
-	}
-}
-
 int			edmonds_karp(t_infos *infos)
 {
 	unsigned int	v;
 	unsigned int	u;
-	unsigned int		flow;
-	int				*parent;
-	uint32_t		**residual_graph;
+	unsigned int	flow;
 	t_solution		*solution;
 
 	solution = NULL;
-	if ((parent = (int *)malloc(sizeof(*parent) * infos->room_total)) == NULL)
-		return (-1);
-	create_matrix(&residual_graph, infos->room_total);
 	flow = 0;
 	while (42)
 	{
-		if (!bfs(infos, residual_graph, parent))
+		if (!bfs(infos, infos->residual_matrix, infos->parent_array))
 			break ;
 		flow++;
 		v = infos->end->id;
 		while (v != infos->start->id)
 		{
-			u = parent[v];
-			write_matrix(residual_graph, 1, u, v);
-			write_matrix(residual_graph, -1, v, u);
+			u = infos->parent_array[v];
+			write_matrix(infos->residual_matrix, 1, u, v);
+			write_matrix(infos->residual_matrix, -1, v, u);
 			v = u;
 		}
 		// We check (at each iteration of the infinite loop) if that flow is sufficient for the number of ants we have to move accross the map
 		// If that's the case, we can break the loop and use the current flow.
-		solution = get_paths(residual_graph, flow, infos);
+		solution = get_paths(infos->residual_matrix, flow, infos);
 		if (solution->total_size > (size_t)infos->nb_ants)
 			break;
 	}
 	// If we don't break the loop until the end of edmonds_karp, the maximum flow is returned
-	ft_printf("\n\nedmonds karp done\n\n");
+	if (!solution)
+		display_error(infos);
 	show_output(solution, infos->nb_ants, infos->rounds);
-	free(parent);
 	return (1);
 }

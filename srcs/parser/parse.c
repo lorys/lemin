@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 10:48:59 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/15 20:33:19 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/19 15:22:55 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,6 @@ static unsigned int	count_room(t_vertice *room_list)
 	return (count);
 }
 
-static void		list_room(t_vertice *room_list)
-{
-	while (room_list)
-	{
-		ft_printf("Name: %s, id: %d\n", room_list->name, room_list->id);
-		room_list = room_list->next;
-	}
-}
-
 int				line_is_valid(t_vertice **room_listp, t_infos *infos, \
 				char *line, int nline)
 {
@@ -103,7 +94,6 @@ int				line_is_valid(t_vertice **room_listp, t_infos *infos, \
 	else if (state == STATE_ROOMS && is_tube_valid(line, *room_listp, 0))
 	{
 		infos->room_total = count_room(*room_listp);
-		list_room(*room_listp);
 		create_matrix(&infos->adjacency_matrix, infos->room_total);
 		state = STATE_TUBES;
 	}
