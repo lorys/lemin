@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 00:14:16 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/19 16:36:26 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/20 18:08:07 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void		read_line(int fd, t_vertice **room_listp, t_infos *infos)
 	ft_strdel(&line);
 }
 
-int			read_file(t_infos *infos)
+int				read_file(t_infos *infos)
 {
 	int		fd;
 

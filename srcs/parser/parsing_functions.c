@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 07:49:24 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/19 16:25:24 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/20 18:06:09 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int			is_tube_valid(char *line, t_vertice *room_list, int nline)
 
 	ret = 0;
 	tmp = ft_strsplit(line, '-');
-	if (!(ft_strchr(line, '-') && !ft_strchr(line, ' ')) || !tmp || count_char(line, '-') != 1)
+	if (!(ft_strchr(line, '-') && !ft_strchr(line, ' ')) || !tmp \
+		|| count_char(line, '-') != 1)
 		error_parsing("tube not well formated", nline);
 	else if (!find_room(tmp[0], room_list) || !find_room(tmp[1], room_list))
 		error_parsing("unknown room", nline);
@@ -43,8 +44,9 @@ t_vertice		*is_room_valid(char *line, t_vertice *room_list, int nline)
 	new = NULL;
 	while (tmp[i])
 		i++;
-	if (i != 3 || **tmp == 'L' || **tmp == '#' || !ft_strisnumber(tmp[1]) || \
-		!ft_strisnumber(tmp[2]) || count_char(line, ' ') != 2 || ft_strchr(tmp[0], '-'))
+	if (i != 3 || **tmp == 'L' || **tmp == '#' || !ft_strisnumber(tmp[1]) \
+		|| !ft_strisnumber(tmp[2]) || count_char(line, ' ') != 2 \
+		|| ft_strchr(tmp[0], '-'))
 		error_parsing("room not well formated", nline);
 	else if (!check_overflow(tmp[1]) && !check_overflow(tmp[2]))
 		error_parsing("int overflow on room coordinates", nline);
@@ -56,7 +58,8 @@ t_vertice		*is_room_valid(char *line, t_vertice *room_list, int nline)
 	return (new);
 }
 
-int			save_tube_if_valid(char *line, t_vertice *rooms, t_infos *infos, int nline)
+int			save_tube_if_valid(char *line, t_vertice *rooms, t_infos *infos, \
+			int nline)
 {
 	if (is_tube_valid(line, rooms, nline))
 	{
@@ -66,7 +69,8 @@ int			save_tube_if_valid(char *line, t_vertice *rooms, t_infos *infos, int nline
 	return (0);
 }
 
-int			save_room_if_valid(char *line, t_vertice **room_listp, t_infos *infos, int nline)
+int			save_room_if_valid(char *line, t_vertice **room_listp, \
+			t_infos *infos, int nline)
 {
 	t_vertice 	*tmp;
 

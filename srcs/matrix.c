@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 14:06:07 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/19 15:53:29 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/20 18:13:45 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ int				create_matrix(uint32_t ***matrixp, size_t size)
 	uint32_t		**matrix;
 
 	index = 0;
-	if (matrixp == NULL || (matrix = (uint32_t**)malloc(sizeof(*matrix) * size)) == NULL)
+	if (matrixp == NULL \
+		|| (matrix = (uint32_t**)malloc(sizeof(*matrix) * size)) == NULL)
 		return (-1);
-	length = ((sizeof(**matrix) * size) / (sizeof(**matrix) * 4)) + sizeof(**matrix);
+	length = ((sizeof(**matrix) * size) / (sizeof(**matrix) * 4)) \
+			+ sizeof(**matrix);
 	while (index < size)
 	{
 		if ((matrix[index] = (uint32_t*)malloc(length)) == NULL)
@@ -40,7 +42,8 @@ int				create_matrix(uint32_t ***matrixp, size_t size)
 	return (1);
 }
 
-int				write_matrix(uint32_t **matrix, int op, unsigned int x, unsigned int y)
+int				write_matrix(uint32_t **matrix, int op, unsigned int x, \
+				unsigned int y)
 {
 	size_t		offset;
 	size_t		index;

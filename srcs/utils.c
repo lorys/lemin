@@ -6,11 +6,10 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 15:17:38 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/19 15:52:51 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/20 18:04:37 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <stdlib.h>
 #include "libft.h"
 #include "common.h"
 

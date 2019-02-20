@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:59:42 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/20 17:42:49 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/20 18:03:25 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ t_vertice		*find_room(char *room_name, t_vertice *room_list);
 t_vertice		*find_room_by_id(unsigned int id, t_vertice *room_list);
 
 int				create_matrix(uint32_t ***matrixp, size_t size);
-int				write_matrix(uint32_t **matrix, int value, unsigned int x, unsigned int y);
+int				write_matrix(uint32_t **matrix, int value, unsigned int x, \
+				unsigned int y);
 int				read_matrix(uint32_t **matrix, unsigned int x, unsigned int y);
 
 void			free_everything(t_infos *infos);

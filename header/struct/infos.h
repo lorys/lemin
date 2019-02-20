@@ -6,14 +6,14 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:52:24 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/19 15:46:19 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/20 18:01:45 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef INFOS_H
 # define INFOS_H
 
-#include <stdint.h>
+# include <stdint.h>
 
 typedef	struct		s_infos {
 	char				*file_path;
