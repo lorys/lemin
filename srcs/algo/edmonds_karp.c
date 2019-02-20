@@ -6,11 +6,11 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 17:08:59 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/19 16:47:56 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/20 17:43:04 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include <stdlib.h>
 #include "common.h"
 #include "algo.h"
 
@@ -29,7 +29,7 @@ static void	backtrack(t_infos *infos)
 	}
 }
 
-int			edmonds_karp(t_infos *infos)
+t_solution	*edmonds_karp(t_infos *infos)
 {
 	unsigned int	flow;
 	t_solution		*solution;
@@ -40,14 +40,29 @@ int			edmonds_karp(t_infos *infos)
 	{
 		if (!bfs(infos, infos->residual_matrix, infos->parent_array))
 			break ;
+		if (solution != NULL)
+			free_solution(&solution);
 		flow++;
 		backtrack(infos);
 		solution = get_paths(infos->residual_matrix, flow, infos);
 		if (solution->total_size > (size_t)infos->nb_ants)
 			break ;
 	}
-	if (!solution)
-		display_error(infos);
-	show_output(solution, infos->nb_ants, infos->rounds);
-	return (1);
+	return (solution);
+}
+
+void		free_solution(t_solution **solutionp)
+{
+	unsigned int	tmp;
+
+	tmp = 0;
+	while (tmp < (*solutionp)->nb_paths)
+	{
+		free_paths((*solutionp)->paths[tmp]);
+		tmp++;
+	}
+	free((*solutionp)->paths);
+	free((*solutionp)->path_size);
+	free(*solutionp);
+	*solutionp = NULL;
 }

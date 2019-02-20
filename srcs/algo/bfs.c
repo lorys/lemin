@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 16:06:33 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/19 16:43:08 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/19 18:49:26 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,11 @@ int					bfs(t_infos *infos, uint32_t **residual_matrix, int *parent)
 				if (v != infos->end->id)
 					push(&queue, v);
 				else
+				{
+					while (queue != NULL)
+						pop(&queue);
 					return (1);
+				}
 			}
 			tmp = tmp->next;
 		}

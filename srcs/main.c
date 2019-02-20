@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/19 16:40:06 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/20 17:36:13 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static	void	bonus_manager(int argc, char **argv, t_infos *infos)
 int				main(int argc, char **argv)
 {
 	t_infos		infos;
+	t_solution	*solution;
 
 	init_infos(&infos);
 	bonus_manager(argc, argv, &infos);
@@ -84,18 +85,14 @@ int				main(int argc, char **argv)
 		free_everything(&infos);
 		return (EXIT_FAILURE);
 	}
-	if (create_matrix(&infos.residual_matrix, infos.room_total) == -1)
-	{
-		ft_putstr_fd("memory allocation failure\n", 2);
-		free_everything(&infos);
-		return (EXIT_FAILURE);
-	}
-	if ((infos.parent_array = (int *)malloc(sizeof(*infos.parent_array) * infos.room_total)) == NULL)
-		return (-1);
+	ft_putchar('\n');
 	if (!infos.room_list || !infos.start || !infos.end || infos.nb_ants <= 0)
 		display_error(&infos);
-	else
-		edmonds_karp(&infos);
+	init_algo(&infos);
+	if ((solution = edmonds_karp(&infos)) == NULL)
+		display_error(&infos);
+	show_output(solution, infos.nb_ants, infos.rounds);
+	free_solution(&solution);
 	free_everything(&infos);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:59:42 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/19 16:48:39 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/20 17:42:49 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "struct/path.h"
 
 void			init_infos(t_infos *infos);
+void			init_algo(t_infos *infos);
 
 int				ft_stris(char *str, int (*f)(int c));
 int				ft_strisnumber(char *str);
@@ -32,6 +33,7 @@ int				write_matrix(uint32_t **matrix, int value, unsigned int x, unsigned int y
 int				read_matrix(uint32_t **matrix, unsigned int x, unsigned int y);
 
 void			free_everything(t_infos *infos);
+void			free_paths(t_path *path_list);
 void			free_char_tab(char **str);
 
 #endif
