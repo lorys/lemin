@@ -6,7 +6,7 @@
 #    By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2019/02/20 17:59:25 by pcarles          ###   ########.fr        #
+#    Updated: 2019/02/21 19:14:37 by pcarles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME		= lem-in
 NAME_1		= visualizer
 
 CC			= gcc
-C_FLAGS		= -Wall -Wextra -Werror -g3 -fsanitize=address
-LD_FLAGS	= -fsanitize=address
+C_FLAGS		= -Wall -Wextra -Werror -g3 -Ofast
+LD_FLAGS	=
 
 SRCDIR		= srcs/
 INCLDIR		= header/
@@ -55,11 +55,12 @@ C_FILES_1	= free.c \
 			parser/errors.c \
 			parser/links.c \
 			parser/parsing_functions.c \
+			parser/read_file.c \
 			parser/parse.c \
 			parser/save_room.c \
 			parser/utils_parser.c \
 			visualizer/main_vizu.c \
-			visualizer/parser.c \
+			visualizer/init_vizu.c \
 			visualizer/bresenham.c
 
 
@@ -78,7 +79,7 @@ export CC C_FLAGS LD_FLAGS
 
 .PHONY: all clean fclean re norm
 
-all: $(NAME)
+all: $(NAME) $(NAME_1)
 
 $(NAME): $(OBJ) $(LIBFT)
 	@$(CC) -o $@ $(OBJ) -L$(LIBDIR) -lft $(C_FLAGS) $(LD_FLAGS)

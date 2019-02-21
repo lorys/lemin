@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vizualizer.h                                       :+:      :+:    :+:   */
+/*   visualizer.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:36:06 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/05 21:18:10 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/21 18:34:50 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VIZUALIZER_H
-# define VIZUALIZER_H
+#ifndef VISUALIZER_H
+# define VISUALIZER_H
 
-# include "lem_in.h"
+# include "struct/infos.h"
+# include "struct/vertice.h"
+# include "struct/path.h"
 
 typedef struct			s_anthill
 {
@@ -25,14 +27,8 @@ typedef struct			s_anthill
 	int					width;
 }						t_anthill;
 
-typedef struct			s_ant
-{
-	int					name;
-	int					color;
-	int					in_anthill;
-	struct s_vertice	*current_room;
-	struct s_ant		*next;
-}						t_ant;
+void					init_anthill(t_anthill *anthill, t_vertice *rooms);
+void					init_colors(void);
 
 int						parse(t_vertice **room_listp, t_infos *infos);
 void					plot_line(int x0, int y0, int x1, int y1);

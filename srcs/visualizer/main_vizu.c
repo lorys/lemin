@@ -6,38 +6,16 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:40:31 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/15 20:24:53 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/21 19:14:04 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <ncurses.h>
-#include "ft_printf.h"
-#include "get_next_line.h"
+#include "libft.h"
 #include "common.h"
-#include "vizualizer.h"
-
-static void		init_anthill(t_anthill *anthill, t_vertice *rooms)
-{
-	anthill->min_x = rooms->x;
-	anthill->max_y = rooms->y;
-	anthill->max_x = rooms->x;
-	anthill->min_y = rooms->y;
-	while (rooms)
-	{
-		if (rooms->x < anthill->min_x)
-			anthill->min_x = rooms->x;
-		if (rooms->y < anthill->min_y)
-			anthill->min_y = rooms->y;
-		if (rooms->x > anthill->max_x)
-			anthill->max_x = rooms->x;
-		if (rooms->y > anthill->max_y)
-			anthill->max_y = rooms->y;
-		rooms = rooms->next;
-	}
-	anthill->height = anthill->max_y - anthill->min_y;
-	anthill->width = anthill->max_x - anthill->min_x;
-}
+#include "parser.h"
+#include "visualizer.h"
 
 static void		set_real_position(t_vertice *room_list, t_anthill *anthill, \
 				int *height, int *width)
@@ -79,132 +57,6 @@ static void		display_map(t_vertice *room, t_infos *infos)
 	}
 }
 
-static t_ant	*create_ant(int name, char *room, t_vertice *room_list)
-{
-	t_ant		*new;
-
-	if (!room || !(new = (t_ant *)ft_memalloc(sizeof(*new))))
-		return (NULL);
-	new->name = name;
-	new->current_room = find_room(room, room_list);
-	new->in_anthill = 1;
-	new->next = NULL;
-	new->color = name % 6;
-	return (new);
-}
-
-static void		move_ant(int name, char *destination, t_ant **ant_list, t_vertice *room_list, int *nb_ants)
-{
-	t_ant		*ant;
-
-	if (!(*ant_list))
-		*ant_list = create_ant(name, destination, room_list);
-	ant = *ant_list;
-	while (ant)
-	{
-		if (name == ant->name)
-		{
-			ant->current_room = find_room(destination, room_list);
-			ant->in_anthill = 1;
-			return ;
-		}
-		ant = ant->next;
-	}
-	ant = *ant_list;
-	while (ant)
-	{
-		if (!ant->in_anthill)
-		{
-			ant->name = name;
-			ant->current_room = find_room(destination, room_list);
-			ant->in_anthill = 1;
-			ant->color = name % 6;
-			*nb_ants = *nb_ants - 1;
-			return ;
-		}
-		ant = ant->next;
-	}
-	ant = *ant_list;
-	while (ant->next)
-		ant = ant->next;
-	ant->next = create_ant(name, destination, room_list);
-	*nb_ants = *nb_ants - 1;
-}
-
-static void		reset_ants(t_ant *ant_list)
-{
-	while (ant_list)
-	{
-		ant_list->in_anthill = 0;
-		ant_list = ant_list->next;
-	}
-}
-
-static void		display_ants(t_ant *ant_list)
-{
-	t_vertice		*room;
-
-	while (ant_list)
-	{
-		room = ant_list->current_room;
-		attron(COLOR_PAIR(ant_list->color));
-		mvprintw(room->y - 1, room->x - 2, "[L%.2d]", ant_list->name);
-		attroff(COLOR_PAIR(ant_list->color));
-		ant_list->in_anthill = 0;
-
-		ant_list = ant_list->next;
-	}
-}
-
-static void		parse_line_ants(char *line, t_ant **ant_list, t_vertice *room_list, t_infos *infos)
-{
-	char		*tmp;
-	char		*room_name;
-
-	while(*line)
-	{
-		if (*line++ != 'L')
-			return ;
-		if (!(tmp = ft_strchr(line, ' ')))
-			break ;
-		*tmp = '\0';
-		room_name = ft_strdup(ft_strchr(line, '-') + 1);
-		*tmp = '\n';
-		move_ant(ft_atoi(line), room_name, ant_list, room_list, &infos->nb_ants);
-		ft_strdel(&room_name);
-		line = tmp + 1;
-	}
-	if (*line)
-	{
-		room_name = ft_strdup(ft_strchr(line, '-') + 1);
-		move_ant(ft_atoi(line), room_name, ant_list, room_list, &infos->nb_ants);
-		ft_strdel(&room_name);
-	}
-}
-
-static void		parse_ants(t_vertice *room_list, t_infos *infos)
-{
-	char		*line;
-	int			nline;
-	t_ant		*ant_list;
-
-	nline = 0;
-	ant_list = NULL;
-	(void)infos;
-	while (get_next_line(0, &line) > 0 && ++nline)
-	{
-		reset_ants(ant_list);
-		parse_line_ants(line, &ant_list, room_list, infos);
-		ft_strdel(&line);
-		display_ants(ant_list);
-		mvprintw(0, 0, "ligne:%d", nline);
-		mvprintw(infos->start->y - 1, infos->start->x - 2, "[%d]", infos->nb_ants);
-		refresh();
-		sleep(2);
-	}
-	ft_strdel(&line);
-}
-
 static void		launch(t_vertice *room_list, t_infos *infos)
 {
 	int			screen_height;
@@ -220,28 +72,18 @@ static void		launch(t_vertice *room_list, t_infos *infos)
 int				main(void)
 {
 	t_infos		infos;
-	t_vertice		*room_list;
 
-	room_list = NULL;
 	init_infos(&infos);
-	parse(&room_list, &infos);
-	if (!room_list)
+	read_file(&infos);
+	if (!infos.room_list)
 		return (EXIT_FAILURE);
 	initscr();
+	noecho();
 	curs_set(0);
-	start_color();
-	init_pair(20, COLOR_BLUE, COLOR_BLACK);
-	init_pair(21, COLOR_GREEN, COLOR_BLACK);
-	init_pair(0, COLOR_WHITE, COLOR_RED);
-	init_pair(1, COLOR_WHITE, COLOR_GREEN);
-	init_pair(2, COLOR_BLACK, COLOR_YELLOW);
-	init_pair(3, COLOR_WHITE, COLOR_BLUE);
-	init_pair(4, COLOR_WHITE, COLOR_MAGENTA);
-	init_pair(5, COLOR_WHITE, COLOR_CYAN);
-	launch(room_list, &infos);
+	init_colors();
+	launch(infos.room_list, &infos);
+	free_everything(&infos);
 	refresh();
-	parse_ants(room_list, &infos);
-	free_everything(room_list);
 	sleep(1000);
 	endwin();
 	return (EXIT_SUCCESS);
