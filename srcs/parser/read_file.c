@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 00:14:16 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/21 17:35:21 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/21 17:40:18 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ static void		fill_buffer(char *str)
 		if (str == NULL)
 			return ;
 	}
-	str[str_len] = '\n';
-	ft_strncpy(buffer + index, str, ++str_len);
+	ft_strcpy(buffer + index, str);
 	index += str_len;
+	buffer[index++] = '\n';
 }
 
 static void		read_line(int fd, t_vertice **room_listp, t_infos *infos)
