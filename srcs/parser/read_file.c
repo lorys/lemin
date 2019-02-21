@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 00:14:16 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/21 17:40:18 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/21 17:41:30 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,6 @@
 #include "parser.h"
 
 #define BUFFER_SIZE 65536
-
-static void		fill_buffer(char *str)
-{
-	static char		buffer[BUFFER_SIZE + 1] = {'\0'};
-	static size_t	index = 0;
-	size_t			str_len;
-
-	str_len = 0;
-	if (str == NULL || index + (str_len = ft_strlen(str)) >= BUFFER_SIZE)
-	{
-		write(1, buffer, index);
-		index = 0;
-		if (str == NULL)
-			return ;
-	}
-	ft_strcpy(buffer + index, str);
-	index += str_len;
-	buffer[index++] = '\n';
-}
 
 static void		read_line(int fd, t_vertice **room_listp, t_infos *infos)
 {
@@ -79,4 +60,23 @@ int				read_file(t_infos *infos)
 	if (fd != STDIN_FILENO)
 		close(fd);
 	return (1);
+}
+
+void			fill_buffer(char *str)
+{
+	static char		buffer[BUFFER_SIZE + 1] = {'\0'};
+	static size_t	index = 0;
+	size_t			str_len;
+
+	str_len = 0;
+	if (str == NULL || index + (str_len = ft_strlen(str)) >= BUFFER_SIZE)
+	{
+		write(1, buffer, index);
+		index = 0;
+		if (str == NULL)
+			return ;
+	}
+	ft_strcpy(buffer + index, str);
+	index += str_len;
+	buffer[index++] = '\n';
 }

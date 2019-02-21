@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 07:06:44 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/20 18:13:35 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/21 17:46:28 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void		free_everything(t_infos *infos)
 	free_rooms(infos->room_list);
 	free_matrix(infos->adjacency_matrix, infos->room_total);
 	free_matrix(infos->residual_matrix, infos->room_total);
-	free(infos->parent_array);
+	if (infos->parent_array != NULL)
+		free(infos->parent_array);
 }
 
 void		free_char_tab(char **str)

@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:35:58 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/20 18:02:59 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/21 17:41:56 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,6 @@ void				error_parsing(char *str, int nline);
 int					count_char(char *str, char c);
 
 int					read_file(t_infos *infos);
+void				fill_buffer(char *str);
 
 #endif
