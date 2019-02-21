@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 22:11:45 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/20 18:14:22 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/21 18:20:36 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ t_vertice		*create_room(char *name, int x, int y)
 	new->id = id++;
 	new->next = NULL;
 	new->links = NULL;
-	new->ants = 0;
-	new->vu = 0;
 	return (new);
 }
 
