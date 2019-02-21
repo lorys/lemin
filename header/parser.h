@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:35:58 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/21 17:41:56 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/21 18:07:08 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@
 # define STATE_TUBES 2
 # define STATE_START_ROOM 3
 # define STATE_END_ROOM 4
+# define STATE_START 5
 
-# define DEBUG 1
+# define PARSER_VERBOSITY 1
+# define LI_BUFFER_SIZE 65536
 
 int					line_is_valid(t_vertice **room_listp, t_infos *infos, \
 					char *line, int nline);

@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 10:48:59 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/19 16:25:03 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/21 18:10:50 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 #include "common.h"
 #include "parser.h"
 
-static int		check_number_of_ants(char *line, t_infos *infos)
+static int		check_number_of_ants(char *line, int *state, t_infos *infos)
 {
+	*state = STATE_ROOMS;
 	if (!ft_stris(line, &ft_isdigit))
 		error_parsing("the first line must be the number of ants", 1);
 	else
@@ -73,11 +74,13 @@ static unsigned int	count_room(t_vertice *room_list)
 int				line_is_valid(t_vertice **room_listp, t_infos *infos, \
 				char *line, int nline)
 {
-	static int	state = STATE_ROOMS;
+	static int	state = STATE_START;
 	int			ret;
 
 	ret = 0;
-	if (state == STATE_START_ROOM || state == STATE_END_ROOM)
+	if (*line == '#')
+		ret = check_command_comment(line, &state, nline);
+	else if (state == STATE_START_ROOM || state == STATE_END_ROOM)
 	{
 		if (state == STATE_START_ROOM)
 			ret = add_start_or_end_room(line, &(infos->start), room_listp, nline);
@@ -85,10 +88,8 @@ int				line_is_valid(t_vertice **room_listp, t_infos *infos, \
 			ret = add_start_or_end_room(line, &(infos->end), room_listp, nline);
 		state = STATE_ROOMS;
 	}
-	else if (nline == 1)
-		ret = check_number_of_ants(line, infos);
-	else if (*line == '#')
-		ret = check_command_comment(line, &state, nline);
+	else if (state == STATE_START)
+		ret = check_number_of_ants(line, &state, infos);
 	else if (state == STATE_ROOMS && is_tube_valid(line, *room_listp, 0))
 	{
 		infos->room_total = count_room(*room_listp);

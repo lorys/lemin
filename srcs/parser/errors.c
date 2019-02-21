@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:36:22 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/21 17:42:37 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/21 18:04:10 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	warn_parsing(char *str, int nline)
 {
 	char	*nline_str;
 
-	if (str && DEBUG && nline > 0)
+	if (str && PARSER_VERBOSITY && nline > 0)
 	{
 		fill_buffer(NULL);
 		nline_str = ft_itoa(nline);
@@ -34,7 +34,7 @@ void	error_parsing(char *str, int nline)
 {
 	char	*nline_str;
 
-	if (str && DEBUG && nline > 0)
+	if (str && PARSER_VERBOSITY && nline > 0)
 	{
 		fill_buffer(NULL);
 		nline_str = ft_itoa(nline);

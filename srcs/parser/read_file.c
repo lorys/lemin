@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 00:14:16 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/21 17:41:30 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/21 18:04:36 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 #include "libft.h"
 #include "get_next_line.h"
 #include "parser.h"
-
-#define BUFFER_SIZE 65536
 
 static void		read_line(int fd, t_vertice **room_listp, t_infos *infos)
 {
@@ -64,12 +62,12 @@ int				read_file(t_infos *infos)
 
 void			fill_buffer(char *str)
 {
-	static char		buffer[BUFFER_SIZE + 1] = {'\0'};
+	static char		buffer[LI_BUFFER_SIZE + 1] = {'\0'};
 	static size_t	index = 0;
 	size_t			str_len;
 
 	str_len = 0;
-	if (str == NULL || index + (str_len = ft_strlen(str)) >= BUFFER_SIZE)
+	if (str == NULL || index + (str_len = ft_strlen(str)) >= LI_BUFFER_SIZE)
 	{
 		write(1, buffer, index);
 		index = 0;
