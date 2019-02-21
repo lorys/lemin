@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:40:31 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/21 19:14:04 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/21 19:16:56 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ static void		set_real_position(t_vertice *room_list, t_anthill *anthill, \
 	*width -= *width * 0.1;
 	while (room_list)
 	{
-		room_list->x = ((*width * room_list->x) + *width * 0.2) / (anthill->max_x);
-		room_list->y = ((*height * room_list->y) + *height * 0.2) / (anthill->max_y);
+		room_list->x = ((*width * room_list->x) + *width * 0.2) \
+						/ (anthill->max_x);
+		room_list->y = ((*height * room_list->y) + *height * 0.2) \
+						/ (anthill->max_y);
 		room_list = room_list->next;
 	}
 }
@@ -53,7 +55,8 @@ static void		display_map(t_vertice *room, t_infos *infos)
 			link = link->next;
 		}
 		display_map(room->next, infos);
-		display_room_name(room, room == infos->start || room == infos->end ? 21 : 20);
+		display_room_name(room, \
+			room == infos->start || room == infos->end ? 21 : 20);
 	}
 }
 
