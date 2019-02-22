@@ -2,6 +2,8 @@
 *.a
 *.dSYM
 *.map
+*.d
+*.Td
 lem_in
 lem-in
 vizualizer
