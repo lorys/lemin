@@ -6,7 +6,7 @@
 #    By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/23 17:30:55 by pcarles           #+#    #+#              #
-#    Updated: 2019/02/22 21:22:27 by pcarles          ###   ########.fr        #
+#    Updated: 2019/02/25 05:20:05 by pcarles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ endif
 define LINKING_RULE_TEMPLATE
 $(1)_BIN := $$(patsubst %.c,%.o,$$(addprefix $(BINDIR)/,$$($(1)_SRC)))
 $(1): $$($(1)_BIN)
-	@$(CC) $(LD_FLAGS) -I$(HDRDIR) -L$(BINDIR) $(addprefix -l,$($(1)_LIB)) -o $(1) $$^
+	@$(CC) $(LD_FLAGS) -I$(HDRDIR) -L$(BINDIR) $(addprefix -l,$($(1)_LIB)) -o $(1) $$($(1)_BIN)
 	@echo "\033[32;1mCreated $(1)\033[0m"
 endef
 
@@ -83,6 +83,7 @@ $(DEPDIR)/%.d: ;
 # Clean all binaries expect the targets..
 clean:
 	@rm -rf `dirname $(BINDIR)` $(DEPDIR)
+	@$(MAKE) -C $(addprefix $(LIBDIR)/,$(LIBS)) $@
 
 # ..clean targets binaries
 fclean: clean
