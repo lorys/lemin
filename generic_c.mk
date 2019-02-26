@@ -6,7 +6,7 @@
 #    By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/23 17:30:55 by pcarles           #+#    #+#              #
-#    Updated: 2019/02/25 05:20:05 by pcarles          ###   ########.fr        #
+#    Updated: 2019/02/25 23:44:47 by pcarles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ endif
 define LINKING_RULE_TEMPLATE
 $(1)_BIN := $$(patsubst %.c,%.o,$$(addprefix $(BINDIR)/,$$($(1)_SRC)))
 $(1): $$($(1)_BIN)
-	@$(CC) $(LD_FLAGS) -I$(HDRDIR) -L$(BINDIR) $(addprefix -l,$($(1)_LIB)) -o $(1) $$($(1)_BIN)
+	@$(CC) $(LD_FLAGS) -I$(HDRDIR) -L./$(BINDIR) -o $(1) $$($(1)_BIN) $(addprefix -l,$($(1)_LIB))
 	@echo "\033[32;1mCreated $(1)\033[0m"
 endef
 
