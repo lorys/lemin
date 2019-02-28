@@ -19,8 +19,7 @@ int	change_room(t_infos *infos, t_tube *from, t_tube *to, \
 {
 	int	init_ants;
 
-	if (!to || !from || from->already_moved\
-		 || (to->ants && to != infos->end))
+	if (!to || !from || from->already_moved || (to->ants && to != infos->end))
 		return (0);
 	init_ants = from->ants;
 	if (to == infos->end)
@@ -35,6 +34,7 @@ int	change_room(t_infos *infos, t_tube *from, t_tube *to, \
 		init_ants = infos->fourmis - infos->start->ants;
 		if (to != infos->end)
 		{
+			to->ants_passed++;
 			to->ants = init_ants;
 			to->already_moved = 1;
 		}
@@ -44,7 +44,11 @@ int	change_room(t_infos *infos, t_tube *from, t_tube *to, \
 		to->ants = from->ants;
 		from->ants = 0;
 		to->already_moved = 1;
-	}
+	}/*
+	if (from == infos->start)
+	{
+		printf("%d ant go in %d steps long path.\n", init_ants, path_length(to, infos));
+	}*/
 	show_ant(init_ants, to, infos, buffer);
 	return (1);
 }

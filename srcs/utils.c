@@ -60,3 +60,18 @@ t_tube	*find_room(char *room_name, t_tube *room_list)
 	}
 	return (NULL);
 }
+
+int	ft_linkslen(t_tube *room)
+{
+	t_paths *links;
+	int	count;
+
+	count = 0;
+	links = room->links;
+	while (links)
+	{
+		count++;
+		links = links->next;
+	}
+	return (count);
+}

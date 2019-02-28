@@ -20,6 +20,7 @@ typedef	struct		s_infos {
 	struct s_tube	*start;
 	int				paths_nb;
 	int				bfs;
+	int				biggest_path;
 	int				fourmis;
 	int				nb_paths;
 	int				bonus;

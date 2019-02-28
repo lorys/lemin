@@ -13,83 +13,6 @@
 #include "ft_printf.h"
 #include "lem_in.h"
 
-int	ft_linkslen(t_tube *room)
-{
-	t_paths *links;
-	int	count;
-
-	count = 0;
-	links = room->links;
-	while (links)
-	{
-		count++;
-		links = links->next;
-	}
-	return (count);
-}
-
-t_tube	*minus_available(t_tube *room, t_infos *infos)
-{
-	t_paths	*links;
-	t_tube	*minus;
-
-	minus = NULL;
-	links = room->links;
-	while (links)
-	{
-		if (links->room == infos->end)
-			return (infos->end);
-		if ((!minus || minus->steps > links->room->steps)\
-			 && links->room->steps && (!links->room->hidden\
-			 || room == infos->start) && !links->room->ants)
-			minus = links->room;
-		links = links->next;
-	}
-	return (minus);
-}
-
-t_tube	*set_minus_path(t_infos *infos)
-{
-	t_paths	*links;
-	t_tube	*minus;
-
-	minus = NULL;
-	links = infos->start->links;
-	while (links)
-	{
-		if (links->room == infos->end)
-			return (infos->end);
-		if ((!minus || minus->steps > links->room->steps)\
-			 && links->room->steps && !links->room->ants\
-			 && bury_path(links->room, infos, 1))
-		{
-			printf("\n");
-			minus = links->room;
-		}
-		links = links->next;
-	}
-	return (minus);
-}
-
-int	bury_path(t_tube *room, t_infos *infos, int nb)
-{
-	t_tube	*next;
-	int	ret;
-
-	ret = 0;
-	room->vu = 3;
-	if ((next = minus_available(room, infos)) == infos->end && ++ret)
-		room->hidden = infos->paths_nb + nb;
-	else if (next && next->vu != 3 && !next->hidden\
-		 && (ret = bury_path(next, infos, nb + 1)))
-	{
-		printf("%s (%d steps)", room->name, room->steps);
-		room->hidden = infos->paths_nb + nb;
-	}
-	room->vu = 0;
-	return (ret);
-}
-
 t_tube	*get_minus(t_tube *room, t_infos *infos)
 {
 	t_paths	*links;
@@ -103,31 +26,16 @@ t_tube	*get_minus(t_tube *room, t_infos *infos)
 			return (infos->end);
 		links = links->next;
 	}
-	if (room->hidden && room != infos->start)
-	{
-		links = room->links;
-		while (links)
-		{
-			if (!links->room->ants && links->room->steps\
-			 && links->room->hidden == room->hidden + 1)
-				return (links->room);
-			links = links->next;
-		}
-	}
 	if (room == infos->start)
 	{
-		if ((minus = set_minus_path(infos)))
-			return (minus);
-		links = room->links;
-		while (links)
-		{
-			if ((!minus || minus->steps < links->room->steps)\
-			 && links->room->steps && links->room->hidden && !links->room->ants)
-				minus = links->room;
-			links = links->next;
-		}
+		minus = minus_path(infos, 1);
+		if (!minus && infos->paths_nb <= 3 && bury_path(infos->start, infos, 1)\
+		&& ++infos->paths_nb)
+			minus = minus_path(infos, 1);
 	}
-	return (minus);
+	else
+		minus = next_step_path(room, 1, infos);
+	return ((minus && !minus->ants) ? minus : NULL);
 }
 
 int	bfs(t_tube *room, t_tube *from, int nb, t_infos *infos)

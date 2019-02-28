@@ -39,7 +39,8 @@ t_tube		*choose_ants(t_tube *room, t_infos *infos)
 	while (room)
 	{
 		if (room != infos->end && room->ants && !room->already_moved\
-			 && get_minus(room, infos))
+		&& ((room == infos->start && (room->to = get_minus(room, infos)))\
+		|| (room != infos->start && (room->to = next_step_path(room, 1, infos)))))
 			return (room);
 		room = room->next;
 	}
@@ -53,7 +54,7 @@ t_tube	*to_base(t_tube *base)
 	return (base);
 }
 
-static void			reset_infos(t_tube *base)
+static void	reset_infos(t_tube *base)
 {
 	while (base)
 	{
@@ -68,21 +69,19 @@ void		move_ants(t_infos *infos, char *buffer)
 	t_tube	*skip;
 	int	moved;
 	t_tube	*base;
+	int	count;
 
 	moved = 0;
+	count = 0;
 	base = to_base(infos->start);
 	tmp = NULL;
 	skip = NULL;
 	while ((tmp = choose_ants(base, infos)))
 	{
-		if (tmp->ants && !tmp->already_moved\
-			 && (skip = get_minus(tmp, infos)))
-		{
-			if (moved)
-				fill_buffer(" ", buffer, 0, infos);
-			moved += change_room(infos, tmp, skip, buffer);
-		}
-		tmp = (!get_minus(tmp, infos)) ? tmp->next : tmp;
+		if (moved)
+			fill_buffer(" ", buffer, 0, infos);
+		moved += change_room(infos, tmp, tmp->to, buffer);
+		tmp->to = NULL;
 	}
 	reset_infos(base);
 	if (moved && ++infos->rounds)
@@ -95,10 +94,9 @@ int		main(int argc, char **argv)
 {
 	t_infos		infos;
 	t_tube		*room_list;
+	t_paths		*tmp;
 	int		i;
 	char		*buffer;
-	//t_tube		*tmp;
-	//t_paths		*paths_tmp;
 
 	i = 0;
 	buffer = NULL;
@@ -118,6 +116,14 @@ int		main(int argc, char **argv)
 			fill_buffer(NULL, buffer, 1, &infos);
 			printf("\n\t\t\033[41m%d ROUNDS\033[0m\n", infos.rounds);
 			printf("\n%d/%d\n", infos.end->ants, infos.fourmis);
+			tmp = infos.start->links;
+			while (tmp)
+			{
+				if (tmp->room->steps)
+					printf("%s (%d ants passed) (%d steps)\n", tmp->room->name, tmp->room->ants_passed, tmp->room->steps);
+				tmp = tmp->next;
+			}
+			printf("%d links to end.\n", ft_linkslen(infos.end));
 		}
 	}
 	free_everything(room_list);

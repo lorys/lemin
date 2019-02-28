@@ -26,6 +26,12 @@ typedef enum	e_status
 	STATUS_VISITED
 }				t_status;
 
+t_tube			*choose_ants(t_tube *room, t_infos *infos);
+int			path_length(t_tube *room, t_infos *infos);
+t_tube			*minus_available(t_tube *room, t_infos *infos);
+t_tube			*minus_path(t_infos *infos, int noants);
+t_tube			*next_step_path(t_tube *room, int noants,\
+				t_infos *infos);
 int			ft_linkslen(t_tube *room);
 int			bury_path(t_tube *room, t_infos *infos, int nb);
 t_tube			*find_room(char *room_name, t_tube *room_list);
@@ -34,10 +40,10 @@ int			make_line(t_paths *path_list, t_infos *infos,\
 				int ant);
 int			find_paths(t_infos *infos);
 t_tube			*get_minus(t_tube *room, t_infos *infos);
-int			flow_count(t_tube *room, int *capacity, int *flow, t_infos *infos);
 void			fill_buffer(const char *str, char *buffer, int print,\
 				t_infos *infos);
 void			show_ant(int l, t_tube *room, t_infos *infos, char *buffer);
 int			change_room(t_infos *infos, t_tube *from, t_tube *to, \
 				char *buffer);
+
 #endif

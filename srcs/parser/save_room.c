@@ -27,9 +27,12 @@ t_tube		*create_room(char *name, int x, int y)
 	new->x = x;
 	new->y = y;
 	new->prev = NULL;
+	new->to = NULL;
 	new->next = NULL;
 	new->links = NULL;
 	new->ants = 0;
+	new->passages = 0;
+	new->ants_passed = 0;
 	new->vu = 0;
 	return (new);
 }

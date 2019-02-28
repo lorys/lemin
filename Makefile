@@ -45,6 +45,7 @@ C_FILES		= main.c \
 			parser/save_room.c \
 			parser/utils_parser.c \
 			algo/find_paths.c \
+			algo/manage_path.c \
 			algo/select_paths.c
 
 C_FILES_1	= free.c \

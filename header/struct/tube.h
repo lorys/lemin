@@ -24,8 +24,12 @@ typedef	struct		s_tube {
 	int				steps;
 	int				already_moved;
 	int				hidden;
+	int				passages;
+	int				path_length;
+	int				ants_passed;
 	struct s_paths	*links;
 	struct s_tube	*next;
+	struct s_tube	*to;
 	struct s_tube	*prev;
 }					t_tube;
 
