@@ -19,10 +19,11 @@ typedef	struct		s_infos {
 	struct s_tube	*end;
 	struct s_tube	*start;
 	int				paths_nb;
-	int				bfs;
-	int				biggest_path;
-	int				fourmis;
+	int				max_diff;
 	int				nb_paths;
+	int				bfs;
+	int				minus_path;
+	int				fourmis;
 	int				bonus;
 	int				select;
 	int				bonusants;

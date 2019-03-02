@@ -26,6 +26,7 @@ typedef enum	e_status
 	STATUS_VISITED
 }				t_status;
 
+t_tube			*last_path(t_infos *infos);
 t_tube			*choose_ants(t_tube *room, t_infos *infos);
 int			path_length(t_tube *room, t_infos *infos);
 t_tube			*minus_available(t_tube *room, t_infos *infos);

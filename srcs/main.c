@@ -112,17 +112,30 @@ int		main(int argc, char **argv)
 		infos.start->ants = infos.fourmis;
 		if (find_paths(&infos))
 		{
+			while ((i = bury_path(infos.start, &infos, 1)))
+			{
+				if (!infos.minus_path)
+					infos.minus_path = \
+					path_length(last_path(&infos), &infos);
+				infos.paths_nb++;
+			}
+			tmp = infos.start->links;
+			while (tmp)
+			{
+				if (tmp->room->hidden)
+					printf("%s (%d path length) (%d hidden) (%d steps)\n"\
+				, tmp->room->name\
+				, path_length(tmp->room, &infos)
+				, tmp->room->hidden\
+				, tmp->room->steps);
+				tmp = tmp->next;
+			}
+			printf("%d steps\n", infos.minus_path);
 			move_ants(&infos, buffer);
 			fill_buffer(NULL, buffer, 1, &infos);
 			printf("\n\t\t\033[41m%d ROUNDS\033[0m\n", infos.rounds);
 			printf("\n%d/%d\n", infos.end->ants, infos.fourmis);
-			tmp = infos.start->links;
-			while (tmp)
-			{
-				if (tmp->room->steps)
-					printf("%s (%d ants passed) (%d steps)\n", tmp->room->name, tmp->room->ants_passed, tmp->room->steps);
-				tmp = tmp->next;
-			}
+			
 			printf("%d links to end.\n", ft_linkslen(infos.end));
 		}
 	}

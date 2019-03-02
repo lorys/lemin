@@ -13,13 +13,32 @@
 #include "ft_printf.h"
 #include "lem_in.h"
 
-t_tube	*get_minus(t_tube *room, t_infos *infos)
+t_tube	*last_path(t_infos *infos)
 {
 	t_paths	*links;
 	t_tube	*minus;
 
 	minus = NULL;
+	links = infos->start->links;
+	while (links)
+	{
+		if ((!minus || (minus->hidden < links->room->hidden))\
+		&& links->room->hidden)
+			minus = links->room;
+		links = links->next;
+	}
+	return (minus);
+}
+
+t_tube	*get_minus(t_tube *room, t_infos *infos)
+{
+	t_paths	*links;
+	t_tube	*minus;
+	int	ret;
+
+	minus = NULL;
 	links = room->links;
+	ret = 0;
 	while (links)
 	{
 		if (links->room == infos->end)
@@ -27,12 +46,7 @@ t_tube	*get_minus(t_tube *room, t_infos *infos)
 		links = links->next;
 	}
 	if (room == infos->start)
-	{
 		minus = minus_path(infos, 1);
-		if (!minus && infos->paths_nb <= 3 && bury_path(infos->start, infos, 1)\
-		&& ++infos->paths_nb)
-			minus = minus_path(infos, 1);
-	}
 	else
 		minus = next_step_path(room, 1, infos);
 	return ((minus && !minus->ants) ? minus : NULL);

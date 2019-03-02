@@ -20,7 +20,7 @@ void	init_infos(t_infos *infos)
 	infos->paths_nb = 0;
 	infos->fourmis = 0;
 	infos->bfs = 0;
-	infos->nb_paths = 0;
+	infos->minus_path = 0;
 	infos->bonus = 0;
 	infos->select = 0;
 	infos->bonusants = 0;
