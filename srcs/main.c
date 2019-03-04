@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/20 17:36:13 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/04 16:53:54 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,56 @@ static	void	bonus_manager(int argc, char **argv, t_infos *infos)
 // 	}
 // }
 
+// static void	print_path(t_path *path)
+// {
+// 	ft_printf("Path :");
+// 	while (path)
+// 	{
+// 		ft_printf("%s ", path->room->name);
+// 		path = path->next;
+// 	}
+// 	ft_printf("\n");
+// }
+
+// static void		show_solution(t_solution *solution)
+// {
+// 	unsigned int	x;
+
+// 	x = 0;
+// 	while (x < solution->nb_paths)
+// 	{
+// 		ft_printf("Path size: %5d | ", solution->path_size[x]);
+// 		print_path(solution->paths[x]);
+// 		x++;
+// 	}
+// 	ft_printf("Total size: %d\n\n", solution->total_size);
+// }
+
+static void	sort_solution(t_solution *solution)
+{
+	size_t		i;
+	size_t		j;
+	size_t	x;
+	t_path	*path;
+
+	i = 1;
+	while (i < solution->nb_paths)
+	{
+		x = solution->path_size[i];
+		path = solution->paths[i];
+		j = i;
+		while (j > 0 && solution->path_size[j - 1] > x)
+		{
+			solution->path_size[j] = solution->path_size[j - 1];
+			solution->paths[j] = solution->paths[j - 1];
+			j -= 1;
+		}
+		solution->path_size[j] = x;
+		solution->paths[j] = path;
+		i++;
+	}
+}
+
 int				main(int argc, char **argv)
 {
 	t_infos		infos;
@@ -91,6 +141,7 @@ int				main(int argc, char **argv)
 	init_algo(&infos);
 	if ((solution = edmonds_karp(&infos)) == NULL)
 		display_error(&infos);
+	sort_solution(solution);
 	show_output(solution, infos.nb_ants, infos.rounds);
 	free_solution(&solution);
 	free_everything(&infos);

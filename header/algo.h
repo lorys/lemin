@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 16:07:00 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/22 21:29:29 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/04 16:15:00 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct		s_solution
 typedef struct		s_queue
 {
 	unsigned int	value;
+	int				check_only_annulable;
 	struct s_queue	*next;
 }					t_queue;
 
