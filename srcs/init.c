@@ -13,11 +13,17 @@
 #include <stdlib.h>
 #include "lem_in.h"
 
-void	init_infos(t_infos *infos)
+void	init_infos(t_infos *infos, t_btu *btu)
 {
+	btu->rounds = 0;
+	btu->index = 0;
+	btu->room = NULL;
 	infos->start = NULL;
+	infos->btu = btu;
 	infos->end = NULL;
 	infos->paths_nb = 0;
+	infos->paths_index = 0;
+	infos->total_room = 0;
 	infos->fourmis = 0;
 	infos->bfs = 0;
 	infos->minus_path = 0;

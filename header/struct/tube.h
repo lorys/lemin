@@ -15,6 +15,12 @@
 
 # include "struct/path.h"
 
+typedef	struct		s_btu {
+	int		rounds;
+	int		index;
+	struct s_tube	*room;
+}			t_btu;
+
 typedef	struct		s_tube {
 	char			*name;
 	int				x;
@@ -24,6 +30,7 @@ typedef	struct		s_tube {
 	int				steps;
 	int				already_moved;
 	int				hidden;
+	int				index;
 	int				passages;
 	int				path_length;
 	int				ants_passed;

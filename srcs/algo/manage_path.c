@@ -34,7 +34,8 @@ int	bury_path(t_tube *room, t_infos *infos, int nb)
 		ret = bury_path(room, infos, nb);
 		next->steps = tmp;
 	}
-	room->vu = 0;
+	if (!ret)
+		room->vu = 0;
 	return (ret);
 }
 
@@ -93,10 +94,9 @@ t_tube	*minus_path(t_infos *infos, int noants)
 	{
 		if (links->room == infos->end)
 			return (infos->end);
-		if (links->room->hidden && (!minus\
-		|| path_length(minus, infos) > path_length(links->room, infos))\
-		&& ((noants && !links->room->ants) || (!noants))\
-		&& links->room->hidden < infos->paths_nb)
+		if (links->room->index && (!minus\
+		|| minus->index > links->room->index)\
+		&& ((noants && !links->room->ants) || (!noants)) && links->room->index <= infos->btu->index)
 			minus = links->room;
 		links = links->next;
 	}

@@ -44,11 +44,7 @@ int	change_room(t_infos *infos, t_tube *from, t_tube *to, \
 		to->ants = from->ants;
 		from->ants = 0;
 		to->already_moved = 1;
-	}/*
-	if (from == infos->start)
-	{
-		printf("%d ant go in %d steps long path.\n", init_ants, path_length(to, infos));
-	}*/
+	}
 	show_ant(init_ants, to, infos, buffer);
 	return (1);
 }

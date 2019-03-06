@@ -36,11 +36,10 @@ t_tube			*next_step_path(t_tube *room, int noants,\
 int			ft_linkslen(t_tube *room);
 int			bury_path(t_tube *room, t_infos *infos, int nb);
 t_tube			*find_room(char *room_name, t_tube *room_list);
-void			init_infos(t_infos *infos);
+void			init_infos(t_infos *infos, t_btu *btu);
 int			make_line(t_paths *path_list, t_infos *infos,\
 				int ant);
 int			find_paths(t_infos *infos);
-t_tube			*get_minus(t_tube *room, t_infos *infos);
 void			fill_buffer(const char *str, char *buffer, int print,\
 				t_infos *infos);
 void			show_ant(int l, t_tube *room, t_infos *infos, char *buffer);

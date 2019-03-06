@@ -30,28 +30,6 @@ t_tube	*last_path(t_infos *infos)
 	return (minus);
 }
 
-t_tube	*get_minus(t_tube *room, t_infos *infos)
-{
-	t_paths	*links;
-	t_tube	*minus;
-	int	ret;
-
-	minus = NULL;
-	links = room->links;
-	ret = 0;
-	while (links)
-	{
-		if (links->room == infos->end)
-			return (infos->end);
-		links = links->next;
-	}
-	if (room == infos->start)
-		minus = minus_path(infos, 1);
-	else
-		minus = next_step_path(room, 1, infos);
-	return ((minus && !minus->ants) ? minus : NULL);
-}
-
 int	bfs(t_tube *room, t_tube *from, int nb, t_infos *infos)
 {
 	t_paths *links;

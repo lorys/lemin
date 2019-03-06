@@ -39,7 +39,7 @@ t_tube		*choose_ants(t_tube *room, t_infos *infos)
 	while (room)
 	{
 		if (room != infos->end && room->ants && !room->already_moved\
-		&& ((room == infos->start && (room->to = get_minus(room, infos)))\
+		&& ((room == infos->start && (room->to = minus_path(infos, 1)))\
 		|| (room != infos->start && (room->to = next_step_path(room, 1, infos)))))
 			return (room);
 		room = room->next;
@@ -90,17 +90,51 @@ void		move_ants(t_infos *infos, char *buffer)
 		move_ants(infos, buffer);
 }
 
+
+void		set_path_index(t_infos *infos)
+{
+	t_paths *links;
+	t_tube	*minus;
+
+	minus = NULL;
+	links = infos->start->links;
+	if (!infos->paths_index)
+		infos->room_total = 0;
+	while (links)
+	{
+		if (links->room->vu != 5 && links->room->hidden && (!minus\
+		|| path_length(minus, infos) > path_length(links->room, infos)))
+			minus = links->room;
+		links = links->next;
+	}
+	if (minus && minus->vu != 5)
+	{
+		minus->vu = 5;
+		minus->index = ++infos->paths_index;
+		printf("path n %d = %d steps\n", minus->index, path_length(minus, infos));
+		infos->room_total += path_length(minus, infos);
+		set_path_index(infos);
+		printf("ESTIMATED ROUNDS (if path n %d is the biggest) = %d\n", minus->index, path_length(minus, infos)+(infos->fourmis/minus->index));
+		if (path_length(minus, infos)+(infos->fourmis/minus->index) < infos->btu->rounds || !infos->btu->rounds)
+		{
+			infos->btu->index = minus->index;
+			infos->btu->room = minus;
+			infos->btu->rounds = path_length(minus, infos)+(infos->fourmis/minus->index);
+		}
+	}
+}
+
 int		main(int argc, char **argv)
 {
 	t_infos		infos;
+	t_btu		btu;
 	t_tube		*room_list;
-	t_paths		*tmp;
 	int		i;
 	char		*buffer;
 
 	i = 0;
 	buffer = NULL;
-	init_infos(&infos);
+	init_infos(&infos, &btu);
 	room_list = NULL;
 	bonus_manager(argc, argv, &infos);
 	read_stdin(&room_list, &infos);
@@ -119,23 +153,12 @@ int		main(int argc, char **argv)
 					path_length(last_path(&infos), &infos);
 				infos.paths_nb++;
 			}
-			tmp = infos.start->links;
-			while (tmp)
-			{
-				if (tmp->room->hidden)
-					printf("%s (%d path length) (%d hidden) (%d steps)\n"\
-				, tmp->room->name\
-				, path_length(tmp->room, &infos)
-				, tmp->room->hidden\
-				, tmp->room->steps);
-				tmp = tmp->next;
-			}
-			printf("%d steps\n", infos.minus_path);
+			set_path_index(&infos);
 			move_ants(&infos, buffer);
 			fill_buffer(NULL, buffer, 1, &infos);
 			printf("\n\t\t\033[41m%d ROUNDS\033[0m\n", infos.rounds);
 			printf("\n%d/%d\n", infos.end->ants, infos.fourmis);
-			
+			printf("\n\t%d rooms used\n", infos.room_total);
 			printf("%d links to end.\n", ft_linkslen(infos.end));
 		}
 	}

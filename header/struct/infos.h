@@ -18,10 +18,13 @@
 typedef	struct		s_infos {
 	struct s_tube	*end;
 	struct s_tube	*start;
+	struct s_btu	*btu;
 	int				paths_nb;
-	int				max_diff;
+	int				paths_index;
+	int				biggest_to_use;
 	int				nb_paths;
 	int				bfs;
+	int				total_room;
 	int				minus_path;
 	int				fourmis;
 	int				bonus;
