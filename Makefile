@@ -6,7 +6,7 @@
 #    By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/22 21:11:24 by pcarles           #+#    #+#              #
-#    Updated: 2019/02/25 05:12:39 by pcarles          ###   ########.fr        #
+#    Updated: 2019/03/04 19:09:15 by pcarles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ HDRDIR			:= header
 SRCDIR			:= srcs
 
 CC				:= gcc
+C_FLAGS			:= -Wall -Wextra -Werror -Ofast
 
 TARGETS			:= lem-in visualizer
 LIBS			:= libft
