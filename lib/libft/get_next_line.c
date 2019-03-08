@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 15:34:07 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/07 01:34:37 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/09 00:41:44 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int			get_next_line(const int fd, char **line)
 
 	if (fd < 0 || !line || BUFF_SIZE < 1 || fd > OPEN_MAX || (*line = ft_strnew(0)) == NULL)
 	{
-		if (!line && fd > 0 && fd < OPEN_MAX)
+		if (!line && fd >= 0 && fd < OPEN_MAX)
 			free(lst[fd]);
 		return (-1);
 	}
