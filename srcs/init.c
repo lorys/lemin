@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 07:07:06 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/21 17:47:13 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/09 18:06:47 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	init_infos(t_infos *infos)
 	infos->residual_matrix = NULL;
 	infos->parent_array = NULL;
 	infos->nb_ants = 0;
-	infos->colors = 0;
 	infos->selected_ant = 0;
 	infos->rounds = 0;
 }

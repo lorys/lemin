@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 18:52:24 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/20 18:01:45 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/09 18:06:35 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ typedef	struct		s_infos {
 	uint32_t			**residual_matrix;
 	int					*parent_array;
 	int					nb_ants;
-	int					colors;
-	int					selected_ant;
+	unsigned int		selected_ant;
 	int					rounds;
 }					t_infos;
 

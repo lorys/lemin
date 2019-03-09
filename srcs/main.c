@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2019/03/07 18:50:24 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/09 18:06:30 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 
 static void	print_usage(void)
 {
-	ft_putstr_fd("usage: lem-in [-c] [-r] [-s ant] [-a ant] [-f map_file]\n\n"
-	"    --colors, -c: colored output\n"
+	ft_putstr_fd("usage: lem-in [-r] [-s ant] [-a ant] [-f map_file]\n\n"
 	"    --rounds, -r: display number of rounds\n"
 	"    --select, -s: highlight only one ant in output\n"
 	"      --ants, -a: set number of ants directly in command line\n"
@@ -32,9 +31,7 @@ static void	bonus_manager(int argc, char **argv, t_infos *infos)
 	i = 0;
 	while (++i < argc)
 	{
-		if (!ft_strcmp(argv[i], "--colors") || !ft_strcmp(argv[i], "-c"))
-			infos->colors = 1;
-		else if (!ft_strcmp(argv[i], "--rounds") || !ft_strcmp(argv[i], "-r"))
+		if (!ft_strcmp(argv[i], "--rounds") || !ft_strcmp(argv[i], "-r"))
 			infos->rounds = 1;
 		else if ((!ft_strcmp(argv[i], "--select") || \
 			!ft_strcmp(argv[i], "-s")) && i + 1 < argc)
@@ -97,7 +94,7 @@ int			main(int argc, char **argv)
 	if ((solution = edmonds_karp(&infos)) == NULL)
 		display_error(&infos);
 	sort_solution(solution);
-	show_output(solution, infos.nb_ants, infos.rounds);
+	show_output(solution, infos.nb_ants, infos.rounds, &infos);
 	free_solution(&solution);
 	free_everything(&infos);
 	return (EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 16:01:01 by pcarles           #+#    #+#             */
-/*   Updated: 2019/03/09 00:58:07 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/09 18:03:37 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static t_path	*get_next_path(t_solution *solution)
 	return (solution->paths[last_path++]);
 }
 
-static int		push_ants(t_path *path, unsigned int new_ant)
+static int		push_ants(t_path *path, unsigned int new_ant, t_infos *infos)
 {
 	int				ret;
 	unsigned int	tmp;
@@ -59,10 +59,14 @@ static int		push_ants(t_path *path, unsigned int new_ant)
 		if (new_ant != 0)
 		{
 			tmp_c = ft_itoa(new_ant);
+			if (new_ant == infos->selected_ant)
+				fill_buffer("\e[30;41m", 8);
 			fill_buffer("L", 1);
 			fill_buffer(tmp_c, ft_strlen(tmp_c));
 			fill_buffer("-", 1);
 			fill_buffer(path->room->name, ft_strlen(path->room->name));
+			if (new_ant == infos->selected_ant)
+				fill_buffer("\e[0m", 4);
 			fill_buffer(" ", 1);
 			free(tmp_c);
 			ret++;
@@ -84,7 +88,7 @@ static int		print_newline(unsigned int *status, unsigned int *rounds)
 }
 
 void			show_output(t_solution *solution, size_t nb_ants, \
-				int display_rounds)
+				int display_rounds, t_infos *infos)
 {
 	unsigned int	rounds;
 	unsigned int	status;
@@ -97,7 +101,7 @@ void			show_output(t_solution *solution, size_t nb_ants, \
 	next_path = get_next_path(solution);
 	while (42)
 	{
-		status += push_ants(next_path, next_ant);
+		status += push_ants(next_path, next_ant, infos);
 		next_path = get_next_path(solution);
 		if (next_path == solution->paths[0] && print_newline(&status, &rounds))
 			break ;
@@ -110,5 +114,5 @@ void			show_output(t_solution *solution, size_t nb_ants, \
 	}
 	fill_buffer(NULL, 0);
 	if (display_rounds == 1)
-		ft_printf("%d rounds\n", rounds);
+		ft_printf("\n\e[30;41m%d rounds\e[0m\n", rounds);
 }
