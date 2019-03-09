@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 16:06:33 by pcarles           #+#    #+#             */
-/*   Updated: 2019/03/04 18:03:10 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/09 02:38:11 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,24 +77,31 @@ static void			fill_parent_array(int *parent_array, uint32_t **matrix, \
 	parent_array[infos->start->id] = -3;
 }
 
-static int			bfs2(t_infos *infos, unsigned int u, unsigned int v, \
-					t_queue **queue)
+static int			bfs1(unsigned int u, unsigned int v, \
+					t_algo *all, t_infos *infos)
 {
 	int				*parent;
 
 	parent = infos->parent_array;
-	if (parent[v] == -2 && read_matrix(infos->residual_matrix, u, v) == 0)
-		push(queue, v, 1);
-	else if (v != infos->end->id)
-		push(queue, v, 0);
-	else
+	if ((all->state == 1 && parent[v] == -2 \
+		&& read_matrix(infos->residual_matrix, u, v) == -1)
+		|| (all->state == 0 && ((parent[v] == -1 || parent[v] == -2) \
+		&& (read_matrix(infos->adjacency_matrix, u, v) - \
+		read_matrix(infos->residual_matrix, u, v)) > 0)))
 	{
+		if (parent[v] == -2 && read_matrix(infos->residual_matrix, u, v) == 0)
+			push(&all->queue, v, 1);
+		else if (v != infos->end->id)
+			push(&all->queue, v, 0);
+		else
+		{
+			parent[v] = u;
+			while (all->queue != NULL)
+				pop(&all->queue, NULL);
+			return (1);
+		}
 		parent[v] = u;
-		while (*queue != NULL)
-			pop(queue, NULL);
-		return (1);
 	}
-	parent[v] = u;
 	return (0);
 }
 
@@ -103,29 +110,21 @@ int					bfs(t_infos *infos, uint32_t **residual_matrix, int *parent)
 	unsigned int	u;
 	unsigned int	v;
 	t_path			*tmp;
-	t_queue			*queue;
-	int				state;
+	t_algo			all;
 
-	state = 0;
+	all.state = 0;
 	fill_parent_array(parent, residual_matrix, infos);
-	queue = NULL;
-	push(&queue, infos->start->id, 0);
-	while (queue != NULL)
+	all.queue = NULL;
+	push(&all.queue, infos->start->id, 0);
+	while (all.queue != NULL)
 	{
-		u = pop(&queue, &state);
+		u = pop(&all.queue, &all.state);
 		tmp = find_room_by_id(u, infos->room_list)->links;
 		while (tmp)
 		{
 			v = tmp->room->id;
-			if ((state == 1 && parent[v] == -2 \
-				&& read_matrix(infos->residual_matrix, u, v) == -1)
-				|| (state == 0 && ((parent[v] == -1 || parent[v] == -2) \
-				&& (read_matrix(infos->adjacency_matrix, u, v) - \
-				read_matrix(residual_matrix, u, v)) > 0)))
-			{
-				if (bfs2(infos, u, v, &queue) == 1)
-					return (1);
-			}
+			if (bfs1(u, v, &all, infos) == 1)
+				return (1);
 			tmp = tmp->next;
 		}
 	}
