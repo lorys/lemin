@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 16:01:01 by pcarles           #+#    #+#             */
-/*   Updated: 2019/03/09 00:35:59 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/09 00:58:07 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,18 @@ static int		push_ants(t_path *path, unsigned int new_ant)
 	return (ret);
 }
 
-void			show_output(t_solution *solution, size_t nb_ants, int display_rounds)
+static int		print_newline(unsigned int *status, unsigned int *rounds)
+{
+	fill_buffer("\n", 1);
+	if (*status == 0)
+		return (1);
+	(*rounds)++;
+	*status = 0;
+	return (0);
+}
+
+void			show_output(t_solution *solution, size_t nb_ants, \
+				int display_rounds)
 {
 	unsigned int	rounds;
 	unsigned int	status;
@@ -88,14 +99,8 @@ void			show_output(t_solution *solution, size_t nb_ants, int display_rounds)
 	{
 		status += push_ants(next_path, next_ant);
 		next_path = get_next_path(solution);
-		if (next_path == solution->paths[0])
-		{
-			fill_buffer("\n", 1);
-			if (status == 0)
-				break ;
-			rounds++;
-			status = 0;
-		}
+		if (next_path == solution->paths[0] && print_newline(&status, &rounds))
+			break ;
 		if (next_ant == 0)
 			continue ;
 		if (next_ant < nb_ants)

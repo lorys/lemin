@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:35:58 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/21 18:07:08 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/09 01:05:14 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ int					count_char(char *str, char c);
 
 int					read_file(t_infos *infos);
 void				fill_buffer(char *str);
+unsigned int		count_room(t_vertice *room_list);
 
 #endif

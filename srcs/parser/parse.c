@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 10:48:59 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/21 18:10:50 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/09 01:08:35 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "common.h"
 #include "parser.h"
 
-static int		check_number_of_ants(char *line, int *state, t_infos *infos)
+static int			check_number_of_ants(char *line, int *state, t_infos *infos)
 {
 	*state = STATE_ROOMS;
 	if (!ft_stris(line, &ft_isdigit))
@@ -33,7 +33,7 @@ static int		check_number_of_ants(char *line, int *state, t_infos *infos)
 	return (0);
 }
 
-static int		check_command_comment(char *line, int *state, int nline)
+static int			check_command_comment(char *line, int *state, int nline)
 {
 	if (!ft_strcmp(line, "##start"))
 		*state = STATE_START_ROOM;
@@ -47,8 +47,8 @@ static int		check_command_comment(char *line, int *state, int nline)
 	return (1);
 }
 
-static int		add_start_or_end_room(char *line, t_vertice **to_change, \
-				t_vertice **room_listp, int nline)
+static int			add_start_or_end_room(char *line, t_vertice **to_change, \
+					t_vertice **room_listp, int nline)
 {
 	t_vertice		*tmp;
 
@@ -61,18 +61,16 @@ static int		add_start_or_end_room(char *line, t_vertice **to_change, \
 	return (0);
 }
 
-static unsigned int	count_room(t_vertice *room_list)
+static void			switch_to_tubes(t_infos *infos, int *state, \
+					t_vertice **room_listp)
 {
-	unsigned int	count;
-
-	count = 0;
-	while (room_list && ++count)
-		room_list = room_list->next;
-	return (count);
+	infos->room_total = count_room(*room_listp);
+	create_matrix(&infos->adjacency_matrix, infos->room_total);
+	*state = STATE_TUBES;
 }
 
-int				line_is_valid(t_vertice **room_listp, t_infos *infos, \
-				char *line, int nline)
+int					line_is_valid(t_vertice **room_listp, t_infos *infos, \
+					char *line, int nline)
 {
 	static int	state = STATE_START;
 	int			ret;
@@ -83,7 +81,8 @@ int				line_is_valid(t_vertice **room_listp, t_infos *infos, \
 	else if (state == STATE_START_ROOM || state == STATE_END_ROOM)
 	{
 		if (state == STATE_START_ROOM)
-			ret = add_start_or_end_room(line, &(infos->start), room_listp, nline);
+			ret = add_start_or_end_room(line, &(infos->start), \
+					room_listp, nline);
 		else if (state == STATE_END_ROOM)
 			ret = add_start_or_end_room(line, &(infos->end), room_listp, nline);
 		state = STATE_ROOMS;
@@ -91,11 +90,7 @@ int				line_is_valid(t_vertice **room_listp, t_infos *infos, \
 	else if (state == STATE_START)
 		ret = check_number_of_ants(line, &state, infos);
 	else if (state == STATE_ROOMS && is_tube_valid(line, *room_listp, 0))
-	{
-		infos->room_total = count_room(*room_listp);
-		create_matrix(&infos->adjacency_matrix, infos->room_total);
-		state = STATE_TUBES;
-	}
+		switch_to_tubes(infos, &state, room_listp);
 	else if (state == STATE_ROOMS)
 		ret = save_room_if_valid(line, room_listp, infos, nline);
 	if (state == STATE_TUBES && !ret)

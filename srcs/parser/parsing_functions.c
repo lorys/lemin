@@ -6,11 +6,10 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 07:49:24 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/20 18:06:09 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/09 01:01:38 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <limits.h>
 #include "libft.h"
 #include "common.h"
 #include "parser.h"
@@ -33,10 +32,10 @@ int			is_tube_valid(char *line, t_vertice *room_list, int nline)
 	return (ret);
 }
 
-t_vertice		*is_room_valid(char *line, t_vertice *room_list, int nline)
+t_vertice	*is_room_valid(char *line, t_vertice *room_list, int nline)
 {
-	int		i;
-	char	**tmp;
+	int			i;
+	char		**tmp;
 	t_vertice	*new;
 
 	i = 0;
@@ -72,7 +71,7 @@ int			save_tube_if_valid(char *line, t_vertice *rooms, t_infos *infos, \
 int			save_room_if_valid(char *line, t_vertice **room_listp, \
 			t_infos *infos, int nline)
 {
-	t_vertice 	*tmp;
+	t_vertice	*tmp;
 
 	if ((tmp = is_room_valid(line, *room_listp, nline)))
 	{
@@ -81,37 +80,4 @@ int			save_room_if_valid(char *line, t_vertice **room_listp, \
 		return (1);
 	}
 	return (0);
-}
-
-int			check_overflow(char *str)
-{
-	long	tmp;
-
-	tmp = ft_atoi_long(str);
-	if (tmp < INT_MIN || tmp > INT_MAX || ft_strlen(str) > 10)
-		return (0);
-	return (1);
-}
-
-long		ft_atoi_long(char const *s)
-{
-	unsigned int	flag;
-	long			res;
-
-	flag = 0;
-	res = 0;
-	while ((*s >= 9 && *s <= 13) || *s == ' ')
-		s++;
-	if (*s == '-' || *s == '+')
-	{
-		if (*s == '-')
-			flag = 1;
-		s++;
-	}
-	while (ft_isdigit(*s))
-	{
-		res = (res * 10) + (*s - '0');
-		s++;
-	}
-	return (flag ? -res : res);
 }
