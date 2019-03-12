@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 16:01:01 by pcarles           #+#    #+#             */
-/*   Updated: 2019/03/09 18:03:37 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/12 10:42:09 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,27 @@ static void		fill_buffer(char *str, size_t str_len)
 	index += str_len;
 }
 
-static t_path	*get_next_path(t_solution *solution)
+static void		show_ant(unsigned int new_ant, t_path *path, t_infos *infos)
 {
-	static size_t	last_path = 0;
+	char		*tmp_c;
 
-	if (last_path >= solution->nb_paths)
-		last_path = 0;
-	return (solution->paths[last_path++]);
+	tmp_c = ft_itoa(new_ant);
+	if (new_ant == infos->selected_ant)
+		fill_buffer("\e[30;41m", 8);
+	fill_buffer("L", 1);
+	fill_buffer(tmp_c, ft_strlen(tmp_c));
+	fill_buffer("-", 1);
+	fill_buffer(path->room->name, ft_strlen(path->room->name));
+	if (new_ant == infos->selected_ant)
+		fill_buffer("\e[0m", 4);
+	fill_buffer(" ", 1);
+	free(tmp_c);
 }
 
 static int		push_ants(t_path *path, unsigned int new_ant, t_infos *infos)
 {
 	int				ret;
 	unsigned int	tmp;
-	char			*tmp_c;
 
 	ret = 0;
 	while (path)
@@ -58,17 +65,7 @@ static int		push_ants(t_path *path, unsigned int new_ant, t_infos *infos)
 		path->ant = new_ant;
 		if (new_ant != 0)
 		{
-			tmp_c = ft_itoa(new_ant);
-			if (new_ant == infos->selected_ant)
-				fill_buffer("\e[30;41m", 8);
-			fill_buffer("L", 1);
-			fill_buffer(tmp_c, ft_strlen(tmp_c));
-			fill_buffer("-", 1);
-			fill_buffer(path->room->name, ft_strlen(path->room->name));
-			if (new_ant == infos->selected_ant)
-				fill_buffer("\e[0m", 4);
-			fill_buffer(" ", 1);
-			free(tmp_c);
+			show_ant(new_ant, path, infos);
 			ret++;
 		}
 		new_ant = tmp;

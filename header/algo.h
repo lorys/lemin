@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 16:07:00 by pcarles           #+#    #+#             */
-/*   Updated: 2019/03/09 17:59:46 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/12 10:42:53 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ t_solution			*get_paths(uint32_t **matrix, size_t path_counter, \
 					t_infos *infos);
 void				show_output(t_solution *solution, size_t nb_ants, \
 					int display_rounds, t_infos *infos);
+t_path				*get_next_path(t_solution *solution);
 
 #endif

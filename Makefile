@@ -6,7 +6,7 @@
 #    By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/22 21:11:24 by pcarles           #+#    #+#              #
-#    Updated: 2019/03/04 19:09:15 by pcarles          ###   ########.fr        #
+#    Updated: 2019/03/12 10:43:27 by pcarles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ lem-in_SRC		:=	main.c \
 					algo/find_paths.c \
 					algo/edmonds_karp.c \
 					algo/show_output.c \
+					algo/show_output2.c \
 					algo/bfs.c
 
 visualizer_SRC :=	free.c \
