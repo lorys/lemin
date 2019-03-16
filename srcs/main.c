@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2019/03/16 18:08:34 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/16 18:40:18 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	bonus_manager(int argc, char **argv, t_infos *infos)
 	}
 }
 
-static void	sort_solution(t_solution *solution)
+void		sort_solution(t_solution *solution)
 {
 	size_t		i;
 	size_t		j;
@@ -93,7 +93,6 @@ int			main(int argc, char **argv)
 	init_algo(&infos);
 	if ((solution = edmonds_karp(&infos)) == NULL)
 		display_error(&infos);
-	sort_solution(solution);
 	show_output(solution, infos.nb_ants, infos.rounds, &infos);
 	free_solution(&solution);
 	free_everything(&infos);

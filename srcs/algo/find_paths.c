@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 12:51:27 by pcarles           #+#    #+#             */
-/*   Updated: 2019/03/09 03:52:43 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/16 20:16:00 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,17 +110,16 @@ t_solution			*get_paths(uint32_t **matrix, \
 		return (NULL);
 	x = 0;
 	path_counter = 0;
-	res->total_size = 0;
 	while (x < infos->room_total)
 	{
 		if (read_matrix(matrix, start_id, x) == 1)
 		{
 			res->path_size[path_counter] = get_path(matrix, x, infos, \
 				&res->paths[path_counter]);
-			res->total_size += res->path_size[path_counter];
 			path_counter++;
 		}
 		x++;
 	}
+	sort_solution(res);
 	return (res);
 }
