@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   toend.c                                            :+:      :+:    :+:   */
+/*   show_output2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/07 11:04:09 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/30 08:11:22 by llopez           ###   ########.fr       */
+/*   Created: 2019/03/12 10:41:46 by pcarles           #+#    #+#             */
+/*   Updated: 2019/03/12 10:43:05 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "struct/path.h"
+#include "algo.h"
 
-t_tube	*toend(t_tube *tube)
+t_path		*get_next_path(t_solution *solution)
 {
-	while (tube && tube->next)
-		tube = tube->next;
-	return (tube);
+	static size_t	last_path = 0;
+
+	if (last_path >= solution->nb_paths)
+		last_path = 0;
+	return (solution->paths[last_path++]);
 }

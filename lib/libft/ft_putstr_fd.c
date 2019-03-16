@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_char_tab.c                                    :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/12 03:44:42 by llopez            #+#    #+#             */
-/*   Updated: 2018/11/12 06:19:31 by llopez           ###   ########.fr       */
+/*   Created: 2017/11/14 01:50:14 by llopez            #+#    #+#             */
+/*   Updated: 2019/02/06 04:06:19 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
 
-void	free_char_tab(char **str)
+void	ft_putstr_fd(char const *s, int fd)
 {
-	int	a;
-
-	a = 0;
-	while (str[a])
-		free(str[a++]);
-	free(str);
+	write(fd, s, ft_strlen(s));
 }

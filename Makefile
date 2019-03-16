@@ -5,123 +5,54 @@
 #                                                     +:+ +:+         +:+      #
 #    By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/09/24 19:15:43 by llopez            #+#    #+#              #
-#    Updated: 2019/02/04 00:01:17 by pcarles          ###   ########.fr        #
+#    Created: 2019/02/22 21:11:24 by pcarles           #+#    #+#              #
+#    Updated: 2019/03/16 18:06:56 by pcarles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= lem-in
-NAME_1		= visualizer
+HDRDIR			:= header
+SRCDIR			:= srcs
 
-CC			= gcc
-C_FLAGS		= -Wall -Wextra -Werror -Ofast
-LD_FLAGS	=
+CC				:= gcc
+C_FLAGS			:= -Wall -Wextra -Werror -Ofast
 
-SRCDIR		= srcs/
-INCLDIR		= header/
-LIBDIR		= libft/
-OBJDIR		= obj/
+TARGETS			:= lem-in visualizer
+LIBS			:= libft
 
-H_FILES		= lem_in.h \
-			libft.h \
-			ft_printf.h \
-			get_next_line.h
+lem-in_LIB		:= ft
+visualizer_LIB	:= ft ncurses
 
-H_FILES_1	= lem_in.h \
-			parser.h \
-			libft.h \
-			ft_printf.h \
-			vizualizer.h
+lem-in_SRC		:=	main.c \
+					free.c \
+					init.c \
+					utils.c \
+					matrix.c \
+					parser/errors.c \
+					parser/links.c \
+					parser/parsing_functions.c \
+					parser/read_file.c \
+					parser/parse.c \
+					parser/save_room.c \
+					parser/utils_parser.c \
+					algo/find_paths.c \
+					algo/edmonds_karp.c \
+					algo/show_output.c \
+					algo/show_output2.c \
+					algo/bfs.c
 
-C_FILES		= main.c \
-			find_path.c \
-			print.c \
-			find_room.c \
-			realloc_links.c \
-			save_room.c \
-			parser/read_stdin.c \
-			paser/errors.c \
-			parser/links.c \
-			toend.c \
-			ft_tubelen.c \
-			move_ants.c \
-			free_char_tab.c \
-			set_research.c \
-			display_error.c \
-			free_everything.c \
-			free_list.c \
-			set_tube.c \
-			utils.c \
-			parser/parsing_functions.c
+visualizer_SRC :=	free.c \
+					init.c \
+					utils.c \
+					matrix.c \
+					parser/errors.c \
+					parser/links.c \
+					parser/parsing_functions.c \
+					parser/read_file.c \
+					parser/parse.c \
+					parser/save_room.c \
+					parser/utils_parser.c \
+					visualizer/main_vizu.c \
+					visualizer/init_vizu.c \
+					visualizer/bresenham.c
 
-C_FILES_1	= vizualizer/main_vizu.c \
-			vizualizer/parser.c \
-			visualizer/init_vizu.c \
-			parser/read_stdin.c \
-			parser/errors.c \
-			parser/links.c \
-			set_tube.c \
-			save_room.c \
-			utils.c \
-			free_everything.c \
-			free_char_tab.c \
-			toend.c \
-			find_room.c \
-			free_list.c \
-			realloc_links.c \
-			vizualizer/bresenham.c \
-			parser/parsing_functions.c
-
-LIBFT		= $(LIBDIR)libft.a
-
-SRC			= $(addprefix $(SRCDIR), $(C_FILES))
-SRC_1		= $(addprefix $(SRCDIR), $(C_FILES_1))
-OBJ			= $(patsubst %.c, %.o, $(addprefix $(OBJDIR), $(notdir $(SRC))))
-OBJ_1		= $(patsubst %.c, %.o, $(addprefix $(OBJDIR), $(notdir $(SRC_1))))
-HDRS		= $(addprefix $(INCLDIR), $(H_FILES))
-HDRS_1		= $(addprefix $(INCLDIR), $(H_FILES_1))
-
-VPATH		= $(shell find $(SRCDIR) -type d)
-
-export CC C_FLAGS LD_FLAGS
-
-.PHONY: all clean fclean re norm
-
-all: $(NAME) $(NAME_1)
-
-$(NAME): $(OBJ) $(LIBFT)
-	@$(CC) -o $@ $(OBJ) -L$(LIBDIR) -lft $(LD_FLAGS)
-	@printf "\033[32m BINARY FILE $@ CREATED \033[0m\n"
-
-$(NAME_1): $(OBJ_1) $(LIBFT)
-	@$(CC) -o $@ $(OBJ_1) -L$(LIBDIR) -lft -lncurses $(LD_FLAGS)
-	@printf "\n\033[32m BINARY FILE $@ CREATED \033[0m\n"
-
-$(LIBFT):
-	@$(MAKE) -C $(LIBDIR)
-
-$(OBJDIR)%.o: %.c $(HDRS)
-	@mkdir -p $(OBJDIR)
-	@$(CC) -o $@ -c $< -I $(INCLDIR) $(C_FLAGS)
-	@printf "\e[1A\r\033[34m $@                  \033[0m\n"
-
-clean:
-	@$(MAKE) -C $(LIBDIR) $@
-	@printf "\033[35m $@ LIBFT \033[0m\n"
-	@rm -rf $(OBJDIR)
-	@printf "\033[35m DELETE $(OBJDIR) \033[0m\n"
-
-fclean:
-	@$(MAKE) -C $(LIBDIR) $@
-	@printf "\033[35m $@ LIBFT \033[0m\n"
-	@rm -rf $(OBJDIR)
-	@printf "\033[35m DELETE $(OBJDIR) \033[0m\n"
-	@rm -f $(NAME)
-	@printf "\033[35m DELETE $(NAME) \033[0m\n"
-	@rm -f $(NAME_1)
-	@printf "\033[35m DELETE $(NAME_1) \033[0m\n"
-
-re: fclean all
-
-norm:
-	@norminette $(SRCDIR) $(INCLDIR)
+include generic_c.mk

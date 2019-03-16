@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/12 18:15:23 by llopez            #+#    #+#              #
-#    Updated: 2018/11/29 05:28:20 by llopez           ###   ########.fr        #
+#    Updated: 2019/02/22 21:28:49 by pcarles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libft.a
+NAME = $(TARGET_PATH)/libft.a
 
 SOURCES = ft_atoi.c \
 		  ft_bzero.c \
@@ -124,6 +124,7 @@ OBJDIR = obj/
 all: $(NAME)
 
 $(NAME): $(OBJ)
+	@mkdir -p $(TARGET_PATH)
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
 

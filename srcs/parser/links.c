@@ -5,29 +5,29 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/03 23:55:07 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/03 23:55:25 by pcarles          ###   ########.fr       */
+/*   Created: 2019/01/05 18:27:40 by pcarles           #+#    #+#             */
+/*   Updated: 2019/03/16 18:06:58 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
+#include "common.h"
 #include "parser.h"
 
-static t_paths	*create_link(t_tube *room)
+static t_path	*create_link(t_vertice *room)
 {
-	t_paths		*new;
+	t_path		*new;
 
-	if (!(new = (t_paths *)ft_memalloc(sizeof(*new))) || !room)
+	if (!(new = (t_path *)ft_memalloc(sizeof(*new))) || !room)
 		return (NULL);
-	new->next = NULL;
-	new->prev = NULL;
 	new->room = room;
+	new->next = NULL;
 	return (new);
 }
 
-static void		append_links(t_paths **links, t_paths *to_add)
+static void		append_links(t_path **links, t_path *to_add)
 {
-	t_paths	*tmp;
+	t_path	*tmp;
 
 	if (!links || !to_add)
 		return ;
@@ -40,22 +40,25 @@ static void		append_links(t_paths **links, t_paths *to_add)
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = to_add;
-	to_add->prev = tmp;
 }
 
-void			make_tube(char *line, t_tube *room_list)
+void			make_tube(char *line, t_vertice *room_list, t_infos *infos)
 {
-	char	**split_tmp;
-	t_tube	*room_first;
-	t_tube	*room_second;
+	char		*dash_position;
+	t_vertice	*fst_room;
+	t_vertice	*scd_room;
 
-	split_tmp = ft_strsplit(line, '-');
-	room_first = find_room(split_tmp[0], room_list);
-	room_second = find_room(split_tmp[1], room_list);
-	if (room_first && room_second)
+	if ((dash_position = ft_strchr(line, '-')) == NULL)
+		return ;
+	*dash_position = '\0';
+	fst_room = find_room(line, room_list);
+	*dash_position++ = '-';
+	scd_room = find_room(dash_position, room_list);
+	if (fst_room && scd_room)
 	{
-		append_links(&room_first->links, create_link(room_second));
-		append_links(&room_second->links, create_link(room_first));
+		write_matrix(infos->adjacency_matrix, 1, fst_room->id, scd_room->id);
+		write_matrix(infos->adjacency_matrix, 1, scd_room->id, fst_room->id);
+		append_links(&fst_room->links, create_link(scd_room));
+		append_links(&scd_room->links, create_link(fst_room));
 	}
-	free_char_tab(split_tmp);
 }

@@ -6,7 +6,11 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 15:34:07 by pcarles           #+#    #+#             */
+<<<<<<< HEAD:libft/get_next_line.c
 /*   Updated: 2019/02/03 23:51:18 by pcarles          ###   ########.fr       */
+=======
+/*   Updated: 2019/03/09 01:14:27 by pcarles          ###   ########.fr       */
+>>>>>>> pcarles_algo:lib/libft/get_next_line.c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +63,22 @@ static int	put_rest(char **rest, char **line)
 	return (0);
 }
 
+static int	free_static(int fd, char **line, char **lst)
+{
+	if (!line && fd >= 0 && fd < OPEN_MAX)
+		free(lst[fd]);
+	return (-1);
+}
+
 int			get_next_line(const int fd, char **line)
 {
 	char		buff[BUFF_SIZE + 1];
 	static char	*lst[OPEN_MAX] = {NULL};
 	int			count;
 
-	if (fd < 0 || !line || BUFF_SIZE < 1 || fd > OPEN_MAX)
-		return (-1);
-	*line = ft_strnew(0);
+	if (fd < 0 || !line || BUFF_SIZE < 1 || fd > OPEN_MAX \
+		|| (*line = ft_strnew(0)) == NULL)
+		return (free_static(fd, line, lst));
 	if (put_rest(&lst[fd], line))
 		return (1);
 	while ((count = read(fd, buff, BUFF_SIZE)))

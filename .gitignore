@@ -2,11 +2,14 @@
 *.a
 *.dSYM
 *.map
+*.d
+*.Td
 lem_in
 lem-in
 vizualizer
 visualizer
 generator
 !srcs/vizualizer
+!srcs/visualizer
 .vscode
 .DS_Store

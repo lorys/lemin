@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_room.c                                        :+:      :+:    :+:   */
+/*   infos.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/06 22:22:35 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/04 00:02:37 by pcarles          ###   ########.fr       */
+/*   Created: 2019/01/05 18:52:24 by pcarles           #+#    #+#             */
+/*   Updated: 2019/03/09 18:06:35 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#ifndef INFOS_H
+# define INFOS_H
 
-t_tube	*find_room(char *room_name, t_tube *room_list)
-{
-	t_tube	*tmp;
+# include <stdint.h>
 
-	if (!room_name || !room_list)
-		return (NULL);
-	tmp = room_list->next;
-	while (room_list)
-	{
-		if (!ft_strcmp(room_list->name, room_name))
-			return (room_list);
-		room_list = room_list->prev;
-	}
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->name, room_name))
-			return (tmp);
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
+typedef	struct		s_infos {
+	char				*file_path;
+	struct s_vertice	*start;
+	struct s_vertice	*end;
+	struct s_vertice	*room_list;
+	unsigned int		room_total;
+	uint32_t			**adjacency_matrix;
+	uint32_t			**residual_matrix;
+	int					*parent_array;
+	int					nb_ants;
+	unsigned int		selected_ant;
+	int					rounds;
+}					t_infos;
+
+#endif

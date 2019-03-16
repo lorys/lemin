@@ -5,15 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/03 23:45:37 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/03 23:53:27 by pcarles          ###   ########.fr       */
+/*   Created: 2019/02/21 18:24:35 by pcarles           #+#    #+#             */
+/*   Updated: 2019/02/21 19:16:13 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ncurses.h>
-#include "vizualizer.h"
+#include "visualizer.h"
 
-void			init_anthill(t_anthill *anthill, t_tube *rooms)
+void			init_anthill(t_anthill *anthill, t_vertice *rooms)
 {
 	anthill->min_x = rooms->x;
 	anthill->max_y = rooms->y;

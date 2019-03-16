@@ -6,33 +6,45 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:40:31 by pcarles           #+#    #+#             */
-/*   Updated: 2019/02/04 00:40:03 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/02/21 19:16:56 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <ncurses.h>
-#include "lem_in.h"
-#include "vizualizer.h"
+#include "libft.h"
+#include "common.h"
+#include "parser.h"
+#include "visualizer.h"
 
-static void		set_real_position(t_tube *room_list, t_anthill *anthill, \
+static void		set_real_position(t_vertice *room_list, t_anthill *anthill, \
 				int *height, int *width)
 {
 	*height -= *height * 0.1;
 	*width -= *width * 0.1;
 	while (room_list)
 	{
-		room_list->x = ((*width * room_list->x) + *width * 0.2) / \
-						(anthill->max_x);
-		room_list->y = ((*height * room_list->y) + *height * 0.2) / \
-						(anthill->max_y);
+		room_list->x = ((*width * room_list->x) + *width * 0.2) \
+						/ (anthill->max_x);
+		room_list->y = ((*height * room_list->y) + *height * 0.2) \
+						/ (anthill->max_y);
 		room_list = room_list->next;
 	}
 }
 
-static void		display_map(t_tube *room, t_infos *infos)
+static void		display_room_name(t_vertice *room, int color)
 {
-	t_paths		*link;
+	attron(A_BOLD);
+	attron(COLOR_PAIR(color));
+	mvprintw(room->y, room->x - ((ft_strlen(room->name) + 2) / 2), \
+		"[%.5s]", room->name);
+	attroff(COLOR_PAIR(color));
+	attroff(A_BOLD);
+}
+
+static void		display_map(t_vertice *room, t_infos *infos)
+{
+	t_path		*link;
 
 	if (room)
 	{
@@ -43,22 +55,12 @@ static void		display_map(t_tube *room, t_infos *infos)
 			link = link->next;
 		}
 		display_map(room->next, infos);
-		attron(A_BOLD);
-		if (room == infos->end || room == infos->start)
-			attron(COLOR_PAIR(21));
-		else
-			attron(COLOR_PAIR(20));
-		mvprintw(room->y, room->x - (ft_strlen(room->name) + 2) / 2, \
-		"[%.5s]", room->name);
-		if (room == infos->end || room == infos->start)
-			attroff(COLOR_PAIR(21));
-		else
-			attroff(COLOR_PAIR(20));
-		attroff(A_BOLD);
+		display_room_name(room, \
+			room == infos->start || room == infos->end ? 21 : 20);
 	}
 }
 
-static void		launch(t_tube *room_list, t_infos *infos)
+static void		launch(t_vertice *room_list, t_infos *infos)
 {
 	int			screen_height;
 	int			screen_width;
@@ -73,19 +75,18 @@ static void		launch(t_tube *room_list, t_infos *infos)
 int				main(void)
 {
 	t_infos		infos;
-	t_tube		*room_list;
 
-	room_list = NULL;
-	set_infos(&infos);
-	parse(&room_list, &infos);
-	if (!room_list)
+	init_infos(&infos);
+	read_file(&infos);
+	if (!infos.room_list)
 		return (EXIT_FAILURE);
 	initscr();
-	init_colors();
-	launch(room_list, &infos);
+	noecho();
 	curs_set(0);
+	init_colors();
+	launch(infos.room_list, &infos);
+	free_everything(&infos);
 	refresh();
-	free_everything(room_list, NULL);
 	sleep(1000);
 	endwin();
 	return (EXIT_SUCCESS);

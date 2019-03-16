@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tubelen.c                                       :+:      :+:    :+:   */
+/*   vertice.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/08 11:28:05 by llopez            #+#    #+#             */
-/*   Updated: 2019/02/03 22:51:06 by llopez           ###   ########.fr       */
+/*   Created: 2019/01/05 18:48:49 by pcarles           #+#    #+#             */
+/*   Updated: 2019/02/21 18:20:29 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#ifndef VERTICE_H
+# define VERTICE_H
 
-int		ft_tubelen(t_tube *len)
-{
-	int		i;
-	t_paths	*tmp;
+typedef	struct			s_vertice {
+	char				*name;
+	unsigned int		id;
+	int					x;
+	int					y;
+	struct s_path		*links;
+	struct s_vertice	*next;
+}						t_vertice;
 
-	tmp = len->links;
-	i = 0;
-	while (tmp)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	return (i);
-}
+#endif
