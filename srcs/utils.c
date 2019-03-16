@@ -6,11 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 15:17:38 by llopez            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2019/02/03 23:54:15 by pcarles          ###   ########.fr       */
-=======
-/*   Updated: 2019/02/20 18:04:37 by pcarles          ###   ########.fr       */
->>>>>>> pcarles_algo
+/*   Updated: 2019/03/16 18:08:55 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +30,6 @@ int			ft_strisnumber(char *str)
 		str++;
 	return (ft_stris(str, &ft_isdigit));
 }
-<<<<<<< HEAD
-=======
 
 void		display_error(t_infos *infos)
 {
@@ -67,4 +61,3 @@ t_vertice	*find_room_by_id(unsigned int id, t_vertice *room_list)
 	}
 	return (NULL);
 }
->>>>>>> pcarles_algo

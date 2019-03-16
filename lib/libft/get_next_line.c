@@ -6,11 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 15:34:07 by pcarles           #+#    #+#             */
-<<<<<<< HEAD:libft/get_next_line.c
-/*   Updated: 2019/02/03 23:51:18 by pcarles          ###   ########.fr       */
-=======
-/*   Updated: 2019/03/09 01:14:27 by pcarles          ###   ########.fr       */
->>>>>>> pcarles_algo:lib/libft/get_next_line.c
+/*   Updated: 2019/03/16 18:08:12 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

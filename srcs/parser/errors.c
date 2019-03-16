@@ -6,10 +6,11 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 05:36:22 by pcarles           #+#    #+#             */
-/*   Updated: 2019/03/16 18:06:57 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/16 18:12:30 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <limits.h>
 #include "libft.h"
 #include "parser.h"
 
@@ -45,14 +46,4 @@ void		error_parsing(char *str, int nline)
 		ft_putchar_fd('\n', 2);
 		free(nline_str);
 	}
-}
-
-int			check_overflow(char *str)
-{
-	long	tmp;
-
-	tmp = ft_atoi_long(str);
-	if (tmp < INT_MIN || tmp > INT_MAX || ft_strlen(str) > 10)
-		return (0);
-	return (1);
 }

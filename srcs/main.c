@@ -6,11 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2019/02/04 18:25:44 by pcarles          ###   ########.fr       */
-=======
-/*   Updated: 2019/03/09 18:06:30 by pcarles          ###   ########.fr       */
->>>>>>> pcarles_algo
+/*   Updated: 2019/03/16 18:08:34 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +17,6 @@
 
 static void	print_usage(void)
 {
-<<<<<<< HEAD
-=======
 	ft_putstr_fd("usage: lem-in [-r] [-s ant] [-a ant] [-f map_file]\n\n"
 	"    --rounds, -r: display number of rounds\n"
 	"    --select, -s: highlight only one ant in output\n"
@@ -32,32 +26,11 @@ static void	print_usage(void)
 
 static void	bonus_manager(int argc, char **argv, t_infos *infos)
 {
->>>>>>> pcarles_algo
 	int	i;
 
 	i = 0;
 	while (++i < argc)
 	{
-<<<<<<< HEAD
-		if (!ft_strcmp(argv[i], "--colors") || !ft_strcmp(argv[i], "-c"))
-			infos->bonus = 1;
-		else if (!ft_strcmp(argv[i], "--rounds") || !ft_strcmp(argv[i], "-r"))
-			infos->round_bonus = 1;
-		else if ((!ft_strcmp(argv[i], "--select") || \
-			!ft_strcmp(argv[i], "-s")) && i + 1 < argc)
-			infos->select = ft_atoi(argv[++i]);
-		else if ((!ft_strcmp(argv[i], "--ants") || !ft_strcmp(argv[i], "-a")) \
-			&& i + 1 < argc)
-			infos->bonusants = ft_atoi(argv[++i]);
-		else
-		{
-			ft_putstr_fd("usage: lem-in [-c] [-r] [-s ant] [-a ant]\n\n    \
---colors, -c: colored output\n    --rounds, -r: display number of rounds\n    \
---select, -s: highlight only one ant in output\n      \
---ants, -a: set number of ants directly in command line\n", 2);
-			exit(EXIT_FAILURE);
-		}
-=======
 		if (!ft_strcmp(argv[i], "--rounds") || !ft_strcmp(argv[i], "-r"))
 			infos->rounds = 1;
 		else if ((!ft_strcmp(argv[i], "--select") || \
@@ -99,26 +72,11 @@ static void	sort_solution(t_solution *solution)
 		solution->path_size[j] = x;
 		solution->paths[j] = path;
 		i++;
->>>>>>> pcarles_algo
 	}
 }
 
 int			main(int argc, char **argv)
 {
-<<<<<<< HEAD
-	t_tube		*room_list;
-	t_infos		infos;
-
-	room_list = NULL;
-	set_infos(&infos);
-	bonus_manager(argc, argv, &infos);
-	read_stdin(&room_list, &infos);
-	if (!room_list || !infos.start || !infos.end || infos.fourmis <= 0)
-		display_error(room_list, NULL);
-	else
-		set_research(&infos, room_list);
-	free_everything(room_list, NULL);
-=======
 	t_infos		infos;
 	t_solution	*solution;
 
@@ -139,6 +97,5 @@ int			main(int argc, char **argv)
 	show_output(solution, infos.nb_ants, infos.rounds, &infos);
 	free_solution(&solution);
 	free_everything(&infos);
->>>>>>> pcarles_algo
 	return (EXIT_SUCCESS);
 }
