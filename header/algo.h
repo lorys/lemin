@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 16:07:00 by pcarles           #+#    #+#             */
-/*   Updated: 2019/03/16 19:29:06 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/17 16:08:53 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct		s_solution
 {
 	struct s_path	**paths;
 	size_t			*path_size;
+	size_t			*nb_ants;
 	size_t			capacity;
 	size_t			nb_paths;
 }					t_solution;
@@ -49,5 +50,7 @@ void				show_output(t_solution *solution, size_t nb_ants, \
 					int display_rounds, t_infos *infos);
 t_path				*get_next_path(t_solution *solution);
 void				sort_solution(t_solution *solution);
+
+void				calculate_ants(t_solution *solution, size_t nb_ants);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:11:46 by llopez            #+#    #+#             */
-/*   Updated: 2019/03/16 18:40:18 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/17 16:09:32 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int			main(int argc, char **argv)
 	init_algo(&infos);
 	if ((solution = edmonds_karp(&infos)) == NULL)
 		display_error(&infos);
+	calculate_ants(solution, infos.nb_ants);
 	show_output(solution, infos.nb_ants, infos.rounds, &infos);
 	free_solution(&solution);
 	free_everything(&infos);

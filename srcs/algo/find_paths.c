@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 12:51:27 by pcarles           #+#    #+#             */
-/*   Updated: 2019/03/16 20:16:00 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/17 16:01:26 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,14 @@ static t_solution	*alloc_solution(size_t path_counter)
 	if ((res->path_size = (size_t*)malloc(sizeof(size_t) * path_counter)) \
 		== NULL)
 	{
+		free(res->paths);
+		free(res);
+		return (NULL);
+	}
+	if ((res->nb_ants = (size_t*)malloc(sizeof(size_t)* path_counter)) \
+		== NULL)
+	{
+		free(res->path_size);
 		free(res->paths);
 		free(res);
 		return (NULL);
