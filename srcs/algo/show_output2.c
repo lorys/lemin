@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 10:41:46 by pcarles           #+#    #+#             */
-/*   Updated: 2019/03/17 17:43:19 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/17 18:05:53 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ unsigned int	get_next_ant(t_solution *solution, t_path *path)
 	i = 0;
 	while ((tmp = solution->paths[i]) != path)
 		i++;
-	if (solution->path_size[i] >= solution->nb_ants[i])
+	if (solution->path_size[i] >= solution->nb_ants[i] + 1)
 		return (0);
 	return ((unsigned int)solution->path_size[i]++);
 }
