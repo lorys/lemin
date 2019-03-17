@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 17:08:59 by pcarles           #+#    #+#             */
-/*   Updated: 2019/03/17 16:24:52 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/17 16:51:15 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	find_capacity(t_solution *solution, size_t nb_ants)
 		return (1);
 	while (i + 1 < solution->nb_paths)
 	{
-		capacity += (solution->path_size[i + 1] - solution->path_size[i]) * (i + 1); 
+		capacity += (solution->path_size[i + 1] - solution->path_size[0]); 
 		i++;
 	}
 	solution->capacity = capacity;

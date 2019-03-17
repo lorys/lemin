@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 16:01:01 by pcarles           #+#    #+#             */
-/*   Updated: 2019/03/16 19:22:10 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/17 17:41:19 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,10 @@ void			show_output(t_solution *solution, size_t nb_ants, \
 
 	rounds = 0;
 	status = 0;
-	next_ant = 1;
 	next_path = get_next_path(solution);
 	while (42)
 	{
+		next_ant = get_next_ant(solution, next_path);
 		status += push_ants(next_path, next_ant, infos);
 		next_path = get_next_path(solution);
 		if (next_path == solution->paths[0] && print_newline(&status, &rounds))
