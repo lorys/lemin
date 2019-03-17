@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 17:08:59 by pcarles           #+#    #+#             */
-/*   Updated: 2019/03/17 16:51:15 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/17 20:33:00 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	find_capacity(t_solution *solution, size_t nb_ants)
 		i++;
 	}
 	solution->capacity = capacity;
-	return (capacity > (nb_ants / solution->nb_paths) ? 1 : 0);
+	return (capacity >= (nb_ants / solution->nb_paths) ? 1 : 0);
 }
 
 //debug
@@ -116,6 +116,7 @@ void		free_solution(t_solution **solutionp)
 	}
 	free((*solutionp)->paths);
 	free((*solutionp)->path_size);
+	free((*solutionp)->nb_ants);
 	free(*solutionp);
 	*solutionp = NULL;
 }
