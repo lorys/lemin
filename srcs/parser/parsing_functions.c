@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 07:49:24 by pcarles           #+#    #+#             */
-/*   Updated: 2019/03/16 18:11:00 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/18 17:02:06 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_vertice	*is_room_valid(char *line, t_vertice *room_list, int nline)
 		|| !ft_strisnumber(tmp[2]) || count_char(line, ' ') != 2 \
 		|| ft_strchr(tmp[0], '-'))
 		error_parsing("room not well formated", nline);
-	else if (!check_overflow(tmp[1]) && !check_overflow(tmp[2]))
+	else if (!check_overflow(tmp[1]) || !check_overflow(tmp[2]))
 		error_parsing("int overflow on room coordinates", nline);
 	else if (find_room(tmp[0], room_list))
 		error_parsing("room already exists", nline);
