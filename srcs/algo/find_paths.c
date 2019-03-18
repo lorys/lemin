@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 12:51:27 by pcarles           #+#    #+#             */
-/*   Updated: 2019/03/18 15:55:39 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/18 15:58:21 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,10 @@ t_solution			*get_paths(uint32_t **matrix, \
 		}
 		x++;
 	}
+	if (res->path_size[0] == 1 && res->nb_paths == 1)
+		res->is_start_end = 1;
+	else
+		res->is_start_end = 0;
 	sort_solution(res);
 	return (res);
 }

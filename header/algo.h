@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 16:07:00 by pcarles           #+#    #+#             */
-/*   Updated: 2019/03/18 02:23:56 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/18 15:58:36 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct		s_solution
 	size_t			*path_size;
 	size_t			*nb_ants;
 	size_t			capacity;
+	int				is_start_end;
 	size_t			nb_paths;
 }					t_solution;
 
