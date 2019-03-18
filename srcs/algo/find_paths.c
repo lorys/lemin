@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 12:51:27 by pcarles           #+#    #+#             */
-/*   Updated: 2019/03/17 16:01:26 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/18 15:55:39 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,27 +76,26 @@ static size_t		get_path(uint32_t **matrix, unsigned int start, \
 	return (path_size);
 }
 
-static t_solution	*alloc_solution(size_t path_counter)
+static t_solution	*alloc_solution(size_t path_c)
 {
 	t_solution	*res;
 
 	if ((res = (t_solution*)malloc(sizeof(*res))) == NULL)
 		return (NULL);
-	res->nb_paths = path_counter;
-	if ((res->paths = (t_path**)malloc(sizeof(t_path*) * path_counter)) == NULL)
+	res->nb_paths = path_c;
+	if ((res->paths = (t_path**)malloc(sizeof(t_path*) * path_c)) == NULL)
 	{
 		free(res);
 		return (NULL);
 	}
-	if ((res->path_size = (size_t*)malloc(sizeof(size_t) * path_counter)) \
+	if ((res->path_size = (size_t*)malloc(sizeof(size_t) * path_c)) \
 		== NULL)
 	{
 		free(res->paths);
 		free(res);
 		return (NULL);
 	}
-	if ((res->nb_ants = (size_t*)malloc(sizeof(size_t)* path_counter)) \
-		== NULL)
+	if ((res->nb_ants = (size_t*)malloc(sizeof(size_t) * path_c)) == NULL)
 	{
 		free(res->path_size);
 		free(res->paths);

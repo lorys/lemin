@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 10:41:46 by pcarles           #+#    #+#             */
-/*   Updated: 2019/03/18 02:25:47 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/18 15:54:10 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <stdio.h>
 
-void		calculate_ants(t_solution *solution, size_t nb_ants)
+void			calculate_ants(t_solution *solution, size_t nb_ants)
 {
 	size_t	i;
 	size_t	issou;
@@ -55,7 +55,7 @@ unsigned int	get_next_ant(t_solution *solution, t_path *path)
 	return ((unsigned int)solution->path_size[i]++);
 }
 
-t_path		*get_next_path(t_solution *solution)
+t_path			*get_next_path(t_solution *solution)
 {
 	static size_t	last_path = 0;
 
