@@ -6,13 +6,13 @@
 #    By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/22 21:11:24 by pcarles           #+#    #+#              #
-#    Updated: 2019/03/17 17:16:54 by pcarles          ###   ########.fr        #
+#    Updated: 2019/03/18 16:32:59 by pcarles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 HDRDIR			:= header
 SRCDIR			:= srcs
-DEBUG			:= 1
+DEBUG			:= 0
 
 CC				:= gcc
 C_FLAGS			:= -Wall -Wextra -Werror -Ofast
