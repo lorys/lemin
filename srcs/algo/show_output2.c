@@ -6,14 +6,13 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 10:41:46 by pcarles           #+#    #+#             */
-/*   Updated: 2019/03/18 15:54:10 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/18 16:31:08 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "struct/path.h"
 #include "algo.h"
-
-#include <stdio.h>
 
 void			calculate_ants(t_solution *solution, size_t nb_ants)
 {
@@ -62,4 +61,14 @@ t_path			*get_next_path(t_solution *solution)
 	if (last_path >= solution->nb_paths)
 		last_path = 0;
 	return (solution->paths[last_path++]);
+}
+
+void			display_roundsf(int display_rounds, unsigned int rounds)
+{
+	if (display_rounds == 1)
+	{
+		ft_putstr("\n\e[30;41m");
+		ft_putnbr(rounds);
+		ft_putstr(" rounds\e[0m\n");
+	}
 }

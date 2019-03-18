@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 16:07:00 by pcarles           #+#    #+#             */
-/*   Updated: 2019/03/18 15:58:36 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/18 16:30:01 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@ void				sort_solution(t_solution *solution);
 
 void				calculate_ants(t_solution *solution, size_t nb_ants);
 unsigned int		get_next_ant(t_solution *solution, t_path *path);
+void				display_roundsf(int display_rounds, unsigned int rounds);
 
 #endif
