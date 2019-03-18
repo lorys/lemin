@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 16:01:01 by pcarles           #+#    #+#             */
-/*   Updated: 2019/03/17 20:22:22 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/18 02:23:43 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static int		print_newline(unsigned int *status, unsigned int *rounds)
 	return (0);
 }
 
-void			show_output(t_solution *solution, size_t nb_ants, \
+void			show_output(t_solution *solution, \
 				int display_rounds, t_infos *infos)
 {
 	unsigned int	rounds;
@@ -94,7 +94,6 @@ void			show_output(t_solution *solution, size_t nb_ants, \
 
 	rounds = 0;
 	status = 0;
-	(void)nb_ants;
 	next_path = get_next_path(solution);
 	while (42)
 	{

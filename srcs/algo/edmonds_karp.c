@@ -6,7 +6,7 @@
 /*   By: pcarles <pcarles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 17:08:59 by pcarles           #+#    #+#             */
-/*   Updated: 2019/03/17 20:33:00 by pcarles          ###   ########.fr       */
+/*   Updated: 2019/03/18 02:23:15 by pcarles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,33 +50,6 @@ static int	find_capacity(t_solution *solution, size_t nb_ants)
 	return (capacity >= (nb_ants / solution->nb_paths) ? 1 : 0);
 }
 
-//debug
-static void	print_path(t_path *path)
-{
-	printf("Path: ");
-	while (path)
-	{
-		printf("%s ", path->room->name);
-		path = path->next;
-	}
-	printf("\n");
-}
-
-static void		show_solution(t_solution *solution)
-{
-	unsigned int	x;
-
-	x = 0;
-	printf("\nSolution: nb_paths %zu | capacity: %zu\n", solution->nb_paths, solution->capacity);
-	while (x < solution->nb_paths)
-	{
-		printf("Path size: %5zu | ", solution->path_size[x]);
-		print_path(solution->paths[x]);
-		x++;
-	}
-	printf("\n");
-}
-
 t_solution	*edmonds_karp(t_infos *infos)
 {
 	unsigned int	flow;
@@ -94,12 +67,7 @@ t_solution	*edmonds_karp(t_infos *infos)
 		backtrack(infos);
 		solution = get_paths(infos->residual_matrix, flow, infos);
 		if (find_capacity(solution, infos->nb_ants))
-		{
-			printf("\nSelected solution\n\n");
-			show_solution(solution);
 			break ;
-		}
-		show_solution(solution);
 	}
 	return (solution);
 }
